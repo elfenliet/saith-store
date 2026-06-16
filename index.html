@@ -34,7 +34,6 @@
             color: #f1f5f9;
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
-        /* Scrollbar personalizado estilo gamer */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: #080c14; }
         ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
@@ -79,22 +78,19 @@
         </div>
         
         <div class="flex items-center gap-3">
-            <!-- Botón para ocultar/mostrar panel de administración -->
             <button onclick="toggleAdminPanel()" class="bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-bold py-2 px-3.5 rounded-lg border border-slate-700/60 transition flex items-center gap-2">
-                <i class="fa-solid fa-sliders text-purple-400"></i> <span id="btn-admin-text">Ocultar Panel</span>
+                <i class="fa-solid fa-sliders text-purple-400"></i> <span id="btn-admin-text">Mostrar Panel</span>
             </button>
-
             <button id="btn-lang" onclick="toggleLanguage()" class="bg-brand-card hover:bg-slate-800 text-xs font-bold py-2 px-3.5 rounded-lg border border-slate-700/60 transition text-white flex items-center gap-1.5">
                 <i class="fa-solid fa-earth-americas text-cyan-400"></i> <span id="lang-label">English</span>
             </button>
         </div>
     </header>
 
-    <!-- ADMIN PANEL (ZONA PRO DUEÑO) -->
-    <section id="panel-dueno" class="max-w-4xl w-full mx-auto px-4 mt-6 transition-all duration-300">
+    <!-- ADMIN PANEL (Inicia oculto con la clase 'hidden') -->
+    <section id="panel-dueno" class="hidden max-w-4xl w-full mx-auto px-4 mt-6 transition-all duration-300">
         <div class="glass-panel rounded-2xl p-6 shadow-2xl relative overflow-hidden">
             <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-cyan-500 via-purple-500 to-amber-500"></div>
-            
             <div class="flex justify-between items-center mb-4">
                 <div class="flex items-center gap-2">
                     <span class="flex h-2 w-2 relative">
@@ -109,7 +105,7 @@
             <form id="account-form" onsubmit="addAccount(event)" class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div class="md:col-span-2">
                     <label class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">Título de la Publicación</label>
-                    <input type="text" id="acc-title" required class="w-full bg-brand-dark border border-slate-800 focus:border-purple-500 rounded-xl p-2.5 text-sm text-white placeholder-slate-600 outline-none transition" placeholder="Ej: AR 56 | Furina C2 + Clorinde + 15,000 Jades">
+                    <input type="text" id="acc-title" required class="w-full bg-brand-dark border border-slate-800 focus:border-purple-500 rounded-xl p-2.5 text-sm text-white placeholder-slate-600 outline-none transition" placeholder="Ej: AR 56 | Furina C2 + Clorinde">
                 </div>
                 <div>
                     <label class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">Juego Asociado</label>
@@ -132,12 +128,12 @@
                     <input type="text" id="acc-price" required class="w-full bg-brand-dark border border-slate-800 focus:border-purple-500 rounded-xl p-2.5 text-sm text-white placeholder-slate-600 outline-none transition" placeholder="Ej: $35 USD / S/. 130">
                 </div>
                 <div>
-                    <label class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">Galería (Soporta múltiples imágenes)</label>
+                    <label class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">Galería (Imágenes)</label>
                     <input type="file" id="acc-images" accept="image/*" required multiple class="w-full bg-brand-dark border border-slate-800 focus:border-purple-500 rounded-xl p-1.5 text-xs text-slate-400 outline-none transition">
                 </div>
                 <div class="md:col-span-3">
                     <label class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">Especificaciones Técnicas / Detalles de la Cuenta</label>
-                    <textarea id="acc-details" rows="2" required class="w-full bg-brand-dark border border-slate-800 focus:border-purple-500 rounded-xl p-2.5 text-sm text-white placeholder-slate-600 outline-none transition resize-none" placeholder="Detalla personajes 5 estrellas, armas del banner, estatus del correo, etc."></textarea>
+                    <textarea id="acc-details" rows="2" required class="w-full bg-brand-dark border border-slate-800 focus:border-purple-500 rounded-xl p-2.5 text-sm text-white placeholder-slate-600 outline-none transition resize-none" placeholder="Detalla personajes 5 estrellas, armas, etc."></textarea>
                 </div>
                 <div class="md:col-span-3 text-right">
                     <button type="submit" class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-black uppercase tracking-widest py-3 px-6 rounded-xl shadow-lg shadow-purple-900/40 transition-all w-full md:w-auto">
@@ -162,7 +158,7 @@
             <span class="lang-en" style="display:none;">Securely purchase high-end accounts or request professional optimized farming services.</span>
         </p>
 
-        <!-- FILTROS INTELIGENTES DE CATEGORÍAS -->
+        <!-- FILTROS -->
         <div class="flex justify-center gap-2 mt-8 flex-wrap">
             <button onclick="filterGame('all')" id="filter-all" class="bg-purple-600 text-white text-xs font-bold px-4 py-2 rounded-xl border border-purple-500 transition-all shadow-md shadow-purple-900/20">
                 ⭐ <span class="lang-es">Ver Todo</span><span class="lang-en" style="display:none;">Show All</span>
@@ -179,17 +175,15 @@
         </div>
     </section>
 
-    <!-- MAIN WEB INTERFACE CONTAINER -->
+    <!-- MAIN CONTAINER -->
     <main class="max-w-7xl mx-auto w-full px-4 mb-16">
-        
-        <!-- SECCIÓN PERMANENTE DE BOOSTING / EXPLORACIÓN (3 Columnas Pro) -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             
-            <!-- BOOSTING GENSHIN -->
+            <!-- GENSHIN -->
             <div class="bg-brand-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col justify-between p-5 relative game-card-glow transition-all duration-300">
                 <div>
                     <div class="relative h-36 rounded-xl overflow-hidden mb-4">
-                        <img src="genshin.jpg" alt="Genshin Impact" class="w-full h-full object-cover">
+                        <img src="thumb-1920-1129503.jpg" alt="Genshin Impact" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-brand-card via-transparent to-transparent"></div>
                         <span class="absolute top-3 left-3 bg-cyan-950/90 border border-cyan-500/40 text-cyan-400 text-[10px] font-black px-2.5 py-0.5 rounded uppercase tracking-wider">Genshin Boosting</span>
                     </div>
@@ -203,16 +197,16 @@
                 </a>
             </div>
 
-            <!-- BOOSTING STAR RAIL -->
+            <!-- STAR RAIL -->
             <div class="bg-brand-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col justify-between p-5 relative game-card-glow transition-all duration-300">
                 <div>
                     <div class="relative h-36 rounded-xl overflow-hidden mb-4">
-                        <img src="honkai.webp" alt="Honkai Star Rail" class="w-full h-full object-cover">
+                        <img src="ef57c2aaed026fd3275d6c5a06f92e91_6834928378747980045.webp" alt="Honkai Star Rail" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-brand-card via-transparent to-transparent"></div>
                         <span class="absolute top-3 left-3 bg-purple-950/90 border border-purple-500/40 text-purple-400 text-[10px] font-black px-2.5 py-0.5 rounded uppercase tracking-wider">Star Rail Boosting</span>
                     </div>
                     <p class="text-xs text-slate-400 leading-relaxed mb-4">
-                        <span class="lang-es">Recolección masiva de Jades Estelares, limpieza semanal automatizada de Universo Simulado, salas MoC / Pura Ficción y optimización de artefactos.</span>
+                        <span class="lang-es">Recolección masiva de Jades Estelares, limpieza semanal de Universo Simulado, salas MoC / Pura Ficción y optimización de artefactos.</span>
                         <span class="lang-en" style="display:none;">Stellar Jade farming, weekly Simulated Universe clears, MoC / Pure Fiction, and relic min-maxing.</span>
                     </p>
                 </div>
@@ -221,16 +215,16 @@
                 </a>
             </div>
 
-            <!-- BOOSTING WUTHERING WAVES -->
+            <!-- WUTHERING WAVES -->
             <div class="bg-brand-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col justify-between p-5 relative game-card-glow transition-all duration-300">
                 <div>
                     <div class="relative h-36 rounded-xl overflow-hidden mb-4">
-                        <img src="wuwa.webp" alt="Wuthering Waves" class="w-full h-full object-cover">
+                        <img src="wuthering-waves-cyc7b.webp" alt="Wuthering Waves" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-brand-card via-transparent to-transparent"></div>
                         <span class="absolute top-3 left-3 bg-amber-950/90 border border-amber-500/40 text-amber-400 text-[10px] font-black px-2.5 py-0.5 rounded uppercase tracking-wider">WuWa Boosting</span>
                     </div>
                     <p class="text-xs text-slate-400 leading-relaxed mb-4">
-                        <span class="lang-es">Búsqueda veloz de Sonance Caskets, farmeo intensivo de Ecos de alto nivel, subida de nivel de Data Bank al máximo y limpieza de abismo/torre.</span>
+                        <span class="lang-es">Búsqueda veloz de Sonance Caskets, farmeo intensivo de Ecos de alto nivel, subida de nivel de Data Bank al máximo y limpieza de torre.</span>
                         <span class="lang-en" style="display:none;">Sonance Caskets route, high-tier Echo farming, Data Bank leveling, and Tower of Adversity clears.</span>
                     </p>
                 </div>
@@ -242,21 +236,16 @@
         </div>
 
         <div class="border-t border-slate-900 my-8"></div>
-
-        <!-- SECCIÓN DE TIENDA DINÁMICA (Aquí se inyectan las cuentas) -->
         <div class="mb-6 flex items-center justify-between">
             <h4 class="text-lg font-black tracking-wide text-slate-200 flex items-center gap-2">
                 <i class="fa-solid fa-store text-purple-500"></i> <span class="lang-es">Cuentas Disponibles en Vitrina</span><span class="lang-en" style="display:none;">Marketplace Showcase</span>
             </h4>
         </div>
 
-        <!-- CONTENEDOR EN REJILLA PRO -->
-        <div id="marketplace-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Cargado por JavaScript -->
-        </div>
+        <div id="marketplace-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
     </main>
 
-    <!-- FOOTER INFRASTRUCTURE & PAYMENTS -->
+    <!-- FOOTER -->
     <footer class="bg-brand-dark border-t border-slate-900 pt-10 pb-6 w-full">
         <div class="max-w-6xl mx-auto px-4 text-center">
             <div class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-4">Supported Global Gateways</div>
@@ -269,10 +258,29 @@
         </div>
     </footer>
 
-    <!-- SISTEMA LOGÍSTICO COMPLETO (JAVASCRIPT) -->
     <script>
         let currentLang = 'es';
         let activeFilter = 'all';
+
+        function toggleAdminPanel() {
+            const panel = document.getElementById('panel-dueno');
+            const btnText = document.getElementById('btn-admin-text');
+            
+            if (panel.classList.contains('hidden')) {
+                // Solicita la contraseña para abrirlo
+                const password = prompt("Introduce la clave de administrador para acceder al panel:");
+                
+                if (password === 'Saith2026') { 
+                    panel.classList.remove('hidden');
+                    btnText.textContent = "Ocultar Panel";
+                } else {
+                    alert("Clave incorrecta. Acceso denegado.");
+                }
+            } else {
+                panel.classList.add('hidden');
+                btnText.textContent = "Mostrar Panel";
+            }
+        }
 
         function toggleLanguage() {
             currentLang = currentLang === 'es' ? 'en' : 'es';
@@ -291,22 +299,8 @@
             }
         }
 
-        function toggleAdminPanel() {
-            const panel = document.getElementById('panel-dueno');
-            const btnText = document.getElementById('btn-admin-text');
-            if (panel.classList.contains('hidden')) {
-                panel.classList.remove('hidden');
-                btnText.textContent = "Ocultar Panel";
-            } else {
-                panel.addClassList = panel.classList.add('hidden');
-                btnText.textContent = "Mostrar Panel";
-            }
-        }
-
         function filterGame(game) {
             activeFilter = game;
-            
-            // Actualizar clases de botones de filtro
             const filters = ['all', 'genshin', 'honkai', 'wuwa'];
             filters.forEach(f => {
                 const btn = document.getElementById(`filter-${f}`);
@@ -316,18 +310,13 @@
                     btn.className = "bg-brand-card hover:bg-slate-800 text-slate-400 text-xs font-bold px-4 py-2 rounded-xl border border-slate-800 transition-all flex items-center gap-2";
                 }
             });
-
             loadAccounts();
         }
 
         function updateCounters() {
             const accounts = JSON.parse(localStorage.getItem('saith_accounts')) || [];
             const counts = { genshin: 0, honkai: 0, wuwa: 0 };
-            
-            accounts.forEach(acc => {
-                if (counts[acc.game] !== undefined) counts[acc.game]++;
-            });
-
+            accounts.forEach(acc => { if (counts[acc.game] !== undefined) counts[acc.game]++; });
             document.getElementById('count-genshin').textContent = counts.genshin;
             document.getElementById('count-honkai').textContent = counts.honkai;
             document.getElementById('count-wuwa').textContent = counts.wuwa;
@@ -337,11 +326,8 @@
             const mainImg = document.getElementById(`main-img-${accountId}`);
             const accounts = JSON.parse(localStorage.getItem('saith_accounts')) || [];
             const acc = accounts.find(a => a.id === accountId);
-            
             if (acc && acc.images && acc.images[index]) {
                 mainImg.src = acc.images[index];
-                
-                // Limpiar bordes activos de miniaturas de esta tarjeta específica
                 const thumbs = element.parentElement.querySelectorAll('img');
                 thumbs.forEach(t => t.classList.remove('thumb-active'));
                 element.classList.add('thumb-active');
@@ -350,7 +336,6 @@
 
         function addAccount(e) {
             e.preventDefault();
-            
             const title = document.getElementById('acc-title').value;
             const game = document.getElementById('acc-game').value;
             const server = document.getElementById('acc-server').value;
@@ -368,7 +353,6 @@
                     reader.onload = function(event) {
                         base64Images.push(event.target.result);
                         loaded++;
-
                         if (loaded === filesArray.length) {
                             const account = {
                                 id: Date.now(),
@@ -379,11 +363,9 @@
                                 details: details,
                                 images: base64Images
                             };
-
                             let accounts = JSON.parse(localStorage.getItem('saith_accounts')) || [];
                             accounts.push(account);
                             localStorage.setItem('saith_accounts', JSON.stringify(accounts));
-
                             document.getElementById('account-form').reset();
                             loadAccounts();
                         }
@@ -405,24 +387,13 @@
         function loadAccounts() {
             const container = document.getElementById('marketplace-grid');
             container.innerHTML = '';
-            
             updateCounters();
-            
             let accounts = JSON.parse(localStorage.getItem('saith_accounts')) || [];
-            
-            // Aplicar el filtro inteligente seleccionado
-            if (activeFilter !== 'all') {
-                accounts = accounts.filter(acc => acc.game === activeFilter);
-            }
+            if (activeFilter !== 'all') accounts = accounts.filter(acc => acc.game === activeFilter);
 
             if (accounts.length === 0) {
                 container.className = "col-span-full text-center py-12";
-                container.innerHTML = `
-                    <div class="text-slate-600 text-sm italic">
-                        <i class="fa-solid fa-box-open text-3xl mb-2 block text-slate-700"></i>
-                        No hay cuentas registradas bajo este criterio de búsqueda.
-                    </div>
-                `;
+                container.innerHTML = `<div class="text-slate-600 text-sm italic"><i class="fa-solid fa-box-open text-3xl mb-2 block text-slate-700"></i>No hay cuentas registradas bajo este criterio.</div>`;
                 return;
             } else {
                 container.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6";
@@ -431,8 +402,6 @@
             accounts.forEach(acc => {
                 const imageList = acc.images ? acc.images : [];
                 const mainImage = imageList[0] || 'placeholder.jpg';
-                
-                // Color temático de tarjeta según el juego
                 let badgeColor = "bg-cyan-950/80 border-cyan-500/30 text-cyan-400";
                 if(acc.game === 'honkai') badgeColor = "bg-purple-950/80 border-purple-500/30 text-purple-400";
                 if(acc.game === 'wuwa') badgeColor = "bg-amber-950/80 border-amber-500/30 text-amber-400";
@@ -442,9 +411,7 @@
                     thumbsHtml = `<div class="flex gap-1.5 overflow-x-auto pb-2 px-1">`;
                     imageList.forEach((img, idx) => {
                         const activeClass = idx === 0 ? 'thumb-active' : '';
-                        thumbsHtml += `
-                            <img src="${img}" class="h-9 w-12 object-cover rounded border border-slate-800 opacity-50 cursor-pointer transition-all ${activeClass}" onclick="updateMainImage(${acc.id}, ${idx}, this)">
-                        `;
+                        thumbsHtml += `<img src="${img}" class="h-9 w-12 object-cover rounded border border-slate-800 opacity-50 cursor-pointer transition-all ${activeClass}" onclick="updateMainImage(${acc.id}, ${idx}, this)">`;
                     });
                     thumbsHtml += `</div>`;
                 }
@@ -458,41 +425,26 @@
                                     ${acc.game}
                                 </span>
                             </div>
-                            
                             ${thumbsHtml}
-
                             <div class="px-2 mt-2">
-                                <div class="flex justify-between items-start gap-2 mb-2">
-                                    <h5 class="text-sm font-bold text-slate-200 group-hover:text-purple-400 transition-colors line-clamp-2 leading-snug">${acc.title}</h5>
+                                <h5 class="text-sm font-bold text-slate-200 group-hover:text-purple-400 transition-colors line-clamp-2 leading-snug">${acc.title}</h5>
+                                <div class="flex gap-2 my-2">
+                                    <span class="text-[10px] font-extrabold text-emerald-400 bg-emerald-950/40 border border-emerald-500/20 px-2 py-0.5 rounded">${acc.price}</span>
+                                    <span class="text-[9px] font-bold text-indigo-400 bg-indigo-950/40 border border-indigo-500/20 px-2 py-0.5 rounded uppercase tracking-wider">🌍 ${acc.server}</span>
                                 </div>
-                                <div class="flex gap-2 mb-3">
-                                    <span class="text-[10px] font-extrabold text-emerald-400 bg-emerald-950/40 border border-emerald-500/20 px-2 py-0.5 rounded">
-                                        ${acc.price}
-                                    </span>
-                                    <span class="text-[9px] font-bold text-indigo-400 bg-indigo-950/40 border border-indigo-500/20 px-2 py-0.5 rounded uppercase tracking-wider">
-                                        🌍 ${acc.server}
-                                    </span>
-                                </div>
-                                <p class="text-xs text-slate-400 line-clamp-3 bg-brand-dark/40 border border-slate-800/40 rounded-xl p-2.5 font-medium leading-relaxed">
-                                    ${acc.details}
-                                </p>
+                                <p class="text-xs text-slate-400 line-clamp-3 bg-brand-dark/40 border border-slate-800/40 rounded-xl p-2.5 font-medium leading-relaxed">${acc.details}</p>
                             </div>
                         </div>
-
                         <div class="p-3 pt-0 flex gap-2">
                             <a href="https://wa.me/51967128876?text=Hola%20Saith,%20me%20interesa%20la%20cuenta%20de%20${encodeURIComponent(acc.game)}%20[${encodeURIComponent(acc.server)}]:%20${encodeURIComponent(acc.title)}%20con%20precio%20de%20${encodeURIComponent(acc.price)}" target="_blank" class="flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-center font-bold text-xs py-2.5 px-4 rounded-xl transition-all shadow-md shadow-emerald-950/20 flex items-center justify-center gap-1.5">
                                 <i class="fa-solid fa-cart-shopping"></i> Comprar
                             </a>
-                            <button onclick="deleteAccount(${acc.id})" class="bg-red-950/30 hover:bg-red-900/40 border border-red-900/30 hover:border-red-500/40 text-red-400 p-2.5 rounded-xl transition-all">
-                                <i class="fa-solid fa-trash-can text-xs"></i>
-                            </button>
+                            <button onclick="deleteAccount(${acc.id})" class="bg-red-950/30 hover:bg-red-900/40 border border-red-900/30 hover:border-red-500/40 text-red-400 p-2.5 rounded-xl transition-all"><i class="fa-solid fa-trash-can text-xs"></i></button>
                         </div>
-                    </div>
-                `;
+                    </div>`;
                 container.insertAdjacentHTML('beforeend', rawCard);
             });
         }
-
         document.addEventListener('DOMContentLoaded', loadAccounts);
     </script>
 </body>
