@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saith Store | Gaming Boosting & Marketplace Premium</title>
+    <title>Saith Store | Gaming Boosting & Premium Marketplace</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
@@ -11,608 +11,655 @@
             theme: { 
                 extend: { 
                     colors: { 
-                        brand: { dark: '#030712', card: '#0b0f19', border: '#1e293b', accent: '#a855f7', cyan: '#06b6d4', amber: '#f59e0b' } 
-                    },
-                    animation: {
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        brand: { dark: '#02040a', card: '#0d1117', border: '#30363d', accent: '#8b5cf6', cyan: '#06b6d4', gold: '#f59e0b' } 
                     }
                 } 
             }
         }
     </script>
     <style>
-        body { background-color: #030712; color: #f3f4f6; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; overflow-x: hidden; }
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #030712; }
-        ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #a855f7; }
-        
-        .neon-gradient-text { background: linear-gradient(135deg, #06b6d4 0%, #a855f7 50%, #f59e0b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .glass-header { background: rgba(3, 7, 18, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
-        .premium-card { background: linear-gradient(145deg, #0b0f19 0%, #070a10 100%); border: 1px solid rgba(255, 255, 255, 0.03); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-        .premium-card:hover { transform: translateY(-5px); border-color: rgba(168, 85, 247, 0.3); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(168, 85, 247, 0.05); }
-        
-        .bg-glow-orbs { position: absolute; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(168,85,247,0.08) 0%, rgba(0,0,0,0) 70%); filter: blur(40px); z-index: -1; pointer-events: none; }
-        @keyframes pulse-gold { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); box-shadow: 0 0 12px rgba(245, 158, 11, 0.6); } }
-        .instant-badge { animation: pulse-gold 2s infinite ease-in-out; }
+        body { background-color: #02040a; color: #c9d1d9; font-family: system-ui, -apple-system, sans-serif; overflow-x: hidden; }
+        /* Efectos de Cristalería */
+        .glass-panel { background: rgba(13, 17, 23, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .glass-nav { background: rgba(2, 4, 10, 0.75); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(48, 54, 61, 0.6); }
+        /* Tarjetas de Diseño Avanzado */
+        .pro-card { background: linear-gradient(180deg, #0d1117 0%, #161b22 100%); border: 1px solid #21262d; transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+        .pro-card:hover { transform: translateY(-6px); border-color: #8b5cf6; box-shadow: 0 20px 38px rgba(0, 0, 0, 0.8), 0 0 20px rgba(139, 92, 246, 0.15); }
+        /* Texto Degradado */
+        .text-gradient { background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 50%, #f59e0b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        /* Fondo Animado del Espacio */
+        #space-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; pointer-events: none; }
+        .radial-glow { position: fixed; width: 600px; height: 600px; background: radial-gradient(circle, rgba(139,92,246,0.05) 0%, rgba(0,0,0,0) 70%); top: -100px; right: -100px; z-index: -1; pointer-events: none; filter: blur(50px); }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #02040a; }
+        ::-webkit-scrollbar-thumb { background: #30363d; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between relative">
+<body class="min-h-screen flex flex-col justify-between relative antialiased">
 
-    <div class="bg-glow-orbs top-[-100px] left-[-100px]"></div>
-    <div class="bg-glow-orbs top-[400px] right-[-150px]" style="background: radial-gradient(circle, rgba(6,182,212,0.06) 0%, rgba(0,0,0,0) 70%);"></div>
+    <!-- Lienzo de partículas dinámicas -->
+    <canvas id="space-canvas"></canvas>
+    <div class="radial-glow"></div>
 
-    <!-- Barra de anuncios -->
-    <div class="bg-gradient-to-r from-purple-900/60 via-slate-900/80 to-cyan-900/60 text-center py-2 px-4 text-xs font-bold tracking-wide border-b border-white/5 backdrop-blur-sm">
-        <span id="text-topbar"><i class="fa-solid fa-user-shield text-amber-400"></i> Compras 100% manuales y seguras. Trato directo por WhatsApp con Saith Store.</span>
+    <!-- Barra Superior -->
+    <div class="bg-gradient-to-r from-purple-950/80 via-black to-cyan-950/80 text-center py-2 px-4 text-[11px] font-bold tracking-wider border-b border-white/5 relative z-50">
+        <span id="txt-topbar"><i class="fa-solid fa-shield-halved text-cyan-400"></i> Compras 100% manuales y seguras. Trato directo exclusivo por WhatsApp con Saith Store.</span>
     </div>
 
-    <!-- Header -->
-    <header class="sticky top-0 z-40 glass-header px-4 lg:px-12 py-4 flex justify-between items-center">
+    <!-- Navegación Principal -->
+    <header class="sticky top-0 z-40 glass-nav px-4 lg:px-16 py-4 flex justify-between items-center">
         <div class="flex items-center gap-3">
-            <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-purple-600 via-indigo-600 to-cyan-400 flex items-center justify-center shadow-lg shadow-purple-500/20">
-                <i class="fa-solid fa-bolt text-lg text-white animate-pulse-slow"></i>
+            <div class="h-9 w-9 rounded-xl bg-gradient-to-tr from-purple-600 to-cyan-400 flex items-center justify-center shadow-lg shadow-purple-500/20">
+                <i class="fa-solid fa-bolt text-md text-white"></i>
             </div>
             <div class="flex flex-col">
-                <span class="text-xl font-black tracking-wider neon-gradient-text">SAITH STORE</span>
-                <span class="text-[9px] text-slate-400 tracking-widest uppercase font-black">Professional Gaming Hub</span>
+                <span class="text-lg font-black tracking-widest text-gradient">SAITH STORE</span>
+                <span class="text-[8px] text-slate-400 tracking-widest uppercase font-bold">Premium Gaming Network</span>
             </div>
         </div>
         
-        <div class="flex items-center gap-2">
-            <!-- Selector de Idioma -->
-            <div class="relative bg-white/5 border border-white/10 rounded-xl px-2.5 py-1.5 flex items-center gap-1.5 text-xs text-white font-bold backdrop-blur-md">
-                <i class="fa-solid fa-earth-americas text-cyan-400"></i>
-                <select id="lang-select" onchange="changeLanguage(this.value)" class="bg-transparent text-white outline-none font-bold cursor-pointer">
+        <div class="flex items-center gap-3">
+            <div class="relative bg-white/5 border border-white/10 rounded-xl px-2.5 py-1.5 flex items-center gap-1.5 text-xs font-bold">
+                <i class="fa-solid fa-coins text-amber-400"></i>
+                <select id="currency-select" onchange="changeCurrency(this.value)" class="bg-transparent text-white outline-none cursor-pointer">
+                    <option value="USD" class="bg-slate-950">USD ($)</option>
+                    <option value="PEN" class="bg-slate-950">PEN (S/.)</option>
+                    <option value="EUR" class="bg-slate-950">EUR (€)</option>
+                </select>
+            </div>
+            <div class="relative bg-white/5 border border-white/10 rounded-xl px-2.5 py-1.5 flex items-center gap-1.5 text-xs font-bold">
+                <i class="fa-solid fa-globe text-purple-400"></i>
+                <select id="lang-select" onchange="changeLanguage(this.value)" class="bg-transparent text-white outline-none cursor-pointer">
                     <option value="es" class="bg-slate-950">ES</option>
                     <option value="en" class="bg-slate-950">EN</option>
                 </select>
             </div>
-
-            <!-- Convertidor de Moneda -->
-            <div class="relative bg-white/5 border border-white/10 rounded-xl px-2.5 py-1.5 flex items-center gap-1.5 text-xs text-white font-bold backdrop-blur-md">
-                <i class="fa-solid fa-coins text-amber-400"></i>
-                <select id="currency-select" onchange="changeCurrency(this.value)" class="bg-transparent text-white outline-none font-bold cursor-pointer">
-                    <option value="USD" class="bg-slate-950">USD ($)</option>
-                    <option value="PEN" class="bg-slate-950">PEN (S/.)</option>
-                    <option value="EUR" class="bg-slate-950">EUR (€)</option>
-                    <option value="MXN" class="bg-slate-950">MXN ($)</option>
-                </select>
-            </div>
+            <button id="nav-admin-btn" onclick="scollToAdmin()" class="h-8 w-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white transition-colors">
+                <i class="fa-solid fa-sliders text-xs"></i>
+            </button>
         </div>
     </header>
 
-    <!-- Hero / Banner Superior -->
-    <section class="text-center pt-14 pb-8 px-4 max-w-4xl mx-auto w-full relative z-10">
-        <div class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-950/40 to-cyan-950/40 border border-purple-500/20 px-4 py-1.5 rounded-full mb-5">
-            <span class="text-purple-400 text-xs font-mono font-black tracking-widest animate-pulse">#saithboost & #saithedit</span>
+    <!-- Zona de Control de Búsqueda -->
+    <section class="max-w-7xl mx-auto w-full px-4 pt-12 pb-6 text-center">
+        <div class="inline-flex items-center gap-2 bg-purple-950/30 border border-purple-500/30 px-3 py-1 rounded-full mb-4">
+            <span class="text-purple-400 text-[10px] font-mono font-bold tracking-widest uppercase">#saithboost & #saithedit</span>
         </div>
-        <h1 id="text-hero-title" class="text-4xl md:text-6xl font-black tracking-tight mb-4 leading-none text-white">
-            Catálogo de Cuentas & <br><span class="neon-gradient-text">Boosting Premium</span>
+        <h1 id="txt-hero-title" class="text-4xl md:text-5xl font-black tracking-tight mb-8 text-white">
+            Marketplace de Cuentas & <br><span class="text-gradient">Servicios de Boosting Global</span>
         </h1>
 
-        <!-- Filtros por Juego -->
-        <div id="filter-container" class="flex justify-center gap-2 mt-10 flex-wrap">
-            <!-- Se renderizan dinámicamente con JS -->
+        <!-- Motor Avanzado de Búsqueda -->
+        <div class="max-w-2xl mx-auto bg-[#0d1117]/80 border border-[#30363d] p-2 rounded-2xl flex flex-col sm:flex-row gap-2 shadow-xl backdrop-blur-md mb-8">
+            <div class="flex items-center gap-3 px-3 flex-1">
+                <i class="fa-solid fa-magnifying-glass text-slate-500 text-sm"></i>
+                <input type="text" id="search-input" oninput="triggerSearch()" placeholder="Buscar cuentas por título, servidor o detalles..." class="w-full bg-transparent text-sm text-white focus:outline-none placeholder-slate-500">
+            </div>
+            <div id="filter-container" class="flex gap-1 flex-wrap justify-center p-1 sm:p-0"></div>
         </div>
     </section>
 
-    <!-- Contenido Principal -->
-    <main class="max-w-7xl mx-auto w-full px-4 mb-20 relative z-10 flex-1">
+    <!-- Catálogo de Cuentas y Servicios -->
+    <main class="max-w-7xl mx-auto w-full px-4 mb-24 flex-1">
         
-        <h4 id="text-boosting-title" class="text-xl font-black tracking-wide text-white mb-6 flex items-center gap-2.5">
-            <i class="fa-solid fa-circle-nodes text-cyan-400 animate-pulse"></i> Servicios Profesionales de Boosting
-        </h4>
+        <!-- Sección Boosting -->
+        <h3 id="txt-boosting-title" class="text-lg font-bold text-white mb-6 flex items-center gap-2">
+            <i class="fa-solid fa-bolt text-cyan-400"></i> Servicios de Boosting Profesional
+        </h3>
+        <div id="boosting-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16"></div>
 
-        <!-- Bloque Servicios Boosting Dinámico -->
-        <div id="boosting-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-            <!-- Se renderiza dinámicamente con JS según el idioma -->
+        <div class="border-b border-[#21262d] my-10"></div>
+
+        <!-- Sección Catálogo Cuentas -->
+        <h3 id="txt-marketplace-title" class="text-lg font-bold text-white mb-6 flex items-center gap-2">
+            <i class="fa-solid fa-store text-purple-500"></i> Catálogo de Cuentas Activas
+        </h3>
+        <div id="marketplace-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-24">
+            <div class="col-span-full text-center text-slate-500 py-12">Cargando catálogo en tiempo real...</div>
         </div>
 
-        <div class="border-t border-slate-900/60 my-12"></div>
-
-        <h4 id="text-marketplace-title" class="text-xl font-black tracking-wide text-white mb-8 flex items-center gap-2.5">
-            <i class="fa-solid fa-fire-flame-curved text-purple-500 animate-pulse"></i> Catálogo de Cuentas Disponibles
-        </h4>
-
-        <!-- Rejilla de Cuentas de Firebase -->
-        <div id="marketplace-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
-            <div class="col-span-full text-center text-slate-500 py-12">Conectando en tiempo real con Saith Store...</div>
-        </div>
-
-        <div class="border-t border-slate-900/60 my-12"></div>
-
-        <!-- SECCIÓN DE RESEÑAS / TESTIMONIOS -->
-        <section class="max-w-5xl mx-auto w-full mb-12">
-            <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">
+        <!-- Sección Reseñas Públicas -->
+        <section class="max-w-5xl mx-auto w-full mb-20">
+            <div class="flex justify-between items-center mb-8 border-b border-[#21262d] pb-4">
                 <div>
-                    <h4 id="text-reviews-title" class="text-xl font-black tracking-wide text-white flex items-center gap-2.5">
-                        <i class="fa-solid fa-star text-amber-400 animate-bounce"></i> Reseñas de Compradores
-                    </h4>
-                    <p id="text-reviews-subtitle" class="text-xs text-slate-400 mt-1">Opiniones reales de clientes globales que usaron #saithboost</p>
+                    <h3 id="txt-reviews-title" class="text-lg font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-star text-amber-500"></i> Reseñas Verificadas
+                    </h3>
+                    <p id="txt-reviews-subtitle" class="text-xs text-slate-400 mt-0.5">Opiniones reales procesadas bajo el ecosistema #saithboost</p>
                 </div>
-                <button id="btn-toggle-review" onclick="toggleReviewForm()" class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-xs px-4 py-2.5 rounded-xl border border-purple-500/20 active:scale-95 transition-transform">
-                    ✍️ Dejar una Reseña
+                <button id="btn-toggle-review" onclick="toggleReviewForm()" class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-xs px-4 py-2.5 rounded-xl border border-purple-500/30">
+                    ✍️ Escribir Reseña
                 </button>
             </div>
 
-            <!-- Formulario Oculto para añadir Reseña -->
-            <div id="review-form-container" class="hidden premium-card rounded-2xl p-6 mb-8 max-w-xl mx-auto border border-purple-500/20">
+            <!-- Formulario Cliente -->
+            <div id="review-form-container" class="hidden glass-panel rounded-2xl p-6 mb-8 max-w-xl mx-auto">
                 <form id="review-form" onsubmit="submitReview(event)" class="space-y-4">
                     <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label id="lbl-name" class="block text-[10px] uppercase font-black tracking-wider text-slate-400 mb-1">Tu Nombre / Nickname</label>
-                            <input type="text" id="rev-name" required class="w-full bg-black/40 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-purple-500">
-                        </div>
-                        <div>
-                            <label id="lbl-country" class="block text-[10px] uppercase font-black tracking-wider text-slate-400 mb-1">País (Ej: Perú 🇵🇪, USA 🇺🇸)</label>
-                            <input type="text" id="rev-country" placeholder="Perú 🇵🇪" required class="w-full bg-black/40 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-purple-500">
-                        </div>
+                        <input type="text" id="rev-name" placeholder="Tu Nombre / Nickname" required class="w-full bg-black/50 border border-[#30363d] rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-purple-500">
+                        <input type="text" id="rev-country" placeholder="País (Ej: Perú 🇵🇪)" required class="w-full bg-black/50 border border-[#30363d] rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-purple-500">
                     </div>
-                    <div>
-                        <label id="lbl-stars" class="block text-[10px] uppercase font-black tracking-wider text-slate-400 mb-1">Calificación</label>
-                        <select id="rev-stars" class="w-full bg-black/40 border border-slate-800 rounded-xl px-3 py-2 text-xs text-amber-400 font-bold focus:outline-none focus:border-purple-500">
-                            <option value="5">⭐⭐⭐⭐⭐ (5/5)</option>
-                            <option value="4">⭐⭐⭐⭐ (4/5)</option>
-                            <option value="3">⭐⭐⭐ (3/5)</option>
-                            <option value="2">⭐⭐ (2/5)</option>
-                            <option value="1">⭐ (1/5)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label id="lbl-comment" class="block text-[10px] uppercase font-black tracking-wider text-slate-400 mb-1">Tu Comentario / Experiencia</label>
-                        <textarea id="rev-comment" rows="3" required class="w-full bg-black/40 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-purple-500"></textarea>
-                    </div>
-                    <button type="submit" id="btn-submit-review" class="w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-black text-xs py-2.5 rounded-xl uppercase tracking-wider">Enviar Reseña Pública</button>
+                    <select id="rev-stars" class="w-full bg-black/50 border border-[#30363d] rounded-xl px-3 py-2.5 text-xs text-amber-400 font-bold focus:outline-none focus:border-purple-500">
+                        <option value="5">⭐⭐⭐⭐⭐ (5/5)</option>
+                        <option value="4">⭐⭐⭐⭐ (4/5)</option>
+                        <option value="3">⭐⭐⭐ (3/5)</option>
+                    </select>
+                    <textarea id="rev-comment" rows="3" placeholder="Describe tu experiencia de compra o nivel de boosting..." required class="w-full bg-black/50 border border-[#30363d] rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-purple-500"></textarea>
+                    <button type="submit" id="btn-submit-review" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs py-2.5 rounded-xl uppercase tracking-wider">Publicar Comentario</button>
                 </form>
             </div>
 
-            <!-- Contenedor donde se muestran las Reseñas -->
-            <div id="reviews-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div class="col-span-full text-center text-slate-600 py-6 text-xs">Cargando reseñas...</div>
+            <div id="reviews-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+        </section>
+
+        <!-- ================= PANEL DE GESTIÓN AVANZADA (SÓLO ADMIN) ================= -->
+        <section id="admin-anchor" class="max-w-6xl mx-auto w-full border-t border-[#30363d] pt-12 mt-12">
+            <div class="flex justify-between items-center mb-6">
+                <div class="flex items-center gap-2">
+                    <span class="h-2 w-2 rounded-full bg-purple-500 animate-ping"></span>
+                    <h3 class="text-xs font-black tracking-widest text-slate-400 uppercase">Estación Central de Control / Saith Store</h3>
+                </div>
+                <button id="btn-login-admin" onclick="loginAdmin()" class="text-[11px] bg-white/5 border border-white/10 text-slate-300 font-bold px-3 py-1.5 rounded-lg transition-all">
+                    🔒 Autenticarse como Admin
+                </button>
+            </div>
+
+            <div id="admin-dashboard" class="hidden space-y-8">
+                <!-- Pestañas del Panel de Control -->
+                <div class="flex gap-2 border-b border-[#21262d] pb-px">
+                    <button id="tab-btn-cuentas" onclick="switchAdminTab('cuentas')" class="px-4 py-2 text-xs font-bold text-white border-b-2 border-purple-500">Inventario de Cuentas</button>
+                    <button id="tab-btn-reseñas" onclick="switchAdminTab('reseñas')" class="px-4 py-2 text-xs font-bold text-slate-400 hover:text-white">Moderación de Reseñas</button>
+                </div>
+
+                <!-- SUB-PANEL 1: CREAR Y MODIFICAR CUENTAS -->
+                <div id="admin-tab-cuentas" class="space-y-6">
+                    <div class="glass-panel p-6 rounded-2xl">
+                        <h4 class="text-sm font-bold text-white mb-4"><i class="fa-solid fa-circle-plus text-cyan-400 mr-2"></i>Añadir una Nueva Cuenta al Catálogo</h4>
+                        <form id="account-form" onsubmit="createAccount(event)" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <input type="text" id="acc-title" placeholder="Título (Ej: AR 55 Kazuha + Raiden Shogun)" required class="bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white">
+                            <select id="acc-game" required class="bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white">
+                                <option value="Genshin Impact">Genshin Impact</option>
+                                <option value="Star Rail">Star Rail</option>
+                                <option value="Wuthering Waves">Wuthering Waves</option>
+                            </select>
+                            <input type="text" id="acc-server" placeholder="Servidor (Ej: América / Europa)" required class="bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white">
+                            <input type="number" step="0.01" id="acc-price" placeholder="Precio Base en USD (Ej: 45.00)" required class="bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white">
+                            <input type="text" id="acc-img" placeholder="URL de la Imagen del Producto" required class="bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white">
+                            <select id="acc-instant" class="bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white">
+                                <option value="si">¿Entrega Inmediata? SÍ</option>
+                                <option value="no">¿Entrega Inmediata? NO</option>
+                            </select>
+                            <div class="md:col-span-3">
+                                <textarea id="acc-details" rows="2" placeholder="Detalles específicos de la cuenta (Personajes, armas, constelaciones, etc.)..." required class="w-full bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white"></textarea>
+                            </div>
+                            <div class="md:col-span-3 text-right">
+                                <button type="submit" class="bg-cyan-600 hover:bg-cyan-700 text-white text-xs font-black px-6 py-2 rounded-xl uppercase">Registrar en Catálogo</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Listado CRUD de gestión de inventario -->
+                    <div class="bg-[#0d1117] border border-[#21262d] rounded-xl overflow-hidden">
+                        <div class="p-4 bg-black/20 border-b border-[#21262d] text-xs font-bold text-slate-400 uppercase">Gestión de Stock Activo</div>
+                        <div class="divide-y divide-[#21262d]" id="admin-accounts-list"></div>
+                    </div>
+                </div>
+
+                <!-- SUB-PANEL 2: REVISIÓN DE COMENTARIOS -->
+                <div id="admin-tab-reseñas" class="hidden space-y-4">
+                    <div class="divide-y divide-[#21262d] bg-[#0d1117] border border-[#21262d] rounded-xl" id="admin-reviews-list"></div>
+                </div>
             </div>
         </section>
+
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-black/40 border-t border-slate-900/80 py-8 text-center text-xs text-slate-500 backdrop-blur-md">
-        <p id="text-footer-gateways" class="mb-2 font-bold uppercase tracking-wider text-slate-400 text-[10px]">Gateways de Pago Soportados</p>
-        <p class="text-slate-400 font-medium mb-4">PayPal Int. | Binance Pay | Yape Perú</p>
-        <p>&copy; 2026 SAITH STORE. Todos los derechos reservados. (#saithboost)</p>
+    <!-- Pie de Página -->
+    <footer class="bg-[#0d1117] border-t border-[#21262d] py-8 text-center text-xs text-slate-500 relative z-10">
+        <p id="txt-gateways" class="mb-1 font-bold uppercase tracking-wider text-slate-400 text-[10px]">Canales de Transacción Oficiales</p>
+        <p class="text-slate-300 font-medium mb-3">PayPal Verified | Binance Pay Ledger | Yape S.A. Perú</p>
+        <p>&copy; 2026 SAITH STORE. Codificado bajo arquitectura profesional. (#saithboost)</p>
     </footer>
 
     <script>
-        // ⚠️ REEMPLAZA ESTA URL POR TU PROPIO LINK DE REALTIME DATABASE DE FIREBASE
+        // CONFIGURACIÓN DE TU BASE DE DATOS FIREBASE
         const FIREBASE_BASE_URL = "https://saithstore-default-rtdb.firebaseio.com/";
         const CUENTAS_URL = `${FIREBASE_BASE_URL}cuentas.json`;
-        const REVIEWS_URL = `${FIREBASE_BASE_URL}reseñas.json`;
+        const REVIEWS_URL = `${FIREBASE_BASE_URL}reseñas_moderadas.json`;
 
         let selectedCurrency = 'USD';
         let selectedLanguage = 'es';
         let activeFilter = 'all';
         let rawCuentasData = null;
+        let isAdminAuthenticated = false;
 
-        const exchangeRates = { USD: 1.0, PEN: 3.78, EUR: 0.92, MXN: 17.10 };
-        const currencySymbols = { USD: '$', PEN: 'S/. ', EUR: '€', MXN: 'MXN $' };
+        // CAMBIA TU CONTRASEÑA MAESTRA AQUÍ
+        const ADMIN_PASSWORD = "TU_CONTRASEÑA_AQUI"; 
 
-        // Diccionario de Traducciones estáticas de la Web
+        const exchangeRates = { USD: 1.0, PEN: 3.78, EUR: 0.92 };
+        const currencySymbols = { USD: '$', PEN: 'S/. ', EUR: '€' };
+
         const i18n = {
             es: {
-                topbar: "<i class='fa-solid fa-user-shield text-amber-400'></i> Compras 100% manuales y seguras. Trato directo por WhatsApp con Saith Store.",
-                heroTitle: "Catálogo de Cuentas & <br><span class='neon-gradient-text'>Boosting Premium</span>",
-                boostingTitle: "<i class='fa-solid fa-circle-nodes text-cyan-400 animate-pulse'></i> Servicios Profesionales de Boosting",
-                marketplaceTitle: "<i class='fa-solid fa-fire-flame-curved text-purple-500 animate-pulse'></i> Catálogo de Cuentas Disponibles",
-                footerGateways: "Gateways de Pago Soportados",
-                filterAll: "🔥 Todo",
-                btnCotizar: "Cotizar →",
-                btnCustomWa: "<i class='fa-brands fa-whatsapp text-sm'></i> WhatsApp Personalizado",
-                loading: "Conectando en tiempo real con Saith Store...",
-                noAccounts: "No hay cuentas de este juego disponibles en este momento.",
-                badgeAgotado: "❌ Agotado",
-                btnVendido: "<i class='fa-solid fa-ban'></i> Cuenta Vendida",
-                btnComprar: "<i class='fa-solid fa-bag-shopping'></i> Comprar Ahora",
+                topbar: "<i class='fa-solid fa-shield-halved text-cyan-400'></i> Compras 100% manuales y seguras. Trato directo exclusivo por WhatsApp con Saith Store.",
+                heroTitle: "Marketplace de Cuentas & <br><span class='text-gradient'>Servicios de Boosting Global</span>",
+                boostingTitle: "<i class='fa-solid fa-bolt text-cyan-400'></i> Servicios de Boosting Profesional",
+                marketplaceTitle: "<i class='fa-solid fa-store text-purple-500'></i> Catálogo de Cuentas Activas",
+                reviewsTitle: "<i class='fa-solid fa-star text-amber-500'></i> Reseñas Verificadas",
+                reviewsSubtitle: "Opiniones reales de compradores procesadas bajo #saithboost",
+                gateways: "Canales de Transacción Oficiales",
+                filterAll: "🔥 Ver Todo",
+                btnComprar: "Comprar Ahora",
+                btnVendido: "❌ Cuenta Vendida",
+                badgeAgotado: "Agotado",
                 badgeInstant: "⚡ Entrega Inmediata",
-                reviewsTitle: "<i class='fa-solid fa-star text-amber-400 animate-bounce'></i> Reseñas de Compradores",
-                reviewsSubtitle: "Opiniones reales de clientes globales que usaron #saithboost",
-                btnToggleReviewForm: "✍️ Dejar una Reseña",
-                btnToggleReviewFormClose: "❌ Cerrar Formulario",
-                lblName: "Tu Nombre / Nickname",
-                lblCountry: "País (Ej: Perú 🇵🇪, USA 🇺🇸)",
-                lblStars: "Calificación",
-                lblComment: "Tu Comentario / Experiencia",
-                btnSubmitReview: "Enviar Reseña Pública",
-                noReviews: "Aún no hay reseñas. ¡Sé el primero en dejar una!",
-                reviewSuccess: "¡Reseña publicada con éxito!"
+                btnToggleForm: "✍️ Escribir Reseña",
+                btnToggleFormClose: "❌ Cerrar Ventana",
+                msgSuccessReview: "Tu reseña ha sido enviada para verificación de seguridad por Saith Store."
             },
             en: {
-                topbar: "<i class='fa-solid fa-user-shield text-amber-400'></i> 100% manual & secure purchases. Direct deal via WhatsApp with Saith Store.",
-                heroTitle: "Account Catalog & <br><span class='neon-gradient-text'>Premium Boosting</span>",
-                boostingTitle: "<i class='fa-solid fa-circle-nodes text-cyan-400 animate-pulse'></i> Professional Boosting Services",
-                marketplaceTitle: "<i class='fa-solid fa-fire-flame-curved text-purple-500 animate-pulse'></i> Available Accounts Catalog",
-                footerGateways: "Supported Payment Gateways",
-                filterAll: "🔥 All",
-                btnCotizar: "Quote →",
-                btnCustomWa: "<i class='fa-brands fa-whatsapp text-sm'></i> Custom WhatsApp",
-                loading: "Connecting in real-time with Saith Store...",
-                noAccounts: "No accounts available for this game at the moment.",
-                badgeAgotado: "❌ Sold Out",
-                btnVendido: "<i class='fa-solid fa-ban'></i> Sold Out",
-                btnComprar: "<i class='fa-solid fa-bag-shopping'></i> Buy Now",
+                topbar: "<i class='fa-solid fa-shield-halved text-cyan-400'></i> 100% secure & manual purchases. Direct deal via WhatsApp with Saith Store.",
+                heroTitle: "Premium Accounts Marketplace & <br><span class='text-gradient'>Global Boosting Services</span>",
+                boostingTitle: "<i class='fa-solid fa-bolt text-cyan-400'></i> Professional Boosting Services",
+                marketplaceTitle: "<i class='fa-solid fa-store text-purple-500'></i> Active Accounts Catalog",
+                reviewsTitle: "<i class='fa-solid fa-star text-amber-500'></i> Verified Reviews",
+                reviewsSubtitle: "Real buyer feedback processed under #saithboost ecosystem",
+                gateways: "Official Transaction Channels",
+                filterAll: "🔥 View All",
+                btnComprar: "Buy Now",
+                btnVendido: "❌ Sold Out",
+                badgeAgotado: "Sold Out",
                 badgeInstant: "⚡ Instant Delivery",
-                reviewsTitle: "<i class='fa-solid fa-star text-amber-400 animate-bounce'></i> Buyer Reviews",
-                reviewsSubtitle: "Real feedback from global customers who used #saithboost",
-                btnToggleReviewForm: "✍️ Leave a Review",
-                btnToggleReviewFormClose: "❌ Close Form",
-                lblName: "Your Name / Nickname",
-                lblCountry: "Country (Ex: Peru 🇵🇪, USA 🇺🇸)",
-                lblStars: "Rating",
-                lblComment: "Your Review / Experience",
-                btnSubmitReview: "Submit Public Review",
-                noReviews: "No reviews yet. Be the first to leave one!",
-                reviewSuccess: "Review published successfully!"
+                btnToggleForm: "✍️ Write a Review",
+                btnToggleFormClose: "❌ Close Window",
+                msgSuccessReview: "Your review was successfully filed for security clearance by Saith Store."
             }
         };
 
-        // Datos Estructurados del Boosting Bilingüe
         const boostingServices = [
             {
                 juego: "Genshin Impact",
                 img: "genshin.jpg",
-                colorClass: "border-l-cyan-500",
-                badgeColor: "bg-cyan-950/90 border-cyan-500/40 text-cyan-400",
-                subcatColor: "text-cyan-400",
+                color: "border-l-cyan-500",
+                badge: "bg-cyan-950 text-cyan-400 border-cyan-500/30",
                 items: [
-                    {
-                        es: { title: "<i class='fa-solid fa-map-location-dot text-cyan-400 mr-1.5'></i> Exploración de Mapas", desc: "Regiones al 100%, recolección de Oculi, cofres y misiones de mundo.", wa: "Hola Saith Store, quiero cotizar un servicio de *Exploración al 100%* para Genshin Impact." },
-                        en: { title: "<i class='fa-solid fa-map-location-dot text-cyan-400 mr-1.5'></i> Map Exploration", desc: "100% completion, Oculi collection, chests, and world quests.", wa: "Hello Saith Store, I'd like to get a quote for *100% Map Exploration* in Genshin Impact." }
-                    },
-                    {
-                        es: { title: "<i class='fa-solid fa-wand-magic-sparkles text-purple-400 mr-1.5'></i> Optimización & Builds", desc: "Farmeo balanceado de Artefactos perfectos, armas y optimización de daño.", wa: "Hola Saith Store, necesito ayuda con las *Builds y Artefactos* de mis personajes en Genshin Impact." },
-                        en: { title: "<i class='fa-solid fa-wand-magic-sparkles text-purple-400 mr-1.5'></i> Character Builds", desc: "Balanced Artifact farming, weapons, and damage optimization.", wa: "Hello Saith Store, I need help optimization *Character Builds & Artifacts* in Genshin Impact." }
-                    },
-                    {
-                        es: { title: "<i class='fa-solid fa-wheat-awn text-amber-500 mr-1.5'></i> Farmeo Diario & Eventos", desc: "Resina diaria, misiones del pase, Protogemas y eventos temporales.", wa: "Hola Saith Store, quisiera un plan de *Farmeo Diario o Eventos* en Genshin Impact." },
-                        en: { title: "<i class='fa-solid fa-wheat-awn text-amber-500 mr-1.5'></i> Daily Farm & Events", desc: "Daily Resin spend, battle pass, Primogems, and active events.", wa: "Hello Saith Store, I'm looking for a *Daily Maintenance or Event Farm* plan in Genshin Impact." }
-                    },
-                    {
-                        es: { title: "<i class='fa-solid fa-trophy text-emerald-400 mr-1.5'></i> Abismo Espiral Completo", desc: "Pasamos los pisos 9 al 12 asegurando el máximo de estrellas posibles.", wa: "Hola Saith Store, quiero contratar el servicio para completar el *Abismo Espiral (36 estrellas)* en Genshin Impact." },
-                        en: { title: "<i class='fa-solid fa-trophy text-emerald-400 mr-1.5'></i> Spiral Abyss Clear", desc: "Floor 9 to 12 full clear ensuring the maximum amount of stars.", wa: "Hello Saith Store, I want to order a *Spiral Abyss Full Clear (36 stars)* service for Genshin Impact." }
-                    }
-                ],
-                customWa: { es: "Hola Saith, quisiera cotizar un plan personalizado de Boosting para Genshin Impact.", en: "Hello Saith, I'd like to request a custom Boosting plan for Genshin Impact." }
+                    { base: 15.00, es: { title: "Exploración de Región al 100%", desc: "Cofres, misiones de mundo y coleccionables.", wa: "Contratar Exploración 100% Genshin Impact" }, en: { title: "100% Map Completion", desc: "Chests, world quests and full oculi exploration.", wa: "Buy 100% Map Completion Genshin" } },
+                    { base: 12.00, es: { title: "Abismo Espiral (Pisos 9-12)", desc: "Limpieza garantizada con el máximo de estrellas.", wa: "Contratar Abismo Espiral 36 Estrellas" }, en: { title: "Spiral Abyss Full Run", desc: "Guaranteed 36 stars run inside floors 9-12.", wa: "Buy Spiral Abyss Clear" } }
+                ]
             },
             {
                 juego: "Star Rail",
                 img: "honkai.webp",
-                colorClass: "border-l-purple-500",
-                badgeColor: "bg-purple-950/90 border-purple-500/40 text-purple-400",
-                subcatColor: "text-purple-400",
+                color: "border-l-purple-500",
+                badge: "bg-purple-950 text-purple-400 border-purple-500/30",
                 items: [
-                    {
-                        es: { title: "<i class='fa-solid fa-layer-group text-purple-400 mr-1.5'></i> Universo Simulado & Divergente", desc: "Limpieza semanal, desbloqueo de ecuaciones, ornamentos y dificultades altas.", wa: "Hola Saith Store, quiero cotizar farmeo de *Universo Simulado / Divergente* en Honkai Star Rail." },
-                        en: { title: "<i class='fa-solid fa-layer-group text-purple-400 mr-1.5'></i> Simulated Universe", desc: "Weekly reset points, equations unlock, planar ornaments farming and high difficulties.", wa: "Hello Saith Store, I want to quote *Simulated / Divergent Universe* farming in Honkai Star Rail." }
-                    },
-                    {
-                        es: { title: "<i class='fa-solid fa-shield-halved text-cyan-400 mr-1.5'></i> Armado de Builds & Reliquias", desc: "Gasto de Poder de Trazacaminos óptimo buscando estadísticas perfectas.", wa: "Hola Saith Store, necesito armar mis personajes y buscar *Reliquias/Builds* en Honkai Star Rail." },
-                        en: { title: "<i class='fa-solid fa-shield-halved text-cyan-400 mr-1.5'></i> Relics & Character Builds", desc: "Optimal Trailblaze Power spend looking for perfect stats.", wa: "Hello Saith Store, I need to build my characters and farm *Relics* in Honkai Star Rail." }
-                    },
-                    {
-                        es: { title: "<i class='fa-solid fa-sparkles text-amber-500 mr-1.5'></i> Farmeo General de Jades", desc: "Encargos diarios, misiones de trazacaminos, eventos activos y cofres.", wa: "Hola Saith Store, solicito el servicio de *Farmeo Diario y Jades Estelares* en Honkai Star Rail." },
-                        en: { title: "<i class='fa-solid fa-sparkles text-amber-500 mr-1.5'></i> Daily Tasks & Stellar Jades", desc: "Daily training, trailblaze missions, active events and map chests.", wa: "Hello Saith Store, I need a *Daily Maintenance & Stellar Jade Farm* in Honkai Star Rail." }
-                    },
-                    {
-                        es: { title: "<i class='fa-solid fa-skull-crossbones text-red-400 mr-1.5'></i> End Game (MoC / Pura Ficción)", desc: "Pasamos el contenido endgame más difícil para asegurar tus Jades gratis.", wa: "Hola Saith Store, necesito completar el *Salón Olvidado / Pura Ficción / Espejismo* en Star Rail." },
-                        en: { title: "<i class='fa-solid fa-skull-crossbones text-red-400 mr-1.5'></i> Endgame (MoC / Pure Fiction)", desc: "Full clear of the hardest endgame challenges for maximum Stellar Jades.", wa: "Hello Saith Store, I want to clear *Memory of Chaos / Pure Fiction / Apocalyptic Shadow* in Star Rail." }
-                    }
-                ],
-                customWa: { es: "Hola Saith, quisiera cotizar un plan personalizado de Boosting para Honkai Star Rail.", en: "Hello Saith, I'd like to request a custom Boosting plan for Honkai Star Rail." }
+                    { base: 10.00, es: { title: "Universo Simulado & Divergente", desc: "Farmeo semanal de puntos y ecuaciones de alta dificultad.", wa: "Contratar Universo Simulado Star Rail" }, en: { title: "Simulated & Divergent Universe", desc: "Weekly point caps and high difficulty stages clear.", wa: "Buy Simulated Universe Farm" } },
+                    { base: 15.00, es: { title: "Salón Olvidado (Endgame)", desc: "Limpieza completa de MoC y Pura Ficción.", wa: "Contratar Endgame MoC Star Rail" }, en: { title: "Memory of Chaos & Pure Fiction", desc: "Full clear of all stages for maximum Stellar Jades.", wa: "Buy MoC Endgame Clear" } }
+                ]
             },
             {
                 juego: "Wuthering Waves",
                 img: "wuwa.webp",
-                colorClass: "border-l-amber-500",
-                badgeColor: "bg-amber-950/90 border-amber-500/40 text-amber-400",
-                subcatColor: "text-amber-400",
+                color: "border-l-amber-500",
+                badge: "bg-amber-950 text-amber-400 border-amber-500/30",
                 items: [
-                    {
-                        es: { title: "<i class='fa-solid fa-dragon text-amber-500 mr-1.5'></i> Farmeo & Caza de Ecos", desc: "Rutas intensivas de caza para conseguir los mejores Ecos de rareza Dorada.", wa: "Hola Saith Store, quiero contratar el servicio de *Ruta de Farmeo de Ecos Dorados Perfectos* en WuWa." },
-                        en: { title: "<i class='fa-solid fa-dragon text-amber-500 mr-1.5'></i> Echo Hunting & Farm", desc: "Intensive farm routes to get the best Gold rarity Echoes (cost 4, 3, 1).", wa: "Hello Saith Store, I want to buy a *Perfect Gold Echo Farming Route* in Wuthering Waves." }
-                    },
-                    {
-                        es: { title: "<i class='fa-solid fa-gem text-cyan-400 mr-1.5'></i> Cofres & Sonance Caskets", desc: "Exploración profunda del mapa, recolección de todos los coleccionables clave.", wa: "Hola Saith Store, quiero cotizar la búsqueda de *Caskets, Cofres y Exploración* en Wuthering Waves." },
-                        en: { title: "<i class='fa-solid fa-gem text-cyan-400 mr-1.5'></i> Chests & Sonance Caskets", desc: "Deep overworld exploration, collecting all key progression items.", wa: "Hello Saith Store, I want to quote *Caskets, Chests & Map Exploration* in Wuthering Waves." }
-                    },
-                    {
-                        es: { title: "<i class='fa-solid fa-bolt text-purple-400 mr-1.5'></i> Gasto de Waveplates & Diarias", desc: "Mantenemos tu cuenta al día, completando el pase de batalla y materiales.", wa: "Hola Saith Store, quisiera un plan de *Misiones Diarias y gasto de Resina/Waveplates* en WuWa." },
-                        en: { title: "<i class='fa-solid fa-bolt text-purple-400 mr-1.5'></i> Waveplates & Daily Quests", desc: "We keep your account updated, completing daily tasks and progression materials.", wa: "Hello Saith Store, I need a *Daily Activity and Waveplates spending* plan in Wuthering Waves." }
-                    },
-                    {
-                        es: { title: "<i class='fa-solid fa-dungeon text-red-500 mr-1.5'></i> Torre de la Adversidad", desc: "Completamos los pisos de Hazard Zone usando las mejores rotaciones.", wa: "Hola Saith Store, necesito ayuda con la *Torre de la Adversidad* en Wuthering Waves." },
-                        en: { title: "<i class='fa-solid fa-dungeon text-red-500 mr-1.5'></i> Tower of Adversity", desc: "We clear Hazard Zone floors using your character's best frame rotatons.", wa: "Hello Saith Store, I need help clearing the *Tower of Adversity* in Wuthering Waves." }
-                    }
-                ],
-                customWa: { es: "Hola Saith, quisiera cotizar un plan personalizado de Boosting para Wuthering Waves.", en: "Hello Saith, I'd like to request a custom Boosting plan for Wuthering Waves." }
+                    { base: 14.00, es: { title: "Caza de Ecos Dorados Perfectos", desc: "Rutas completas optimizando estadísticas secundarias.", wa: "Contratar Ruta Ecos Dorados WuWa" }, en: { title: "Perfect Gold Echo Farming", desc: "Targeted echo hunting routes maximizing perfect substats.", wa: "Buy Gold Echo Farming Route" } }
+                ]
             }
         ];
 
-        function changeLanguage(langCode) {
-            selectedLanguage = langCode;
-            translateStaticUI();
+        function changeLanguage(lang) { selectedLanguage = lang; updateUI(); }
+        function changeCurrency(curr) { selectedCurrency = curr; updateUI(); }
+
+        function updateUI() {
+            const ui = i18n[selectedLanguage];
+            document.getElementById('txt-topbar').innerHTML = ui.topbar;
+            document.getElementById('txt-hero-title').innerHTML = ui.heroTitle;
+            document.getElementById('txt-boosting-title').innerHTML = ui.boostingTitle;
+            document.getElementById('txt-marketplace-title').innerHTML = ui.marketplaceTitle;
+            document.getElementById('txt-reviews-title').innerHTML = ui.reviewsTitle;
+            document.getElementById('txt-reviews-subtitle').innerText = ui.reviewsSubtitle;
+            document.getElementById('txt-gateways').innerText = ui.gateways;
+            
+            const isOpen = !document.getElementById('review-form-container').classList.contains('hidden');
+            document.getElementById('btn-toggle-review').innerText = isOpen ? ui.btnToggleFormClose : ui.btnToggleForm;
+
             renderFilters();
             renderBoosting();
             renderCuentas();
-            fetchReviews();
-        }
-
-        function changeCurrency(currencyCode) {
-            selectedCurrency = currencyCode;
-            renderCuentas();
-        }
-
-        function translateStaticUI() {
-            const currentUI = i18n[selectedLanguage];
-            document.getElementById('text-topbar').innerHTML = currentUI.topbar;
-            document.getElementById('text-hero-title').innerHTML = currentUI.heroTitle;
-            document.getElementById('text-boosting-title').innerHTML = currentUI.boostingTitle;
-            document.getElementById('text-marketplace-title').innerHTML = currentUI.marketplaceTitle;
-            document.getElementById('text-footer-gateways').innerText = currentUI.footerGateways;
-            
-            // Textos Seccion Reseñas
-            document.getElementById('text-reviews-title').innerHTML = currentUI.reviewsTitle;
-            document.getElementById('text-reviews-subtitle').innerText = currentUI.reviewsSubtitle;
-            
-            const formVisible = !document.getElementById('review-form-container').classList.contains('hidden');
-            document.getElementById('btn-toggle-review').innerText = formVisible ? currentUI.btnToggleReviewFormClose : currentUI.btnToggleReviewForm;
-            
-            document.getElementById('lbl-name').innerText = currentUI.lblName;
-            document.getElementById('lbl-country').innerText = currentUI.lblCountry;
-            document.getElementById('lbl-stars').innerText = currentUI.lblStars;
-            document.getElementById('lbl-comment').innerText = currentUI.lblComment;
-            document.getElementById('btn-submit-review').innerText = currentUI.btnSubmitReview;
         }
 
         function renderFilters() {
             const container = document.getElementById('filter-container');
-            const allText = i18n[selectedLanguage].filterAll;
-            
             const games = [
-                { id: 'all', label: allText, circle: '' },
-                { id: 'Genshin Impact', label: 'Genshin Impact', circle: '<span class="h-2 w-2 rounded-full bg-cyan-400"></span>' },
-                { id: 'Star Rail', label: 'Star Rail', circle: '<span class="h-2 w-2 rounded-full bg-purple-400"></span>' },
-                { id: 'Wuthering Waves', label: 'Wuthering Waves', circle: '<span class="h-2 w-2 rounded-full bg-amber-500"></span>' }
+                { id: 'all', label: i18n[selectedLanguage].filterAll },
+                { id: 'Genshin Impact', label: 'Genshin' },
+                { id: 'Star Rail', label: 'Star Rail' },
+                { id: 'Wuthering Waves', label: 'WuWa' }
             ];
-
             container.innerHTML = games.map(g => {
-                const isActive = activeFilter === g.id;
-                const activeStyle = "bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-xs font-black px-5 py-2.5 rounded-xl border border-purple-500/30 transition-all shadow-lg shadow-purple-900/30";
-                const inactiveStyle = "bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 text-xs font-bold px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all";
-                
-                return `<button onclick="filterGame('${g.id}')" class="${isActive ? activeStyle : inactiveStyle}">${g.circle} ${g.label}</button>`;
+                const active = activeFilter === g.id;
+                return `<button onclick="setActiveFilter('${g.id}')" class="text-[11px] font-bold px-3 py-1 rounded-lg transition-all ${active ? 'bg-purple-600 text-white shadow-md' : 'text-slate-400 hover:text-white bg-white/5'}">${g.label}</button>`;
             }).join('');
         }
 
-        function filterGame(game) {
-            activeFilter = game;
-            renderFilters();
-            renderBoosting();
-            renderCuentas();
+        function setActiveFilter(filter) { activeFilter = filter; renderFilters(); renderCuentas(); renderBoosting(); }
+
+        function formatPrice(usdPrice) {
+            const val = parseFloat(usdPrice);
+            if (isNaN(val)) return usdPrice;
+            return `${currencySymbols[selectedCurrency]}${(val * exchangeRates[selectedCurrency]).toFixed(2)}`;
         }
 
         function renderBoosting() {
             const container = document.getElementById('boosting-grid');
             container.innerHTML = '';
-            const currentUI = i18n[selectedLanguage];
-
             boostingServices.forEach(srv => {
                 if (activeFilter !== 'all' && srv.juego !== activeFilter) return;
-
-                let itemsHTML = '';
+                let cards = '';
                 srv.items.forEach(it => {
-                    const data = it[selectedLanguage];
-                    itemsHTML += `
-                        <div class="bg-black/30 p-2.5 rounded-xl border border-white/[0.02]">
-                            <div class="flex justify-between items-center mb-1">
-                                <span class="text-xs font-black text-slate-200">${data.title}</span>
-                                <a href="https://wa.me/51967128876?text=${encodeURIComponent(data.wa)}" target="_blank" class="text-[10px] font-extrabold ${srv.subcatColor} hover:underline">${currentUI.btnCotizar}</a>
+                    const local = it[selectedLanguage];
+                    const price = formatPrice(it.base);
+                    const waText = `Hola Saith Store, solicito el servicio de *${local.title}* por ${price} (${selectedCurrency})`;
+                    cards += `
+                        <div class="bg-black/30 p-3 rounded-xl border border-white/[0.02] flex justify-between items-center">
+                            <div>
+                                <h5 class="text-xs font-bold text-white">${local.title}</h5>
+                                <p class="text-[10px] text-slate-400">${local.desc}</p>
                             </div>
-                            <p class="text-[11px] text-slate-400">${data.desc}</p>
+                            <a href="https://wa.me/51967128876?text=${encodeURIComponent(waText)}" target="_blank" class="bg-white/5 border border-white/10 hover:border-purple-500 px-2.5 py-1 rounded-lg text-xs font-black text-purple-300 transition-colors">${price} →</a>
                         </div>`;
                 });
-
                 container.innerHTML += `
-                    <div class="premium-card rounded-2xl overflow-hidden flex flex-col justify-between p-5 border-l-2 ${srv.colorClass}">
-                        <div>
-                            <div class="relative h-32 rounded-xl overflow-hidden mb-4 bg-slate-950">
-                                <img src="${srv.img}" class="w-full h-full object-cover opacity-80">
-                                <span class="absolute top-3 left-3 border text-[10px] font-black px-2.5 py-0.5 rounded uppercase tracking-wider ${srv.badgeColor}">${srv.juego}</span>
-                            </div>
-                            <div class="space-y-3 mb-6">
-                                ${itemsHTML}
-                            </div>
+                    <div class="pro-card rounded-2xl p-4 flex flex-col justify-between border-l-2 ${srv.color}">
+                        <div class="relative h-28 rounded-xl overflow-hidden bg-slate-950 mb-4">
+                            <img src="${srv.img}" class="w-full h-full object-cover opacity-60">
+                            <span class="absolute top-2 left-2 border text-[9px] font-black uppercase px-2 py-0.5 rounded ${srv.badge}">${srv.juego}</span>
                         </div>
-                        <a href="https://wa.me/51967128876?text=${encodeURIComponent(srv.customWa[selectedLanguage])}" target="_blank" class="w-full bg-white/5 text-center text-xs font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/10 transition-colors border border-white/5">${currentUI.btnCustomWa}</a>
+                        <div class="space-y-2">${cards}</div>
                     </div>`;
             });
         }
 
-        function formatPrice(originalPrice) {
-            const num = parseFloat(originalPrice.toString().replace(/[^0-9.]/g, ''));
-            if (isNaN(num)) return originalPrice;
-            return `${currencySymbols[selectedCurrency]}${(num * exchangeRates[selectedCurrency]).toFixed(2)}`;
+        async function fetchCatalogo() {
+            try {
+                const res = await fetch(CUENTAS_URL);
+                rawCuentasData = await res.json() || {};
+                renderCuentas();
+                if(isAdminAuthenticated) renderAdminDashboard();
+            } catch (e) { console.error("Error sincronizando catálogo:", e); }
         }
 
-        async function fetchCuentas() {
-            try {
-                const response = await fetch(CUENTAS_URL);
-                rawCuentasData = await response.json();
-                renderCuentas();
-            } catch (error) {
-                console.error("Error cargando Firebase Cuentas:", error);
-            }
-        }
+        function triggerSearch() { renderCuentas(); }
 
         function renderCuentas() {
             const container = document.getElementById('marketplace-grid');
-            const currentUI = i18n[selectedLanguage];
+            const searchVal = document.getElementById('search-input').value.toLowerCase();
             container.innerHTML = '';
 
-            if (!rawCuentasData) {
-                container.innerHTML = `<div class="col-span-full text-center text-slate-500 py-12">${currentUI.loading}</div>`;
-                return;
-            }
-
-            let keys = Object.keys(rawCuentasData);
-            let hasItems = false;
+            const keys = Object.keys(rawCuentasData);
+            let totalRendered = 0;
 
             keys.forEach(key => {
                 const acc = rawCuentasData[key];
                 if (activeFilter !== 'all' && acc.juego !== activeFilter) return;
-                hasItems = true;
 
-                const finalPrice = formatPrice(acc.precio);
-                const esAgotada = (acc.estado && (acc.estado.toLowerCase() === 'agotado' || acc.estado.toLowerCase() === 'vendido'));
-                
-                let badgeInstant = '';
-                let botonCompra = '';
+                // Sistema de Match Inteligente
+                const matchSearch = acc.titulo.toLowerCase().includes(searchVal) || 
+                                    acc.servidor.toLowerCase().includes(searchVal) || 
+                                    acc.detalles.toLowerCase().includes(searchVal);
+                if (!matchSearch) return;
 
-                if (esAgotada) {
-                    badgeInstant = `<span class="absolute top-3 right-3 bg-red-600/90 text-white text-[9px] font-black px-2.5 py-0.5 rounded uppercase tracking-wider border border-red-500/30 backdrop-blur-sm">${currentUI.badgeAgotado}</span>`;
-                    botonCompra = `<button disabled class="mt-4 w-full bg-slate-900 border border-slate-800 text-slate-500 text-center font-black text-xs py-3 rounded-xl flex items-center justify-center gap-2 uppercase tracking-wider cursor-not-allowed">${currentUI.btnVendido}</button>`;
+                totalRendered++;
+                const pFormated = formatPrice(acc.precio);
+                const isSold = (acc.estado && (acc.estado === 'agotado' || acc.estado === 'vendido'));
+
+                let btn = '', badge = '';
+                if(isSold) {
+                    badge = `<span class="absolute top-2 right-2 bg-red-900/80 text-red-200 border border-red-700 text-[9px] font-bold px-2 py-0.5 rounded uppercase">${i18n[selectedLanguage].badgeAgotado}</span>`;
+                    btn = `<button disabled class="w-full bg-slate-800 text-slate-500 font-bold py-2.5 rounded-xl text-xs uppercase cursor-not-allowed">${i18n[selectedLanguage].btnVendido}</button>`;
                 } else {
-                    if (acc.entrega === 'si') {
-                        badgeInstant = `<span class="instant-badge absolute top-3 right-3 bg-gradient-to-r from-amber-500 to-orange-500 text-black text-[9px] font-black px-2.5 py-0.5 rounded uppercase tracking-wider">${currentUI.badgeInstant}</span>`;
-                    }
-                    
-                    const textWa = selectedLanguage === 'es' 
-                        ? `Hola Saith Store, estoy interesado en comprar esta cuenta:\n\n📌 *Cuenta:* ${acc.titulo}\n🎮 *Juego:* ${acc.juego}\n🌍 *Servidor:* ${acc.servidor}\n💵 *Precio:* ${finalPrice} (${selectedCurrency})\n\n¿Sigue disponible para proceder con el pago manual?`
-                        : `Hello Saith Store, I am interested in buying this account:\n\n📌 *Account:* ${acc.titulo}\n🎮 *Game:* ${acc.juego}\n🌍 *Server:* ${acc.servidor}\n💵 *Price:* ${finalPrice} (${selectedCurrency})\n\nIs it still available to proceed with manual payment?`;
-
-                    botonCompra = `<a href="https://wa.me/51967128876?text=${encodeURIComponent(textWa)}" target="_blank" class="mt-4 w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-center font-black text-xs py-3 rounded-xl flex items-center justify-center gap-2 uppercase tracking-wider transition-transform active:scale-95">${currentUI.btnComprar}</a>`;
+                    if(acc.entrega === 'si') badge = `<span class="absolute top-2 right-2 bg-amber-500 text-black text-[9px] font-black px-2 py-0.5 rounded uppercase tracking-wide shadow-md">${i18n[selectedLanguage].badgeInstant}</span>`;
+                    const waLink = `Hola Saith Store, deseo adquirir la cuenta:\n📌 *Item:* ${acc.titulo}\n💵 *Precio:* ${pFormated}`;
+                    btn = `<a href="https://wa.me/51967128876?text=${encodeURIComponent(waLink)}" target="_blank" class="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black py-2.5 rounded-xl text-xs uppercase block text-center tracking-wider transition-all shadow-md shadow-emerald-950/20">Comprar Ahora</a>`;
                 }
-                
-                let badgeColor = "bg-cyan-950/80 border-cyan-500/40 text-cyan-400";
-                if(acc.juego === 'Star Rail') badgeColor = "bg-purple-950/80 border-purple-500/40 text-purple-400";
-                if(acc.juego === 'Wuthering Waves') badgeColor = "bg-amber-950/80 border-amber-500/40 text-amber-400";
 
                 container.innerHTML += `
-                    <div class="premium-card rounded-2xl overflow-hidden p-3.5 flex flex-col justify-between relative border border-white/5 ${esAgotada ? 'opacity-40' : ''}">
+                    <div class="pro-card rounded-2xl p-3 flex flex-col justify-between ${isSold ? 'opacity-30' : ''}">
                         <div>
-                            <div class="relative h-48 rounded-xl overflow-hidden mb-3 bg-slate-950 border border-white/5">
-                                <img src="${acc.imagenUrl}" class="w-full h-full object-cover ${esAgotada ? 'grayscale blur-[1px]' : ''}">
-                                <span class="absolute top-3 left-3 border px-2.5 py-0.5 rounded text-[9px] font-black uppercase tracking-widest backdrop-blur-md ${badgeColor}">${acc.juego}</span>
-                                ${badgeInstant}
+                            <div class="relative h-44 rounded-xl overflow-hidden bg-slate-900">
+                                <img src="${acc.imagenUrl}" class="w-full h-full object-cover">
+                                <span class="absolute top-2 left-2 bg-black/70 border border-white/10 text-[9px] font-bold px-2 py-0.5 rounded text-slate-300 uppercase">${acc.juego}</span>
+                                ${badge}
                             </div>
-                            <div class="px-1 mt-3">
-                                <h5 class="text-sm font-bold ${esAgotada ? 'text-slate-500 line-through' : 'text-slate-100'} line-clamp-2 leading-tight">${acc.titulo}</h5>
-                                <div class="flex gap-2 my-2.5 items-center">
-                                    <span class="text-xs font-black ${esAgotada ? 'text-slate-600 bg-slate-950' : 'text-emerald-400 bg-emerald-950/50 border border-emerald-500/30'} px-2.5 py-0.5 rounded-lg">${finalPrice}</span>
-                                    <span class="text-[9px] font-black text-indigo-300 bg-indigo-950/50 border border-indigo-500/20 px-2.5 py-0.5 rounded-lg uppercase tracking-wider">${acc.servidor}</span>
+                            <div class="my-3 px-1">
+                                <h4 class="text-sm font-bold text-white line-clamp-1">${acc.titulo}</h4>
+                                <div class="flex gap-2 my-2">
+                                    <span class="text-xs font-black text-emerald-400 bg-emerald-950/30 border border-emerald-900 px-2 py-0.5 rounded-lg">${pFormated}</span>
+                                    <span class="text-[9px] font-bold text-indigo-300 bg-indigo-950/30 border border-indigo-900 px-2 py-0.5 rounded-lg uppercase">${acc.servidor}</span>
                                 </div>
-                                <p class="text-xs text-slate-400 bg-black/40 border border-white/[0.02] rounded-xl p-3 leading-relaxed font-medium whitespace-pre-line line-clamp-3">${acc.detalles}</p>
+                                <p class="text-xs text-slate-400 line-clamp-3 bg-black/20 p-2 border border-white/[0.02] rounded-xl">${acc.detalles}</p>
                             </div>
                         </div>
-                        ${botonCompra}
+                        <div class="pt-2">${btn}</div>
                     </div>`;
             });
 
-            if (!hasItems) {
-                container.innerHTML = `<div class="col-span-full text-center text-slate-500 py-12">${currentUI.noAccounts}</div>`;
-            }
+            if(totalRendered === 0) container.innerHTML = `<div class="col-span-full text-center text-slate-600 py-12 text-xs">No se encontraron cuentas con los criterios solicitados.</div>`;
         }
 
-        // --- SISTEMA DE RESEÑAS DINÁMICAS ---
-        
+        // --- MANEJO DE RESEÑAS MODERADAS ---
         function toggleReviewForm() {
-            const form = document.getElementById('review-form-container');
-            const btn = document.getElementById('btn-toggle-review');
-            form.classList.toggle('hidden');
-            
-            const isHidden = form.classList.contains('hidden');
-            btn.innerText = isHidden ? i18n[selectedLanguage].btnToggleReviewForm : i18n[selectedLanguage].btnToggleReviewFormClose;
+            const f = document.getElementById('review-form-container');
+            f.classList.toggle('hidden');
+            updateUI();
         }
 
-        async function fetchReviews() {
-            const container = document.getElementById('reviews-grid');
-            try {
-                const response = await fetch(REVIEWS_URL);
-                const data = await response.json();
-                container.innerHTML = '';
+        async function submitReview(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btn-submit-review');
+            btn.disabled = true; btn.classList.add('opacity-40');
 
-                if (!data) {
-                    container.innerHTML = `<div class="col-span-full text-center text-slate-500 py-6 text-xs">${i18n[selectedLanguage].noReviews}</div>`;
-                    return;
-                }
-
-                const keys = Object.keys(data).reverse(); // Mostrar las más nuevas primero
-                keys.forEach(key => {
-                    const r = data[key];
-                    const starsStr = "⭐".repeat(parseInt(r.estrellas || 5));
-                    
-                    container.innerHTML += `
-                        <div class="bg-[#0b0f19] border border-white/[0.03] rounded-xl p-4 flex flex-col justify-between shadow-md">
-                            <div>
-                                <div class="flex justify-between items-center mb-2">
-                                    <span class="text-xs font-black text-slate-200 flex items-center gap-1.5">
-                                        <i class="fa-solid fa-circle-user text-purple-400 text-sm"></i> ${r.nombre}
-                                    </span>
-                                    <span class="text-[10px] font-bold text-slate-400 bg-white/5 px-2 py-0.5 rounded-md">${r.pais}</span>
-                                </div>
-                                <div class="text-[11px] text-amber-400 font-bold mb-2 tracking-wider">${starsStr}</div>
-                                <p class="text-xs text-slate-300 leading-relaxed italic font-medium">"${r.comentario}"</p>
-                            </div>
-                        </div>`;
-                });
-            } catch (error) {
-                console.error("Error cargando reseñas:", error);
-                container.innerHTML = `<div class="col-span-full text-center text-red-400 py-6 text-xs">Error sync reviews.</div>`;
-            }
-        }
-
-        async function submitReview(event) {
-            event.preventDefault();
-            
-            const btnSubmit = document.getElementById('btn-submit-review');
-            btnSubmit.disabled = true;
-            btnSubmit.classList.add('opacity-50');
-
-            const reviewData = {
+            const payload = {
                 nombre: document.getElementById('rev-name').value,
                 pais: document.getElementById('rev-country').value,
                 estrellas: document.getElementById('rev-stars').value,
                 comentario: document.getElementById('rev-comment').value,
+                estado: "pendiente",
                 fecha: new Date().toISOString()
             };
 
             try {
-                const response = await fetch(REVIEWS_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(reviewData)
-                });
-
-                if (response.ok) {
-                    alert(i18n[selectedLanguage].reviewSuccess);
+                const r = await fetch(REVIEWS_URL, { method: 'POST', body: JSON.stringify(payload) });
+                if(r.ok) {
+                    alert(i18n[selectedLanguage].msgSuccessReview);
                     document.getElementById('review-form').reset();
                     toggleReviewForm();
                     fetchReviews();
-                } else {
-                    alert("Error guardando la reseña.");
                 }
-            } catch (error) {
-                console.error("Error:", error);
-                alert("Error de conexión.");
-            } finally {
-                btnSubmit.disabled = false;
-                btnSubmit.classList.remove('opacity-50');
-            }
+            } catch(e) { alert("Error de comunicación."); }
+            finally { btn.disabled = false; btn.classList.remove('opacity-40'); }
         }
 
-        // Inicialización General
+        async function fetchReviews() {
+            try {
+                const res = await fetch(REVIEWS_URL);
+                const data = await res.json() || {};
+                
+                const pGrid = document.getElementById('reviews-grid');
+                const aList = document.getElementById('admin-reviews-list');
+                pGrid.innerHTML = ''; aList.innerHTML = '';
+
+                const keys = Object.keys(data).reverse();
+                let approves = 0;
+
+                keys.forEach(key => {
+                    const r = data[key];
+                    const stars = "⭐".repeat(parseInt(r.estrellas));
+
+                    if(r.estado === 'aprobado') {
+                        approves++;
+                        pGrid.innerHTML += `
+                            <div class="bg-[#0d1117] border border-[#21262d] rounded-xl p-4 flex flex-col justify-between">
+                                <div>
+                                    <div class="flex justify-between items-center text-[11px] mb-2">
+                                        <span class="font-bold text-slate-200"><i class="fa-regular fa-user text-purple-400 mr-1.5"></i>${r.nombre}</span>
+                                        <span class="text-slate-400 font-mono bg-white/5 px-1.5 py-0.5 rounded">${r.pais}</span>
+                                    </div>
+                                    <div class="text-[10px] text-amber-500 mb-1.5">${stars}</div>
+                                    <p class="text-xs text-slate-300 italic font-medium">"${r.comentario}"</p>
+                                </div>
+                            </div>`;
+                    }
+
+                    const isPend = r.estado === 'pendiente';
+                    aList.innerHTML += `
+                        <div class="p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 ${isPend ? 'bg-amber-500/5' : ''}">
+                            <div>
+                                <div class="flex items-center gap-2 text-xs mb-1">
+                                    <span class="font-bold text-white">${r.nombre} [${r.pais}]</span>
+                                    <span class="text-[9px] px-1.5 font-bold rounded ${isPend ? 'bg-amber-500/20 text-amber-400':'bg-emerald-500/20 text-emerald-400'}">${r.estado}</span>
+                                </div>
+                                <p class="text-xs text-slate-400">"${r.comentario}"</p>
+                            </div>
+                            <div class="flex gap-2">
+                                ${isPend ? `<button onclick="updateReviewStatus('${key}','aprobado')" class="bg-emerald-600 text-white text-[10px] font-black px-2.5 py-1 rounded">Aprobar</button>`:''}
+                                <button onclick="deleteReview('${key}')" class="bg-red-950/40 border border-red-500/30 text-red-400 text-[10px] font-bold px-2.5 py-1 rounded">Eliminar</button>
+                            </div>
+                        </div>`;
+                });
+                if(approves === 0) pGrid.innerHTML = `<div class="col-span-full text-center text-slate-600 text-xs py-4">No hay testimonios validados en este momento.</div>`;
+            } catch(e){}
+        }
+
+        // ================= OPERACIONES CRUD DEL ADMINISTRADOR =================
+        function loginAdmin() {
+            if(isAdminAuthenticated) return;
+            const pass = prompt("Clave Maestra Corporativa Saith Store:");
+            if(pass === ADMIN_PASSWORD) {
+                isAdminAuthenticated = true;
+                localStorage.setItem('saith_session', 'true');
+                document.getElementById('admin-dashboard').classList.remove('hidden');
+                document.getElementById('btn-login-admin').innerText = "🔓 Consola Desbloqueada";
+                renderAdminDashboard();
+            } else { alert("Acceso denegado."); }
+        }
+
+        function switchAdminTab(tab) {
+            document.getElementById('admin-tab-cuentas').classList.toggle('hidden', tab !== 'cuentas');
+            document.getElementById('admin-tab-reseñas').classList.toggle('hidden', tab !== 'reseñas');
+            document.getElementById('tab-btn-cuentas').className = tab === 'cuentas' ? 'px-4 py-2 text-xs font-bold text-white border-b-2 border-purple-500' : 'px-4 py-2 text-xs font-bold text-slate-400 hover:text-white';
+            document.getElementById('tab-btn-reseñas').className = tab === 'reseñas' ? 'px-4 py-2 text-xs font-bold text-white border-b-2 border-purple-500' : 'px-4 py-2 text-xs font-bold text-slate-400 hover:text-white';
+        }
+
+        async function createAccount(e) {
+            e.preventDefault();
+            const payload = {
+                titulo: document.getElementById('acc-title').value,
+                juego: document.getElementById('acc-game').value,
+                servidor: document.getElementById('acc-server').value,
+                precio: parseFloat(document.getElementById('acc-price').value),
+                imagenUrl: document.getElementById('acc-img').value,
+                entrega: document.getElementById('acc-instant').value,
+                estado: "disponible"
+            };
+            try {
+                const r = await fetch(CUENTAS_URL, { method: 'POST', body: JSON.stringify(payload) });
+                if(r.ok) {
+                    document.getElementById('account-form').reset();
+                    fetchCatalogo();
+                }
+            } catch(e){}
+        }
+
+        function renderAdminDashboard() {
+            const list = document.getElementById('admin-accounts-list');
+            list.innerHTML = '';
+            Object.keys(rawCuentasData).forEach(key => {
+                const acc = rawCuentasData[key];
+                const isSold = acc.estado === 'agotado';
+                list.innerHTML += `
+                    <div class="p-3 flex justify-between items-center text-xs">
+                        <div>
+                            <span class="font-bold text-white">${acc.titulo}</span>
+                            <span class="text-slate-500 ml-2">(${acc.juego} - ${acc.servidor})</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="toggleStockState('${key}', '${acc.estado}')" class="px-3 py-1 font-bold rounded ${isSold ? 'bg-emerald-600 text-white' : 'bg-amber-600 text-black'}">${isSold ? 'Poner Disponible' : 'Marcar Agotado'}</button>
+                            <button onclick="deleteAccount('${key}')" class="bg-red-900 text-white px-3 py-1 rounded font-bold">Eliminar</button>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        async function toggleStockState(key, current) {
+            const target = current === 'agotado' ? 'disponible' : 'agotado';
+            await fetch(`${FIREBASE_BASE_URL}cuentas/${key}/estado.json`, { method: 'PUT', body: JSON.stringify(target) });
+            fetchCatalogo();
+        }
+
+        async function deleteAccount(key) {
+            if(!confirm("¿Eliminar definitivamente este ítem de la base de datos?")) return;
+            await fetch(`${FIREBASE_BASE_URL}cuentas/${key}.json`, { method: 'DELETE' });
+            fetchCatalogo();
+        }
+
+        async function updateReviewStatus(key, status) {
+            await fetch(`${FIREBASE_BASE_URL}reseñas_moderadas/${key}/estado.json`, { method: 'PUT', body: JSON.stringify(status) });
+            fetchReviews();
+        }
+
+        async function deleteReview(key) {
+            if(!confirm("¿Borrar reseña de forma permanente?")) return;
+            await fetch(`${FIREBASE_BASE_URL}reseñas_moderadas/${key}.json`, { method: 'DELETE' });
+            fetchReviews();
+        }
+
+        function scollToAdmin() { document.getElementById('admin-anchor').scrollIntoView({ behavior: 'smooth' }); }
+
+        // --- SISTEMA INTERNO: FONDO DE ESTRELLAS ANIMADO POR CANVAS MATEMÁTICO ---
+        function initSpaceBackground() {
+            const canvas = document.getElementById('space-canvas');
+            const ctx = canvas.getContext('2d');
+            let stars = [];
+            
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            for(let i=0; i<80; i++) {
+                stars.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*1.2+0.2, d: Math.random()*0.4 });
+            }
+
+            function draw() {
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                ctx.fillStyle = "rgba(255,255,255,0.4)";
+                stars.forEach(s => {
+                    ctx.beginPath();
+                    ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+                    ctx.fill();
+                    s.y += s.d;
+                    if(s.y > canvas.height) { s.y = 0; s.x = Math.random()*canvas.width; }
+                });
+                requestAnimationFrame(draw);
+            }
+            draw();
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
-            translateStaticUI();
-            renderFilters();
-            renderBoosting();
-            fetchCuentas();
+            initSpaceBackground();
+            if(localStorage.getItem('saith_session') === 'true') {
+                isAdminAuthenticated = true;
+                document.getElementById('admin-dashboard').classList.remove('hidden');
+                document.getElementById('btn-login-admin').innerText = "🔓 Consola Desbloqueada";
+            }
+            updateUI();
+            fetchCatalogo();
             fetchReviews();
         });
     </script>
