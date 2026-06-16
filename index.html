@@ -42,12 +42,10 @@
     <div class="bg-glow-orbs top-[-100px] left-[-100px]"></div>
     <div class="bg-glow-orbs top-[400px] right-[-150px]" style="background: radial-gradient(circle, rgba(6,182,212,0.06) 0%, rgba(0,0,0,0) 70%);"></div>
 
-    <!-- Barra de anuncios -->
     <div class="bg-gradient-to-r from-purple-900/60 via-slate-900/80 to-cyan-900/60 text-center py-2 px-4 text-xs font-bold tracking-wide border-b border-white/5 backdrop-blur-sm">
-        <span><i class="fa-solid fa-bolt text-amber-400"></i> Entrega automática disponible vía PayPal, Binance Pay y Yape Perú.</span>
+        <span><i class="fa-solid fa-user-shield text-amber-400"></i> Compras 100% manuales y seguras. Trato directo por WhatsApp con Saith Store.</span>
     </div>
 
-    <!-- Header -->
     <header class="sticky top-0 z-40 glass-header px-4 lg:px-12 py-4 flex justify-between items-center">
         <div class="flex items-center gap-3">
             <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-purple-600 via-indigo-600 to-cyan-400 flex items-center justify-center shadow-lg shadow-purple-500/20">
@@ -59,7 +57,6 @@
             </div>
         </div>
         
-        <!-- Convertidor de Moneda Multi-Divisa Premium -->
         <div class="relative bg-white/5 border border-white/10 rounded-xl px-2.5 py-1.5 flex items-center gap-1.5 text-xs text-white font-bold backdrop-blur-md">
             <i class="fa-solid fa-coins text-amber-400"></i>
             <select id="currency-select" onchange="changeCurrency(this.value)" class="bg-transparent text-white outline-none font-bold cursor-pointer">
@@ -71,7 +68,6 @@
         </div>
     </header>
 
-    <!-- Hero / Banner Superior -->
     <section class="text-center pt-14 pb-8 px-4 max-w-4xl mx-auto w-full relative z-10">
         <div class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-950/40 to-cyan-950/40 border border-purple-500/20 px-4 py-1.5 rounded-full mb-5">
             <span class="text-purple-400 text-xs font-mono font-black tracking-widest animate-pulse">#saithboost & #saithedit</span>
@@ -80,7 +76,6 @@
             Catálogo de Cuentas & <br><span class="neon-gradient-text">Boosting Premium</span>
         </h1>
 
-        <!-- Filtros por Juego -->
         <div class="flex justify-center gap-2 mt-10 flex-wrap">
             <button onclick="filterGame('all')" id="filter-all" class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-xs font-black px-5 py-2.5 rounded-xl border border-purple-500/30 transition-all shadow-lg shadow-purple-900/30">🔥 Todo</button>
             <button onclick="filterGame('Genshin Impact')" id="filter-genshin" class="bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 text-xs font-bold px-4 py-2.5 rounded-xl transition-all flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-cyan-400"></span> Genshin Impact</button>
@@ -89,43 +84,146 @@
         </div>
     </section>
 
-    <!-- Contenido Principal -->
     <main class="max-w-7xl mx-auto w-full px-4 mb-20 relative z-10 flex-1">
         
-        <!-- Bloque Servicios Boosting -->
+        <h4 class="text-xl font-black tracking-wide text-white mb-6 flex items-center gap-2.5">
+            <i class="fa-solid fa-circle-nodes text-cyan-400 animate-pulse"></i> Servicios Profesionales de Boosting
+        </h4>
+
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-            <div class="premium-card rounded-2xl overflow-hidden flex flex-col justify-between p-5">
+            
+            <div class="premium-card rounded-2xl overflow-hidden flex flex-col justify-between p-5 border-l-2 border-l-cyan-500">
                 <div>
-                    <div class="relative h-40 rounded-xl overflow-hidden mb-4 bg-slate-950">
-                        <img src="genshin.jpg" alt="Genshin" class="w-full h-full object-cover">
-                        <span class="absolute top-3 left-3 bg-cyan-950/80 border border-cyan-500/30 text-cyan-400 text-[10px] font-black px-2.5 py-0.5 rounded uppercase">Genshin Boosting</span>
+                    <div class="relative h-32 rounded-xl overflow-hidden mb-4 bg-slate-950">
+                        <img src="genshin.jpg" alt="Genshin" class="w-full h-full object-cover opacity-80">
+                        <span class="absolute top-3 left-3 bg-cyan-950/90 border border-cyan-500/40 text-cyan-400 text-[10px] font-black px-2.5 py-0.5 rounded uppercase tracking-wider">Genshin Impact</span>
                     </div>
-                    <p class="text-xs text-slate-400 mb-4">Exploración al 100%, recolección de Oculi y optimización de Abismo.</p>
+                    
+                    <div class="space-y-3 mb-6">
+                        <div class="bg-black/30 p-2.5 rounded-xl border border-white/[0.02]">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-xs font-black text-slate-200"><i class="fa-solid fa-map-location-dot text-cyan-400 mr-1.5"></i> Exploración de Mapas</span>
+                                <a href="https://wa.me/51967128876?text=Hola%20Saith%20Store,%20quiero%20cotizar%20un%20servicio%20de%20*Exploración%20al%20100%25*%20para%20Genshin%20Impact." target="_blank" class="text-[10px] font-extrabold text-cyan-400 hover:underline">Cotizar →</a>
+                            </div>
+                            <p class="text-[11px] text-slate-400">Regiones al 100%, recolección de Oculi, cofres y misiones de mundo.</p>
+                        </div>
+
+                        <div class="bg-black/30 p-2.5 rounded-xl border border-white/[0.02]">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-xs font-black text-slate-200"><i class="fa-solid fa-wand-magic-sparkles text-purple-400 mr-1.5"></i> Optimización & Builds</span>
+                                <a href="https://wa.me/51967128876?text=Hola%20Saith%20Store,%20necesito%20ayuda%20con%20las%20*Builds%20y%20Artefactos*%20de%20mis%20personajes%20en%20Genshin%20Impact." target="_blank" class="text-[10px] font-extrabold text-cyan-400 hover:underline">Cotizar →</a>
+                            </div>
+                            <p class="text-[11px] text-slate-400">Farmeo balanceado de Artefactos perfectos, armas y optimización de daño.</p>
+                        </div>
+
+                        <div class="bg-black/30 p-2.5 rounded-xl border border-white/[0.02]">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-xs font-black text-slate-200"><i class="fa-solid fa-wheat-awn text-amber-500 mr-1.5"></i> Farmeo Diario & Eventos</span>
+                                <a href="https://wa.me/51967128876?text=Hola%20Saith%20Store,%20quisiera%20un%20plan%20de%20*Farmeo%20Diario%20o%20Eventos*%20en%20Genshin%20Impact." target="_blank" class="text-[10px] font-extrabold text-cyan-400 hover:underline">Cotizar →</a>
+                            </div>
+                            <p class="text-[11px] text-slate-400">Resina diaria, misiones del pase, Protogemas y eventos temporales en curso.</p>
+                        </div>
+
+                        <div class="bg-black/30 p-2.5 rounded-xl border border-white/[0.02]">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-xs font-black text-slate-200"><i class="fa-solid fa-trophy text-emerald-400 mr-1.5"></i> Abismo Espiral Completo</span>
+                                <a href="https://wa.me/51967128876?text=Hola%20Saith%20Store,%20quiero%20contratar%20el%20servicio%20para%20completar el%20*Abismo%20Espiral%20(36%20estrellas)*%20en%20Genshin%20Impact." target="_blank" class="text-[10px] font-extrabold text-cyan-400 hover:underline">Cotizar →</a>
+                            </div>
+                            <p class="text-[11px] text-slate-400">Pasamos los pisos 9 al 12 asegurando el máximo de estrellas posibles.</p>
+                        </div>
+                    </div>
                 </div>
-                <a href="https://wa.me/51967128876?text=Hola%20Saith,%20quisiera%20cotizar%20un%20servicio%20de%20Farmeo%20para%20Genshin" target="_blank" class="w-full bg-white/5 text-cyan-400 border border-white/5 text-center text-xs font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2"><i class="fa-brands fa-whatsapp text-sm"></i> Cotizar Plan</a>
+                <a href="https://wa.me/51967128876?text=Hola%20Saith,%20quisiera%20cotizar%20un plan%20personalizado de%20Boosting%20para%20Genshin%20Impact." target="_blank" class="w-full bg-cyan-950/50 text-cyan-400 border border-cyan-500/30 text-center text-xs font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-cyan-900/40 transition-colors"><i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp Personalizado</a>
             </div>
 
-            <div class="premium-card rounded-2xl overflow-hidden flex flex-col justify-between p-5">
+            <div class="premium-card rounded-2xl overflow-hidden flex flex-col justify-between p-5 border-l-2 border-l-purple-500">
                 <div>
-                    <div class="relative h-40 rounded-xl overflow-hidden mb-4 bg-slate-950">
-                        <img src="honkai.webp" alt="Honkai" class="w-full h-full object-cover">
-                        <span class="absolute top-3 left-3 bg-purple-950/80 border border-purple-500/30 text-purple-400 text-[10px] font-black px-2.5 py-0.5 rounded uppercase">Star Rail Boosting</span>
+                    <div class="relative h-32 rounded-xl overflow-hidden mb-4 bg-slate-950">
+                        <img src="honkai.webp" alt="Honkai" class="w-full h-full object-cover opacity-80">
+                        <span class="absolute top-3 left-3 bg-purple-950/90 border border-purple-500/40 text-purple-400 text-[10px] font-black px-2.5 py-0.5 rounded uppercase tracking-wider">Star Rail</span>
                     </div>
-                    <p class="text-xs text-slate-400 mb-4">Farmeo de Jades Estelares, Universo Simulado, MoC y Pura Ficción.</p>
+                    
+                    <div class="space-y-3 mb-6">
+                        <div class="bg-black/30 p-2.5 rounded-xl border border-white/[0.02]">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-xs font-black text-slate-200"><i class="fa-solid fa-layer-group text-purple-400 mr-1.5"></i> Universo Simulado & Divergente</span>
+                                <a href="https://wa.me/51967128876?text=Hola%20Saith%20Store,%20quiero%20cotizar%20farmeo de%20*Universo%20Simulado%20/%20Divergente*%20en%20Honkai%20Star%20Rail." target="_blank" class="text-[10px] font-extrabold text-purple-400 hover:underline">Cotizar →</a>
+                            </div>
+                            <p class="text-[11px] text-slate-400">Limpieza semanal, desbloqueo de ecuaciones, ornamentos y niveles difíciles.</p>
+                        </div>
+
+                        <div class="bg-black/30 p-2.5 rounded-xl border border-white/[0.02]">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-xs font-black text-slate-200"><i class="fa-solid fa-shield-halved text-cyan-400 mr-1.5"></i> Armado de Builds & Artefactos</span>
+                                <a href="https://wa.me/51967128876?text=Hola%20Saith%20Store,%20necesito%20armar%20mis%20personajes%20y%20buscar%20*Reliquias/Builds*%20en%20Honkai%20Star%20Rail." target="_blank" class="text-[10px] font-extrabold text-purple-400 hover:underline">Cotizar →</a>
+                            </div>
+                            <p class="text-[11px] text-slate-400">Gasto de Poder de Trazacaminos óptimo buscando estadísticas perfectas.</p>
+                        </div>
+
+                        <div class="bg-black/30 p-2.5 rounded-xl border border-white/[0.02]">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-xs font-black text-slate-200"><i class="fa-solid fa-sparkles text-amber-500 mr-1.5"></i> Farmeo General de Jades</span>
+                                <a href="https://wa.me/51967128876?text=Hola%20Saith%20Store,%20solicito%20el%20servicio%20de%20*Farmeo%20Diario%20y%20Jades%20Estelares*%20en%20Honkai%20Star%20Rail." target="_blank" class="text-[10px] font-extrabold text-purple-400 hover:underline">Cotizar →</a>
+                            </div>
+                            <p class="text-[11px] text-slate-400">Encargos diarios, misiones de trazacaminos, eventos activos y cofres de mapas.</p>
+                        </div>
+
+                        <div class="bg-black/30 p-2.5 rounded-xl border border-white/[0.02]">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-xs font-black text-slate-200"><i class="fa-solid fa-skull-crossbones text-red-400 mr-1.5"></i> End Game (MoC / Pura Ficción)</span>
+                                <a href="https://wa.me/51967128876?text=Hola%20Saith%20Store,%20necesito%20completar%20el%20*Salón%20Olvidado%20/%20Pura%20Ficción%20/%20Espejismo*%20en%20Star%20Rail." target="_blank" class="text-[10px] font-extrabold text-purple-400 hover:underline">Cotizar →</a>
+                            </div>
+                            <p class="text-[11px] text-slate-400">Pasamos el contenido endgame más difícil para asegurar tus Jades gratis.</p>
+                        </div>
+                    </div>
                 </div>
-                <a href="https://wa.me/51967128876?text=Hola%20Saith,%20quisiera%20cotizar%20un%20servicio%20de%20Farmeo%20para%20Honkai" target="_blank" class="w-full bg-white/5 text-purple-400 border border-white/5 text-center text-xs font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2"><i class="fa-brands fa-whatsapp text-sm"></i> Cotizar Plan</a>
+                <a href="https://wa.me/51967128876?text=Hola%20Saith,%20quisiera%20cotizar%20un%20plan%20personalizado%20de%20Boosting%20para%20Honkai%20Star%20Rail." target="_blank" class="w-full bg-purple-950/50 text-purple-400 border border-purple-500/30 text-center text-xs font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-purple-900/40 transition-colors"><i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp Personalizado</a>
             </div>
 
-            <div class="premium-card rounded-2xl overflow-hidden flex flex-col justify-between p-5">
+            <div class="premium-card rounded-2xl overflow-hidden flex flex-col justify-between p-5 border-l-2 border-l-amber-500">
                 <div>
-                    <div class="relative h-40 rounded-xl overflow-hidden mb-4 bg-slate-950">
-                        <img src="wuwa.webp" alt="Wuthering" class="w-full h-full object-cover">
-                        <span class="absolute top-3 left-3 bg-amber-950/80 border border-amber-500/30 text-amber-400 text-[10px] font-black px-2.5 py-0.5 rounded uppercase">WuWa Boosting</span>
+                    <div class="relative h-32 rounded-xl overflow-hidden mb-4 bg-slate-950">
+                        <img src="wuwa.webp" alt="Wuthering" class="w-full h-full object-cover opacity-80">
+                        <span class="absolute top-3 left-3 bg-amber-950/90 border border-amber-500/40 text-amber-400 text-[10px] font-black px-2.5 py-0.5 rounded uppercase tracking-wider">Wuthering Waves</span>
                     </div>
-                    <p class="text-xs text-slate-400 mb-4">Recolección de Caskets, Ecos dorados y Torre de la Adversidad.</p>
+                    
+                    <div class="space-y-3 mb-6">
+                        <div class="bg-black/30 p-2.5 rounded-xl border border-white/[0.02]">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-xs font-black text-slate-200"><i class="fa-solid fa-dragon text-amber-500 mr-1.5"></i> Farmeo & Caza de Ecos</span>
+                                <a href="https://wa.me/51967128876?text=Hola%20Saith%20Store,%20quiero%20contratar%20el%20servicio%20de%20*Ruta%20de%20Farmeo%20de%20Ecos%20Dorados%20Perfectos*%20en%20WuWa." target="_blank" class="text-[10px] font-extrabold text-amber-500 hover:underline">Cotizar →</a>
+                            </div>
+                            <p class="text-[11px] text-slate-400">Rutas intensivas de caza para conseguir los mejores Ecos de rareza Dorada de costo 4, 3 y 1.</p>
+                        </div>
+
+                        <div class="bg-black/30 p-2.5 rounded-xl border border-white/[0.02]">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-xs font-black text-slate-200"><i class="fa-solid fa-gem text-cyan-400 mr-1.5"></i> Cofres & Sonance Caskets</span>
+                                <a href="https://wa.me/51967128876?text=Hola%20Saith%20Store,%20quiero%20cotizar%20la%20búsqueda de%20*Caskets,%20Cofres%20y%20Exploración* en%20Wuthering%20Waves." target="_blank" class="text-[10px] font-extrabold text-amber-500 hover:underline">Cotizar →</a>
+                            </div>
+                            <p class="text-[11px] text-slate-400">Exploración profunda del mapa, recolección de todos los coleccionables clave.</p>
+                        </div>
+
+                        <div class="bg-black/30 p-2.5 rounded-xl border border-white/[0.02]">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-xs font-black text-slate-200"><i class="fa-solid fa-bolt text-purple-400 mr-1.5"></i> Gasto de Waveplates & Diarias</span>
+                                <a href="https://wa.me/51967128876?text=Hola%20Saith%20Store,%20quisiera%20un%20plan%20de%20*Misiones%20Diarias%20y%20gasto%20de%20Resina/Waveplates*%20en%20WuWa." target="_blank" class="text-[10px] font-extrabold text-amber-500 hover:underline">Cotizar →</a>
+                            </div>
+                            <p class="text-[11px] text-slate-400">Mantenemos tu cuenta al día, completando el pase de batalla y materiales de ascensión.</p>
+                        </div>
+
+                        <div class="bg-black/30 p-2.5 rounded-xl border border-white/[0.02]">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-xs font-black text-slate-200"><i class="fa-solid fa-dungeon text-red-500 mr-1.5"></i> Torre de la Adversidad</span>
+                                <a href="https://wa.me/51967128876?text=Hola%20Saith%20Store,%20necesito ayuda%20con%20la%20*Torre%20de%20la%20Adversidad*%20en%20Wuthering%20Waves." target="_blank" class="text-[10px] font-extrabold text-amber-500 hover:underline">Cotizar →</a>
+                            </div>
+                            <p class="text-[11px] text-slate-400">Completamos los pisos de Hazard Zone usando las mejores rotaciones de tu equipo.</p>
+                        </div>
+                    </div>
                 </div>
-                <a href="https://wa.me/51967128876?text=Hola%20Saith,%20quisiera%20cotizar%20un%20servicio%20de%20Farmeo%20para%20WuWa" target="_blank" class="w-full bg-white/5 text-amber-400 border border-white/5 text-center text-xs font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2"><i class="fa-brands fa-whatsapp text-sm"></i> Cotizar Plan</a>
+                <a href="https://wa.me/51967128876?text=Hola%20Saith,%20quisiera%20cotizar%20un%20plan%20personalizado%20de%20Boosting%20para%20Wuthering%20Waves." target="_blank" class="w-full bg-amber-950/50 text-amber-400 border border-amber-500/30 text-center text-xs font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-amber-900/40 transition-colors"><i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp Personalizado</a>
             </div>
+
         </div>
 
         <div class="border-t border-slate-900/60 my-12"></div>
@@ -134,13 +232,11 @@
             <i class="fa-solid fa-fire-flame-curved text-purple-500 animate-pulse"></i> Catálogo de Cuentas Disponibles
         </h4>
 
-        <!-- Rejilla de Cuentas de Firebase -->
         <div id="marketplace-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div class="col-span-full text-center text-slate-500 py-12">Conectando en tiempo real con Saith Store...</div>
         </div>
     </main>
 
-    <!-- Footer -->
     <footer class="bg-black/40 border-t border-slate-900/80 py-8 text-center text-xs text-slate-500 backdrop-blur-md">
         <p class="mb-2 font-bold uppercase tracking-wider text-slate-400 text-[10px]">Gateways de Pago Soportados</p>
         <p class="text-slate-400 font-medium mb-4">PayPal Int. | Binance Pay | Yape Perú</p>
@@ -218,21 +314,21 @@
 
                 const finalPrice = formatPrice(acc.precio);
                 
-                // Comprobar si está Agotada (por texto o estado de entrega)
-                const esAgotada = (acc.entrega && acc.entrega.toLowerCase() === 'no') || (acc.status && acc.status.toLowerCase() === 'agotado');
+                // MODO MANUAL: Se considera agotada si el campo 'estado' es 'agotado' o 'vendido'
+                const esAgotada = (acc.estado && (acc.estado.toLowerCase() === 'agotado' || acc.estado.toLowerCase() === 'vendido'));
                 
                 let badgeInstant = '';
                 let botonCompra = '';
 
                 if (esAgotada) {
-                    badgeInstant = `<span class="absolute top-3 right-3 bg-red-600 text-white text-[9px] font-black px-2.5 py-0.5 rounded uppercase tracking-wider">❌ Agotado</span>`;
-                    botonCompra = `<button disabled class="mt-4 w-full bg-slate-800 text-slate-500 text-center font-black text-xs py-3 rounded-xl flex items-center justify-center gap-2 uppercase tracking-wider cursor-not-allowed"><i class="fa-solid fa-ban"></i> Agotado</button>`;
+                    badgeInstant = `<span class="absolute top-3 right-3 bg-red-600/90 text-white text-[9px] font-black px-2.5 py-0.5 rounded uppercase tracking-wider border border-red-500/30 backdrop-blur-sm">❌ Agotado</span>`;
+                    botonCompra = `<button disabled class="mt-4 w-full bg-slate-900 border border-slate-800 text-slate-500 text-center font-black text-xs py-3 rounded-xl flex items-center justify-center gap-2 uppercase tracking-wider cursor-not-allowed"><i class="fa-solid fa-ban"></i> Cuenta Vendida</button>`;
                 } else {
                     if (acc.entrega === 'si') {
                         badgeInstant = `<span class="instant-badge absolute top-3 right-3 bg-gradient-to-r from-amber-500 to-orange-500 text-black text-[9px] font-black px-2.5 py-0.5 rounded uppercase tracking-wider">⚡ Entrega Inmediata</span>`;
                     }
-                    const waMessage = encodeURIComponent(`Hola Saith Store, estoy interesado en comprar esta cuenta:\n\n📌 *Cuenta:* ${acc.titulo}\n🎮 *Juego:* ${acc.juego}\n🌍 *Servidor:* ${acc.servidor}\n💵 *Precio:* ${finalPrice} (${selectedCurrency})\n\n¿Me brindas los datos de pago por favor?`);
-                    botonCompra = `<a href="https://wa.me/51967128876?text=${waMessage}" target="_blank" class="mt-4 w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-center font-black text-xs py-3 rounded-xl flex items-center justify-center gap-2 uppercase tracking-wider"><i class="fa-solid fa-bag-shopping"></i> Comprar Ahora</a>`;
+                    const waMessage = encodeURIComponent(`Hola Saith Store, estoy interesado en comprar esta cuenta:\n\n📌 *Cuenta:* ${acc.titulo}\n🎮 *Juego:* ${acc.juego}\n🌍 *Servidor:* ${acc.servidor}\n💵 *Precio:* ${finalPrice} (${selectedCurrency})\n\n¿Sigue disponible para proceder con el pago manual?`);
+                    botonCompra = `<a href="https://wa.me/51967128876?text=${waMessage}" target="_blank" class="mt-4 w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-center font-black text-xs py-3 rounded-xl flex items-center justify-center gap-2 uppercase tracking-wider transition-transform active:scale-95"><i class="fa-solid fa-bag-shopping"></i> Comprar Ahora</a>`;
                 }
                 
                 let badgeColor = "bg-cyan-950/80 border-cyan-500/40 text-cyan-400";
@@ -240,17 +336,17 @@
                 if(acc.juego === 'Wuthering Waves') badgeColor = "bg-amber-950/80 border-amber-500/40 text-amber-400";
 
                 container.innerHTML += `
-                    <div class="premium-card rounded-2xl overflow-hidden p-3.5 flex flex-col justify-between relative border border-white/5 ${esAgotada ? 'opacity-60' : ''}">
+                    <div class="premium-card rounded-2xl overflow-hidden p-3.5 flex flex-col justify-between relative border border-white/5 ${esAgotada ? 'opacity-40 transition-opacity duration-300' : ''}">
                         <div>
                             <div class="relative h-48 rounded-xl overflow-hidden mb-3 bg-slate-950 border border-white/5">
-                                <img src="${acc.imagenUrl}" class="w-full h-full object-cover ${esAgotada ? 'grayscale select-none' : ''}">
+                                <img src="${acc.imagenUrl}" class="w-full h-full object-cover ${esAgotada ? 'grayscale blur-[1px]' : ''}">
                                 <span class="absolute top-3 left-3 border px-2.5 py-0.5 rounded text-[9px] font-black uppercase tracking-widest backdrop-blur-md ${badgeColor}">${acc.juego}</span>
                                 ${badgeInstant}
                             </div>
                             <div class="px-1 mt-3">
-                                <h5 class="text-sm font-bold ${esAgotada ? 'text-slate-400 line-through' : 'text-slate-100'} line-clamp-2 leading-tight">${acc.titulo}</h5>
+                                <h5 class="text-sm font-bold ${esAgotada ? 'text-slate-500 line-through' : 'text-slate-100'} line-clamp-2 leading-tight">${acc.titulo}</h5>
                                 <div class="flex gap-2 my-2.5 items-center">
-                                    <span class="text-xs font-black ${esAgotada ? 'text-slate-500 bg-slate-950 border-slate-900' : 'text-emerald-400 bg-emerald-950/50 border border-emerald-500/30'} px-2.5 py-0.5 rounded-lg">${finalPrice}</span>
+                                    <span class="text-xs font-black ${esAgotada ? 'text-slate-600 bg-slate-950 border-slate-900' : 'text-emerald-400 bg-emerald-950/50 border border-emerald-500/30'} px-2.5 py-0.5 rounded-lg">${finalPrice}</span>
                                     <span class="text-[9px] font-black text-indigo-300 bg-indigo-950/50 border border-indigo-500/20 px-2.5 py-0.5 rounded-lg uppercase tracking-wider">${acc.servidor}</span>
                                 </div>
                                 <p class="text-xs text-slate-400 bg-black/40 border border-white/[0.02] rounded-xl p-3 leading-relaxed font-medium whitespace-pre-line line-clamp-3">${acc.detalles}</p>
