@@ -3,284 +3,353 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saith Store | Gaming Boosting & Premium Marketplace</title>
+    <title>Saith Store | Premium Gaming Services</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         tailwind.config = {
             theme: { 
-                extend: { colors: { brand: { dark: '#02040a', card: '#0d1117', border: '#30363d', accent: '#8b5cf6' } } }
+                extend: { 
+                    colors: { brand: { bg: '#050505', card: '#0a0a0a', border: '#1f1f1f', accent: '#8b5cf6' } },
+                    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+                }
             }
         }
     </script>
     <style>
-        body { background-color: #02040a; color: #c9d1d9; font-family: system-ui, -apple-system, sans-serif; overflow-x: hidden; }
-        .glass-panel { background: rgba(13, 17, 23, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .pro-card { background: linear-gradient(180deg, #0d1117 0%, #161b22 100%); border: 1px solid #21262d; transition: all 0.3s ease; overflow: hidden; }
-        .pro-card:hover { transform: translateY(-5px); border-color: #8b5cf6; box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2); }
-        .text-gradient { background: linear-gradient(135deg, #06b6d4, #8b5cf6, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        #space-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; pointer-events: none; }
-        .swal2-popup { background: #0d1117 !important; border: 1px solid #30363d !important; color: #fff !important; border-radius: 1rem !important; }
-        .swal2-title { color: #fff !important; }
-        .swal2-input, .swal2-textarea { background: rgba(0,0,0,0.5) !important; border: 1px solid #30363d !important; color: #fff !important; }
-        .img-container { height: 160px; width: 100%; overflow: hidden; position: relative; border-bottom: 1px solid #30363d; background-color: #02040a;}
-        .img-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; opacity: 0.9; }
-        .pro-card:hover .img-container img { transform: scale(1.05); opacity: 1; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap');
+        body { background-color: #050505; color: #e5e5e5; overflow-x: hidden; top: 0px !important; position: static !important; }
+        
+        /* Hacks para ocultar toda la basura visual de Google Translate */
+        #google_translate_element, .skiptranslate, .goog-te-banner-frame { display: none !important; }
+        body { top: 0 !important; }
+        .goog-tooltip { display: none !important; }
+        .goog-tooltip:hover { display: none !important; }
+        .goog-text-highlight { background-color: transparent !important; border: none !important; box-shadow: none !important; }
+
+        /* Estilos Pro */
+        .glass-nav { background: rgba(5, 5, 5, 0.7); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .glass-panel { background: rgba(10, 10, 10, 0.6); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .pro-card { background: #0a0a0a; border: 1px solid #1f1f1f; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); overflow: hidden; position: relative; }
+        .pro-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 100%; background: linear-gradient(180deg, rgba(139, 92, 246, 0.05) 0%, transparent 100%); opacity: 0; transition: opacity 0.4s; z-index: 1; pointer-events: none; }
+        .pro-card:hover { transform: translateY(-8px); border-color: #3b2c63; box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 20px rgba(139, 92, 246, 0.15); }
+        .pro-card:hover::before { opacity: 1; }
+        .text-gradient { background: linear-gradient(to right, #38bdf8, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        /* Efecto de ruido de fondo (estilo agencia pro) */
+        .bg-noise { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1; opacity: 0.03; background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E'); }
+        
+        .img-container { height: 180px; width: 100%; overflow: hidden; position: relative; border-bottom: 1px solid #1f1f1f; background-color: #050505;}
+        .img-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; opacity: 0.8; }
+        .pro-card:hover .img-container img { transform: scale(1.08); opacity: 1; }
+        
+        .custom-select { appearance: none; background: #0a0a0a url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E") no-repeat right 0.5rem center/1.5em 1.5em; padding-right: 2.5rem; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col relative antialiased">
 
-    <canvas id="space-canvas"></canvas>
+    <div class="bg-noise"></div>
+    <div id="google_translate_element"></div> <!-- Oculto por CSS -->
 
-    <header class="sticky top-0 z-50 glass-panel px-6 py-4 flex justify-between items-center border-b border-[#30363d]">
-        <div class="flex items-center gap-3">
-            <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-purple-600 to-cyan-400 flex items-center justify-center shadow-lg shadow-purple-500/30">
-                <i class="fa-solid fa-bolt text-lg text-white"></i>
+    <!-- Header Pro -->
+    <header class="sticky top-0 z-50 glass-nav px-4 py-4 md:px-8 transition-all">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center gap-4">
+                <div class="h-12 w-12 rounded-2xl bg-gradient-to-br from-indigo-600 via-purple-600 to-cyan-500 flex items-center justify-center shadow-[0_0_20px_rgba(139,92,246,0.3)]">
+                    <i class="fa-solid fa-bolt-lightning text-xl text-white"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-2xl font-black tracking-tight text-white leading-none">SAITH<span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">STORE</span></span>
+                    <span class="text-[10px] text-slate-400 tracking-widest uppercase font-bold mt-1">Premium Gaming Agency</span>
+                </div>
             </div>
-            <div class="flex flex-col">
-                <span class="text-xl font-black tracking-widest text-gradient">SAITH STORE</span>
-                <span class="text-[9px] text-slate-400 tracking-widest uppercase font-bold">#saithboost | #saithedit</span>
+
+            <div class="flex items-center gap-3 ml-auto">
+                <!-- Selector de Idioma Custom -->
+                <div class="bg-[#0a0a0a] border border-[#1f1f1f] rounded-xl flex overflow-hidden shadow-lg h-10">
+                    <button onclick="changeLanguage('es')" class="px-3 hover:bg-white/5 text-xs font-bold transition-colors border-r border-[#1f1f1f] flex items-center gap-2 text-white">🇪🇸 ES</button>
+                    <button onclick="changeLanguage('en')" class="px-3 hover:bg-white/5 text-xs font-bold transition-colors flex items-center gap-2 text-slate-400 hover:text-white">🇺🇸 EN</button>
+                </div>
+
+                <!-- Selector de Moneda Custom -->
+                <select id="currency-selector" onchange="updateCurrency()" class="custom-select bg-[#0a0a0a] text-white border border-[#1f1f1f] rounded-xl text-xs px-4 h-10 font-bold focus:border-purple-500 outline-none shadow-lg cursor-pointer transition-colors hover:border-slate-600">
+                    <option value="USD">🇺🇸 USD</option>
+                    <option value="PEN">🇵🇪 PEN</option>
+                    <option value="EUR">🇪🇺 EUR</option>
+                    <option value="MXN">🇲🇽 MXN</option>
+                </select>
+
+                <!-- Candado Admin -->
+                <button onclick="loginAdminPro()" class="h-10 w-10 bg-[#0a0a0a] border border-[#1f1f1f] rounded-xl flex items-center justify-center text-slate-400 hover:text-white hover:border-purple-500 transition-all shadow-lg">
+                    <i class="fa-solid fa-lock text-sm"></i>
+                </button>
             </div>
         </div>
-        <button onclick="loginAdminPro()" class="text-slate-400 hover:text-white transition-colors">
-            <i class="fa-solid fa-lock"></i>
-        </button>
     </header>
 
-    <main class="max-w-7xl mx-auto w-full px-4 py-12 flex-1">
-        <section id="admin-dashboard" class="hidden mb-16 glass-panel p-6 rounded-2xl border-purple-500/30 border-2 shadow-[0_0_30px_rgba(139,92,246,0.15)]">
-            <div class="flex justify-between items-center mb-6 border-b border-[#30363d] pb-4">
-                <h2 class="text-xl font-bold text-white"><i class="fa-solid fa-terminal text-purple-400 mr-2"></i>Panel de Control Maestro</h2>
-                <div class="flex gap-2">
-                    <button onclick="clearDatabase()" class="bg-red-900/40 text-red-400 px-4 py-1.5 rounded-lg text-xs font-bold hover:bg-red-600 hover:text-white transition-all">Borrar Todo</button>
-                    <button onclick="logoutAdmin()" class="bg-white/10 text-white px-4 py-1.5 rounded-lg text-xs font-bold hover:bg-white/20 transition-all">Cerrar Sesión</button>
-                </div>
-            </div>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div class="bg-black/40 p-5 rounded-xl border border-[#30363d]">
-                    <h3 class="text-sm font-bold text-cyan-400 mb-4"><i class="fa-solid fa-plus-circle mr-2"></i>Añadir Servicio de Boosting</h3>
-                    <form id="form-boosting" onsubmit="saveBoosting(event)" class="space-y-3">
-                        <select id="bst-game" class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-2 text-xs text-white outline-none focus:border-cyan-500">
-                            <option value="Genshin Impact">Genshin Impact</option>
-                            <option value="Honkai: Star Rail">Honkai: Star Rail</option>
-                            <option value="Wuthering Waves">Wuthering Waves</option>
-                            <option value="Arknights: Endfield">Arknights: Endfield</option>
-                        </select>
-                        <input type="text" id="bst-title" placeholder="Título (Ej: Mapas al 100%)" required class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-2 text-xs text-white outline-none focus:border-cyan-500">
-                        <input type="text" id="bst-desc" placeholder="Descripción corta (Ej: 10 USD + Fee PayPal)" required class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-2 text-xs text-white outline-none focus:border-cyan-500">
-                        <input type="number" step="0.01" id="bst-price" placeholder="Precio en Dólares (Ej: 10)" required class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-2 text-xs text-white outline-none focus:border-cyan-500">
-                        <input type="text" id="bst-img" placeholder="Nombre de imagen (Ej: genshin.jpg)" required class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-2 text-xs text-white outline-none focus:border-cyan-500">
-                        <button type="submit" class="w-full bg-cyan-600 text-white font-bold py-2.5 rounded-lg text-xs hover:bg-cyan-500 transition-colors uppercase tracking-wider mt-2">Publicar Servicio</button>
-                    </form>
-                </div>
-
-                <div class="bg-black/40 p-5 rounded-xl border border-[#30363d]">
-                    <h3 class="text-sm font-bold text-purple-400 mb-4"><i class="fa-solid fa-plus-circle mr-2"></i>Añadir Cuenta al Catálogo</h3>
-                    <form id="form-account" onsubmit="saveAccount(event)" class="space-y-3">
-                        <select id="acc-game" class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-2 text-xs text-white outline-none focus:border-purple-500">
-                            <option value="Genshin Impact">Genshin Impact</option>
-                            <option value="Honkai: Star Rail">Honkai: Star Rail</option>
-                            <option value="Wuthering Waves">Wuthering Waves</option>
-                            <option value="Arknights: Endfield">Arknights: Endfield</option>
-                        </select>
-                        <input type="text" id="acc-title" placeholder="Título (Ej: Cuenta AR60, 15 5-Estrellas)" required class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-2 text-xs text-white outline-none focus:border-purple-500">
-                        <input type="number" step="0.01" id="acc-price" placeholder="Precio en Dólares" required class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-2 text-xs text-white outline-none focus:border-purple-500">
-                        <textarea id="acc-desc" placeholder="Detalles de la cuenta..." required class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-2 text-xs text-white h-16 outline-none focus:border-purple-500"></textarea>
-                        <input type="text" id="acc-img" placeholder="Nombre de imagen (Ej: honkai.jpg)" required class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-2 text-xs text-white outline-none focus:border-purple-500">
-                        <button type="submit" class="w-full bg-purple-600 text-white font-bold py-2.5 rounded-lg text-xs hover:bg-purple-500 transition-colors uppercase tracking-wider mt-2">Publicar Cuenta</button>
-                    </form>
-                </div>
-            </div>
+    <main class="w-full flex-1">
+        <!-- Hero Section -->
+        <section class="relative max-w-7xl mx-auto px-4 py-20 md:py-32 flex flex-col items-center text-center">
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+            <span class="px-4 py-1.5 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-300 text-[10px] font-bold tracking-widest uppercase mb-6 backdrop-blur-md">#SAITHBOOST &bull; #SAITHEDIT</span>
+            <h1 class="text-5xl md:text-7xl font-black text-white tracking-tight mb-6 leading-tight max-w-4xl">
+                Domina tu juego con <br class="hidden md:block"/><span class="text-gradient">Servicios de Élite</span>
+            </h1>
+            <p class="text-slate-400 text-base md:text-lg max-w-2xl font-medium">Exploración 100%, farmeo optimizado y las mejores cuentas starter/endgame para tus gachas favoritos. Todo con entrega rápida y segura.</p>
         </section>
 
-        <h2 class="text-2xl font-black text-white mb-6 flex items-center gap-2"><i class="fa-solid fa-bolt text-cyan-400"></i> Servicios de Boosting</h2>
-        <div id="services-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-            </div>
+        <div class="max-w-7xl mx-auto w-full px-4 pb-24">
+            <!-- Dashboard Admin -->
+            <section id="admin-dashboard" class="hidden mb-16 glass-panel p-6 md:p-8 rounded-3xl border-purple-500/40 border shadow-[0_0_40px_rgba(139,92,246,0.1)] relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-[80px]"></div>
+                
+                <div class="flex justify-between items-center mb-8 border-b border-[#1f1f1f] pb-5 relative z-10">
+                    <h2 class="text-2xl font-black text-white flex items-center gap-3"><i class="fa-solid fa-shield-halved text-purple-500"></i> Centro de Comandos</h2>
+                    <button onclick="logoutAdmin()" class="bg-[#1f1f1f] text-white px-5 py-2 rounded-xl text-xs font-bold hover:bg-red-500/20 hover:text-red-400 transition-all border border-[#303030]">Cerrar Sesión</button>
+                </div>
+                
+                <p class="text-xs text-amber-300 mb-6 bg-amber-500/10 p-3 rounded-xl border border-amber-500/20 font-medium inline-block">
+                    <i class="fa-solid fa-triangle-exclamation mr-2"></i> Los precios deben ingresarse siempre en <b>Dólares (USD)</b>.
+                </p>
 
-        <h2 class="text-2xl font-black text-white mb-6 flex items-center gap-2"><i class="fa-solid fa-store text-purple-500"></i> Marketplace de Cuentas</h2>
-        <div id="accounts-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+                    <!-- Formulario Boosting -->
+                    <div class="bg-[#050505] p-6 rounded-2xl border border-[#1f1f1f]">
+                        <h3 class="text-base font-bold text-cyan-400 mb-5 flex items-center"><i class="fa-solid fa-rocket mr-3"></i>Nuevo Servicio</h3>
+                        <form id="form-boosting" onsubmit="saveItem(event, 'boost')" class="space-y-4">
+                            <select id="bst-game" class="w-full bg-[#0a0a0a] border border-[#1f1f1f] rounded-xl p-3 text-sm text-white outline-none focus:border-cyan-500 transition-colors">
+                                <option value="Genshin Impact">Genshin Impact</option>
+                                <option value="Honkai: Star Rail">Honkai: Star Rail</option>
+                                <option value="Wuthering Waves">Wuthering Waves</option>
+                                <option value="Arknights: Endfield">Arknights: Endfield</option>
+                            </select>
+                            <input type="text" id="bst-title" placeholder="Título (Ej: Mapas al 100%)" required class="w-full bg-[#0a0a0a] border border-[#1f1f1f] rounded-xl p-3 text-sm text-white outline-none focus:border-cyan-500 transition-colors">
+                            <input type="text" id="bst-desc" placeholder="Descripción corta" required class="w-full bg-[#0a0a0a] border border-[#1f1f1f] rounded-xl p-3 text-sm text-white outline-none focus:border-cyan-500 transition-colors">
+                            <input type="number" step="0.01" id="bst-price" placeholder="Precio en USD ($)" required class="w-full bg-[#0a0a0a] border border-[#1f1f1f] rounded-xl p-3 text-sm text-white outline-none focus:border-cyan-500 transition-colors">
+                            <input type="text" id="bst-img" placeholder="Link de imagen o nombre (Ej: arknights.jpg)" required class="w-full bg-[#0a0a0a] border border-[#1f1f1f] rounded-xl p-3 text-sm text-white outline-none focus:border-cyan-500 transition-colors">
+                            <button type="submit" class="w-full bg-cyan-600/20 border border-cyan-500/50 text-cyan-400 font-bold py-3 rounded-xl text-sm hover:bg-cyan-500 hover:text-white transition-all">Publicar Servicio</button>
+                        </form>
+                    </div>
+
+                    <!-- Formulario Cuentas -->
+                    <div class="bg-[#050505] p-6 rounded-2xl border border-[#1f1f1f]">
+                        <h3 class="text-base font-bold text-purple-400 mb-5 flex items-center"><i class="fa-solid fa-user-astronaut mr-3"></i>Nueva Cuenta</h3>
+                        <form id="form-account" onsubmit="saveItem(event, 'account')" class="space-y-4">
+                            <select id="acc-game" class="w-full bg-[#0a0a0a] border border-[#1f1f1f] rounded-xl p-3 text-sm text-white outline-none focus:border-purple-500 transition-colors">
+                                <option value="Genshin Impact">Genshin Impact</option>
+                                <option value="Honkai: Star Rail">Honkai: Star Rail</option>
+                                <option value="Wuthering Waves">Wuthering Waves</option>
+                                <option value="Arknights: Endfield">Arknights: Endfield</option>
+                            </select>
+                            <input type="text" id="acc-title" placeholder="Título de la cuenta" required class="w-full bg-[#0a0a0a] border border-[#1f1f1f] rounded-xl p-3 text-sm text-white outline-none focus:border-purple-500 transition-colors">
+                            <input type="number" step="0.01" id="acc-price" placeholder="Precio en USD ($)" required class="w-full bg-[#0a0a0a] border border-[#1f1f1f] rounded-xl p-3 text-sm text-white outline-none focus:border-purple-500 transition-colors">
+                            <textarea id="acc-desc" placeholder="Detalles de la cuenta..." required class="w-full bg-[#0a0a0a] border border-[#1f1f1f] rounded-xl p-3 text-sm text-white h-[52px] outline-none focus:border-purple-500 transition-colors"></textarea>
+                            <input type="text" id="acc-img" placeholder="Link o nombre de imagen" required class="w-full bg-[#0a0a0a] border border-[#1f1f1f] rounded-xl p-3 text-sm text-white outline-none focus:border-purple-500 transition-colors">
+                            <button type="submit" class="w-full bg-purple-600/20 border border-purple-500/50 text-purple-400 font-bold py-3 rounded-xl text-sm hover:bg-purple-500 hover:text-white transition-all">Publicar Cuenta</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Catálogo Boosting -->
+            <div class="flex items-center gap-4 mb-8">
+                <div class="h-10 w-2 bg-cyan-500 rounded-full"></div>
+                <h2 class="text-3xl font-black text-white">Servicios de Boosting</h2>
             </div>
+            <div id="services-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-20"></div>
+
+            <!-- Catálogo Cuentas -->
+            <div class="flex items-center gap-4 mb-8">
+                <div class="h-10 w-2 bg-purple-500 rounded-full"></div>
+                <h2 class="text-3xl font-black text-white">Marketplace de Cuentas</h2>
+            </div>
+            <div id="accounts-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+        </div>
     </main>
 
-    <a href="https://wa.me/51967128876" target="_blank" class="fixed bottom-6 right-6 h-14 w-14 bg-green-500 rounded-full flex items-center justify-center text-white text-3xl shadow-[0_0_20px_rgba(34,197,94,0.4)] hover:scale-110 transition-transform z-50">
+    <!-- Footer -->
+    <footer class="border-t border-[#1f1f1f] bg-[#050505] py-10 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="text-2xl font-black tracking-tight text-white mb-2 opacity-50">SAITH<span class="text-purple-500">STORE</span></div>
+            <p class="text-slate-600 text-sm">© 2026 Todos los derechos reservados. Pagos seguros vía Yape, Plin y PayPal.</p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Flotante -->
+    <a href="https://wa.me/51967128876" target="_blank" class="fixed bottom-6 right-6 h-16 w-16 bg-gradient-to-tr from-green-600 to-green-400 rounded-2xl flex items-center justify-center text-white text-3xl shadow-[0_10px_30px_rgba(34,197,94,0.3)] hover:-translate-y-2 transition-all z-50 border border-green-400/30">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
+
+    <!-- Script Oculto de Google Translate -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'es', includedLanguages: 'es,en', autoDisplay: false}, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
         const ADMIN_PASS = "jessicajasmin11";
         const FALLBACK_IMG = "https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60";
+        let isAdminActive = false;
 
-        // Animación de Fondo
-        const canvas = document.getElementById('space-canvas');
-        const ctx = canvas.getContext('2d');
-        let stars = [];
-        window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
-        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        for(let i=0; i<100; i++) stars.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*1.5, s: Math.random()*0.5 });
-        function draw() {
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-            ctx.fillStyle = "rgba(255,255,255,0.4)";
-            stars.forEach(st => { ctx.beginPath(); ctx.arc(st.x, st.y, st.r, 0, Math.PI*2); ctx.fill(); st.y += st.s; if(st.y > canvas.height) st.y = 0; });
-            requestAnimationFrame(draw);
+        // Tasas de cambio actualizadas a tiempo real (Perú)
+        let exchangeRates = { USD: 1, PEN: 3.80, EUR: 0.93, MXN: 18.50 };
+        let currentCurrency = 'USD';
+        let currencySymbols = { USD: '$', PEN: 'S/', EUR: '€', MXN: '$' };
+
+        fetch('https://open.er-api.com/v6/latest/USD')
+            .then(res => res.json())
+            .then(data => {
+                exchangeRates.PEN = data.rates.PEN;
+                exchangeRates.EUR = data.rates.EUR;
+                exchangeRates.MXN = data.rates.MXN;
+                loadData();
+            }).catch(e => console.log("Usando tasas offline"));
+
+        // Traductor Personalizado (Hack para usar botones propios)
+        function changeLanguage(langCode) {
+            const select = document.querySelector('.goog-te-combo');
+            if (select) {
+                select.value = langCode;
+                select.dispatchEvent(new Event('change'));
+                
+                // Efecto visual en los botones
+                const btns = document.querySelectorAll('button[onclick^="changeLanguage"]');
+                btns[0].classList.toggle('text-slate-400', langCode === 'en');
+                btns[0].classList.toggle('text-white', langCode === 'es');
+                btns[1].classList.toggle('text-slate-400', langCode === 'es');
+                btns[1].classList.toggle('text-white', langCode === 'en');
+            }
         }
-        draw();
+
+        function updateCurrency() {
+            currentCurrency = document.getElementById('currency-selector').value;
+            loadData();
+        }
 
         function loginAdminPro() {
+            if(isAdminActive) {
+                document.getElementById('admin-dashboard').classList.toggle('hidden');
+                return;
+            }
             Swal.fire({
-                title: 'Acceso Restringido',
-                input: 'password',
-                inputPlaceholder: 'Ingresa la clave maestra',
-                showCancelButton: true,
-                confirmButtonText: 'Acceder',
-                confirmButtonColor: '#8b5cf6',
-                background: '#0d1117'
+                title: 'Acceso Sistema', input: 'password', inputPlaceholder: 'Clave maestra...',
+                showCancelButton: true, confirmButtonText: 'Entrar', confirmButtonColor: '#8b5cf6', background: '#0a0a0a', border: '1px solid #1f1f1f'
             }).then((result) => {
                 if (result.value === ADMIN_PASS) {
+                    isAdminActive = true;
                     document.getElementById('admin-dashboard').classList.remove('hidden');
-                    Swal.fire({ icon: 'success', title: 'Acceso Concedido', showConfirmButton: false, timer: 1500, background: '#0d1117', color: '#fff' });
+                    loadData();
+                    Swal.fire({ icon: 'success', title: 'Conectado', showConfirmButton: false, timer: 1000, background: '#0a0a0a' });
                 }
             });
         }
 
         function logoutAdmin() {
+            isAdminActive = false;
             document.getElementById('admin-dashboard').classList.add('hidden');
+            loadData();
         }
 
-        function clearDatabase() {
+        function deleteItem(id, type) {
             Swal.fire({
-                title: '¿Estás seguro?',
-                text: "Se borrarán todos los servicios y cuentas.",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Sí, borrar todo',
-                background: '#0d1117', color: '#fff'
+                title: '¿Eliminar servicio?', text: "Esta acción no se puede deshacer.", icon: 'warning',
+                showCancelButton: true, confirmButtonColor: '#ef4444', confirmButtonText: 'Sí, borrar', background: '#0a0a0a'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    localStorage.removeItem('saith_boosting');
-                    localStorage.removeItem('saith_cuentas');
+                    const storageKey = type === 'boost' ? 'saith_boosting' : 'saith_cuentas';
+                    let data = JSON.parse(localStorage.getItem(storageKey));
+                    delete data[id];
+                    localStorage.setItem(storageKey, JSON.stringify(data));
                     loadData();
-                    Swal.fire({title: 'Borrado!', icon: 'success', background: '#0d1117', color: '#fff', timer: 1500, showConfirmButton: false});
                 }
             });
         }
 
-        function generateOrderTicket(itemType, title, price) {
-            const message = `Hola *Saith Store*, vengo desde la web.\n\n🛍️ *Deseo adquirir:* ${title} (${itemType})\n💵 *Precio:* $${price} USD\n\n📱 *Método de pago:* Yape (Perú)\nPor favor, envíame el QR o número para transferir. #saithboost`;
+        function generateOrderTicket(itemType, title, usdPrice) {
+            const convertedPrice = (usdPrice * exchangeRates[currentCurrency]).toFixed(2);
+            const symbol = currencySymbols[currentCurrency];
+            const message = `Hola *Saith Store* 🚀\n\n🛍️ *Deseo adquirir:* ${title} (${itemType})\n💵 *Monto:* ${symbol} ${convertedPrice} ${currentCurrency}\n\nPor favor, indícame los pasos para transferir por Yape/Plin o PayPal. #saithboost`;
             window.open(`https://wa.me/51967128876?text=${encodeURIComponent(message)}`, '_blank');
         }
 
         function loadData() {
-            // Leemos los datos directamente de la memoria de tu computadora (Local Storage)
-            let dataBoost = JSON.parse(localStorage.getItem('saith_boosting'));
-            let dataAcc = JSON.parse(localStorage.getItem('saith_cuentas'));
+            let dataBoost = JSON.parse(localStorage.getItem('saith_boosting')) || {};
+            let dataAcc = JSON.parse(localStorage.getItem('saith_cuentas')) || {};
 
-            // Si está vacío, cargamos tus 4 imágenes por defecto para que no se vea el error "undefined"
-            if (!dataBoost || Object.keys(dataBoost).length === 0) {
-                dataBoost = {
-                    '1': { juego: 'Genshin Impact', titulo: 'Mapas al 100%', desc: 'Exploración completa', precio: '10', imagenUrl: 'genshin.jpg' },
-                    '2': { juego: 'Honkai: Star Rail', titulo: 'Farmeo 20 Deseos', desc: 'Rápido y seguro', precio: '7', imagenUrl: 'honkai.jpg' },
-                    '3': { juego: 'Wuthering Waves', titulo: 'Farmeo Ecos', desc: 'Ecos dorados', precio: '5', imagenUrl: 'wuwa.jpg' },
-                    '4': { juego: 'Arknights: Endfield', titulo: 'Servicio VIP', desc: 'Materiales y farmeo', precio: '15', imagenUrl: 'arknights endfield.jpg' }
-                };
-                localStorage.setItem('saith_boosting', JSON.stringify(dataBoost));
-            }
-            if (!dataAcc) dataAcc = {};
-
-            // Renderizar Boosting
             const srvCont = document.getElementById('services-container');
-            srvCont.innerHTML = '';
-            Object.values(dataBoost).forEach(item => {
+            srvCont.innerHTML = Object.keys(dataBoost).length === 0 ? '<div class="col-span-full py-10 text-center border border-dashed border-[#1f1f1f] rounded-2xl"><p class="text-slate-500 font-medium">Catálogo en mantenimiento. Vuelve pronto.</p></div>' : '';
+            
+            Object.entries(dataBoost).forEach(([id, item]) => {
+                const convertedPrice = (parseFloat(item.precio) * exchangeRates[currentCurrency]).toFixed(2);
                 srvCont.innerHTML += `
-                    <div class="pro-card rounded-2xl flex flex-col justify-between">
-                        <div class="img-container">
+                    <div class="pro-card rounded-3xl flex flex-col justify-between group">
+                        ${isAdminActive ? `<button onclick="deleteItem('${id}', 'boost')" class="absolute top-3 right-3 bg-red-500/80 backdrop-blur-md text-white w-9 h-9 rounded-full shadow-lg hover:bg-red-500 z-20 flex items-center justify-center border border-white/20 transition-all"><i class="fa-solid fa-trash text-sm"></i></button>` : ''}
+                        <div class="img-container rounded-t-3xl z-10">
                             <img src="${item.imagenUrl}" alt="${item.titulo}" onerror="this.src='${FALLBACK_IMG}'">
-                            <span class="absolute top-2 left-2 text-[9px] bg-black/80 border border-white/10 text-white px-2 py-1 rounded font-bold uppercase backdrop-blur-sm shadow-md">${item.juego}</span>
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] to-transparent opacity-80"></div>
+                            <span class="absolute top-3 left-3 text-[10px] bg-black/60 border border-white/10 text-white px-3 py-1.5 rounded-full font-bold uppercase backdrop-blur-md shadow-lg">${item.juego}</span>
                         </div>
-                        <div class="p-4 flex flex-col flex-1 justify-between">
+                        <div class="p-6 flex flex-col flex-1 justify-between relative z-10 -mt-6">
                             <div>
-                                <h3 class="text-sm font-bold text-white line-clamp-2">${item.titulo}</h3>
-                                <p class="text-xs text-slate-400 mt-1 h-8 overflow-hidden">${item.desc}</p>
-                                <p class="text-xl font-black text-cyan-400 mt-2">$${parseFloat(item.precio).toFixed(2)} <span class="text-[10px] text-slate-500 font-normal">USD</span></p>
+                                <h3 class="text-lg font-bold text-white line-clamp-2 leading-tight">${item.titulo}</h3>
+                                <p class="text-sm text-slate-400 mt-2 h-10 overflow-hidden leading-relaxed">${item.desc}</p>
+                                <p class="text-2xl font-black text-cyan-400 mt-4">${currencySymbols[currentCurrency]} ${convertedPrice} <span class="text-xs text-slate-500 font-bold tracking-widest uppercase ml-1">${currentCurrency}</span></p>
                             </div>
-                            <button onclick="generateOrderTicket('Boosting', '${item.titulo}', '${item.precio}')" class="mt-4 w-full bg-white/5 border border-white/10 hover:border-cyan-500 hover:bg-cyan-900/30 text-cyan-400 font-bold py-2 rounded-xl transition-all text-xs">Solicitar Servicio</button>
+                            <button onclick="generateOrderTicket('Boosting', '${item.titulo}', ${item.precio})" class="mt-6 w-full bg-[#121212] border border-[#2a2a2a] group-hover:border-cyan-500/50 group-hover:bg-cyan-500/10 text-white font-bold py-3.5 rounded-xl transition-all text-sm shadow-lg flex justify-center items-center gap-2"><i class="fa-solid fa-cart-shopping"></i> Comprar Servicio</button>
                         </div>
-                    </div>
-                `;
+                    </div>`;
             });
 
-            // Renderizar Cuentas
             const accCont = document.getElementById('accounts-container');
-            accCont.innerHTML = '';
-            const accKeys = Object.keys(dataAcc);
+            accCont.innerHTML = Object.keys(dataAcc).length === 0 ? '<div class="col-span-full py-10 text-center border border-dashed border-[#1f1f1f] rounded-2xl"><p class="text-slate-500 font-medium">No hay cuentas publicadas por el momento.</p></div>' : '';
             
-            if(accKeys.length === 0) {
-                accCont.innerHTML = `<p class="col-span-full text-slate-500 text-sm py-4">Aún no has publicado ninguna cuenta en el Marketplace.</p>`;
-            } else {
-                Object.values(dataAcc).forEach(item => {
-                    accCont.innerHTML += `
-                        <div class="pro-card rounded-2xl flex flex-col justify-between">
-                            <div class="img-container">
-                                <img src="${item.imagenUrl}" alt="${item.titulo}" onerror="this.src='${FALLBACK_IMG}'">
-                                <span class="absolute top-2 left-2 text-[9px] bg-purple-900/80 border border-purple-500/30 text-white px-2 py-1 rounded font-bold uppercase backdrop-blur-sm shadow-md">${item.juego}</span>
-                            </div>
-                            <div class="p-4 flex flex-col flex-1 justify-between">
-                                <div>
-                                    <h3 class="text-sm font-bold text-white line-clamp-2">${item.titulo}</h3>
-                                    <p class="text-xs text-slate-400 mt-1 h-12 overflow-hidden">${item.desc}</p>
-                                    <p class="text-xl font-black text-amber-400 mt-2">$${parseFloat(item.precio).toFixed(2)} <span class="text-[10px] text-slate-500 font-normal">USD</span></p>
-                                </div>
-                                <button onclick="generateOrderTicket('Cuenta', '${item.titulo}', '${item.precio}')" class="mt-4 w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold py-2 rounded-xl transition-all text-xs shadow-lg">Comprar Cuenta</button>
-                            </div>
+            Object.entries(dataAcc).forEach(([id, item]) => {
+                const convertedPrice = (parseFloat(item.precio) * exchangeRates[currentCurrency]).toFixed(2);
+                accCont.innerHTML += `
+                    <div class="pro-card rounded-3xl flex flex-col justify-between group">
+                        ${isAdminActive ? `<button onclick="deleteItem('${id}', 'account')" class="absolute top-3 right-3 bg-red-500/80 backdrop-blur-md text-white w-9 h-9 rounded-full shadow-lg hover:bg-red-500 z-20 flex items-center justify-center border border-white/20 transition-all"><i class="fa-solid fa-trash text-sm"></i></button>` : ''}
+                        <div class="img-container rounded-t-3xl z-10">
+                            <img src="${item.imagenUrl}" alt="${item.titulo}" onerror="this.src='${FALLBACK_IMG}'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] to-transparent opacity-80"></div>
+                            <span class="absolute top-3 left-3 text-[10px] bg-purple-900/60 border border-purple-500/30 text-white px-3 py-1.5 rounded-full font-bold uppercase backdrop-blur-md shadow-lg">${item.juego}</span>
                         </div>
-                    `;
-                });
-            }
+                        <div class="p-6 flex flex-col flex-1 justify-between relative z-10 -mt-6">
+                            <div>
+                                <h3 class="text-lg font-bold text-white line-clamp-2 leading-tight">${item.titulo}</h3>
+                                <p class="text-sm text-slate-400 mt-2 h-14 overflow-hidden leading-relaxed">${item.desc}</p>
+                                <p class="text-2xl font-black text-amber-400 mt-4">${currencySymbols[currentCurrency]} ${convertedPrice} <span class="text-xs text-slate-500 font-bold tracking-widest uppercase ml-1">${currentCurrency}</span></p>
+                            </div>
+                            <button onclick="generateOrderTicket('Cuenta', '${item.titulo}', ${item.precio})" class="mt-6 w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold py-3.5 rounded-xl transition-all text-sm shadow-[0_10px_20px_rgba(139,92,246,0.2)] flex justify-center items-center gap-2"><i class="fa-solid fa-gem"></i> Adquirir Cuenta</button>
+                        </div>
+                    </div>`;
+            });
         }
 
-        // GUARDADO LOCAL (Sin depender de conexiones a la nube)
-        function saveBoosting(e) {
+        function saveItem(e, type) {
             e.preventDefault();
-            const dataBoost = JSON.parse(localStorage.getItem('saith_boosting')) || {};
-            const newId = Date.now().toString(); // Generar ID único
+            const storageKey = type === 'boost' ? 'saith_boosting' : 'saith_cuentas';
+            const data = JSON.parse(localStorage.getItem(storageKey)) || {};
+            const newId = Date.now().toString();
             
-            dataBoost[newId] = {
-                juego: document.getElementById('bst-game').value,
-                titulo: document.getElementById('bst-title').value,
-                desc: document.getElementById('bst-desc').value,
-                precio: document.getElementById('bst-price').value,
+            data[newId] = type === 'boost' ? {
+                juego: document.getElementById('bst-game').value, titulo: document.getElementById('bst-title').value,
+                desc: document.getElementById('bst-desc').value, precio: document.getElementById('bst-price').value,
                 imagenUrl: document.getElementById('bst-img').value || FALLBACK_IMG
-            };
-            
-            localStorage.setItem('saith_boosting', JSON.stringify(dataBoost));
-            Swal.fire({ icon: 'success', title: 'Servicio Guardado', toast: true, position: 'top-end', showConfirmButton: false, timer: 2000, background: '#0d1117', color: '#fff' });
-            e.target.reset(); 
-            loadData();
-        }
-
-        function saveAccount(e) {
-            e.preventDefault();
-            const dataAcc = JSON.parse(localStorage.getItem('saith_cuentas')) || {};
-            const newId = Date.now().toString(); // Generar ID único
-            
-            dataAcc[newId] = {
-                juego: document.getElementById('acc-game').value,
-                titulo: document.getElementById('acc-title').value,
-                precio: document.getElementById('acc-price').value,
-                desc: document.getElementById('acc-desc').value,
+            } : {
+                juego: document.getElementById('acc-game').value, titulo: document.getElementById('acc-title').value,
+                precio: document.getElementById('acc-price').value, desc: document.getElementById('acc-desc').value,
                 imagenUrl: document.getElementById('acc-img').value || FALLBACK_IMG
             };
             
-            localStorage.setItem('saith_cuentas', JSON.stringify(dataAcc));
-            Swal.fire({ icon: 'success', title: 'Cuenta Publicada', toast: true, position: 'top-end', showConfirmButton: false, timer: 2000, background: '#0d1117', color: '#fff' });
+            localStorage.setItem(storageKey, JSON.stringify(data));
+            Swal.fire({ icon: 'success', title: 'Publicado', toast: true, position: 'top-end', showConfirmButton: false, timer: 1500, background: '#0a0a0a' });
             e.target.reset(); 
             loadData();
         }
 
-        // Arrancar la página
         loadData();
     </script>
 </body>
