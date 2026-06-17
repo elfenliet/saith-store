@@ -25,8 +25,8 @@
         .swal2-title { color: #fff !important; }
         .swal2-input, .swal2-textarea { background: rgba(0,0,0,0.5) !important; border: 1px solid #30363d !important; color: #fff !important; }
         .img-container { height: 160px; width: 100%; overflow: hidden; position: relative; border-bottom: 1px solid #30363d; background-color: #02040a;}
-        .img-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
-        .pro-card:hover .img-container img { transform: scale(1.05); }
+        .img-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; opacity: 0.9; }
+        .pro-card:hover .img-container img { transform: scale(1.05); opacity: 1; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col relative antialiased">
@@ -49,54 +49,58 @@
     </header>
 
     <main class="max-w-7xl mx-auto w-full px-4 py-12 flex-1">
-        <section id="admin-dashboard" class="hidden mb-16 glass-panel p-6 rounded-2xl border-purple-500/30 border-2">
-            <div class="flex justify-between items-center mb-6">
+        <section id="admin-dashboard" class="hidden mb-16 glass-panel p-6 rounded-2xl border-purple-500/30 border-2 shadow-[0_0_30px_rgba(139,92,246,0.15)]">
+            <div class="flex justify-between items-center mb-6 border-b border-[#30363d] pb-4">
                 <h2 class="text-xl font-bold text-white"><i class="fa-solid fa-terminal text-purple-400 mr-2"></i>Panel de Control Maestro</h2>
-                <button onclick="logoutAdmin()" class="bg-red-600/20 text-red-400 px-4 py-1.5 rounded-lg text-xs font-bold hover:bg-red-600 hover:text-white transition-all">Cerrar Sesión</button>
+                <div class="flex gap-2">
+                    <button onclick="clearDatabase()" class="bg-red-900/40 text-red-400 px-4 py-1.5 rounded-lg text-xs font-bold hover:bg-red-600 hover:text-white transition-all">Borrar Todo</button>
+                    <button onclick="logoutAdmin()" class="bg-white/10 text-white px-4 py-1.5 rounded-lg text-xs font-bold hover:bg-white/20 transition-all">Cerrar Sesión</button>
+                </div>
             </div>
             
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div class="bg-black/40 p-5 rounded-xl border border-[#30363d]">
-                    <h3 class="text-sm font-bold text-cyan-400 mb-4">Añadir Servicio de Boosting / Farmeo</h3>
+                    <h3 class="text-sm font-bold text-cyan-400 mb-4"><i class="fa-solid fa-plus-circle mr-2"></i>Añadir Servicio de Boosting</h3>
                     <form id="form-boosting" onsubmit="saveBoosting(event)" class="space-y-3">
-                        <select id="bst-game" class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-2 text-xs text-white">
+                        <select id="bst-game" class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-2 text-xs text-white outline-none focus:border-cyan-500">
                             <option value="Genshin Impact">Genshin Impact</option>
                             <option value="Honkai: Star Rail">Honkai: Star Rail</option>
                             <option value="Wuthering Waves">Wuthering Waves</option>
                             <option value="Arknights: Endfield">Arknights: Endfield</option>
                         </select>
-                        <input type="text" id="bst-title" placeholder="Título (Ej: Mapas al 100%)" required class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-2 text-xs text-white">
-                        <input type="text" id="bst-desc" placeholder="Descripción corta (Ej: 10 USD + Fee PayPal)" required class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-2 text-xs text-white">
-                        <input type="number" step="0.01" id="bst-price" placeholder="Precio en Dólares (Ej: 10)" required class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-2 text-xs text-white">
-                        <input type="url" id="bst-img" placeholder="Link de la Imagen (URL terminada en .jpg o .png)" class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-2 text-xs text-white">
-                        <button type="submit" class="w-full bg-cyan-600 text-white font-bold py-2 rounded-lg text-xs hover:bg-cyan-500">Publicar Servicio</button>
+                        <input type="text" id="bst-title" placeholder="Título (Ej: Mapas al 100%)" required class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-2 text-xs text-white outline-none focus:border-cyan-500">
+                        <input type="text" id="bst-desc" placeholder="Descripción corta (Ej: 10 USD + Fee PayPal)" required class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-2 text-xs text-white outline-none focus:border-cyan-500">
+                        <input type="number" step="0.01" id="bst-price" placeholder="Precio en Dólares (Ej: 10)" required class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-2 text-xs text-white outline-none focus:border-cyan-500">
+                        <input type="text" id="bst-img" placeholder="Nombre de imagen (Ej: genshin.jpg)" required class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-2 text-xs text-white outline-none focus:border-cyan-500">
+                        <button type="submit" class="w-full bg-cyan-600 text-white font-bold py-2.5 rounded-lg text-xs hover:bg-cyan-500 transition-colors uppercase tracking-wider mt-2">Publicar Servicio</button>
                     </form>
                 </div>
 
                 <div class="bg-black/40 p-5 rounded-xl border border-[#30363d]">
-                    <h3 class="text-sm font-bold text-purple-400 mb-4">Añadir Cuenta al Catálogo</h3>
+                    <h3 class="text-sm font-bold text-purple-400 mb-4"><i class="fa-solid fa-plus-circle mr-2"></i>Añadir Cuenta al Catálogo</h3>
                     <form id="form-account" onsubmit="saveAccount(event)" class="space-y-3">
-                        <select id="acc-game" class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-2 text-xs text-white">
+                        <select id="acc-game" class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-2 text-xs text-white outline-none focus:border-purple-500">
                             <option value="Genshin Impact">Genshin Impact</option>
                             <option value="Honkai: Star Rail">Honkai: Star Rail</option>
                             <option value="Wuthering Waves">Wuthering Waves</option>
+                            <option value="Arknights: Endfield">Arknights: Endfield</option>
                         </select>
-                        <input type="text" id="acc-title" placeholder="Título (Ej: Cuenta AR60, 15 5-Estrellas)" required class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-2 text-xs text-white">
-                        <input type="number" step="0.01" id="acc-price" placeholder="Precio en Dólares" required class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-2 text-xs text-white">
-                        <textarea id="acc-desc" placeholder="Detalles de la cuenta..." required class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-2 text-xs text-white h-16"></textarea>
-                        <input type="url" id="acc-img" placeholder="Link de la Imagen (URL terminada en .jpg o .png)" required class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-2 text-xs text-white">
-                        <button type="submit" class="w-full bg-purple-600 text-white font-bold py-2 rounded-lg text-xs hover:bg-purple-500">Publicar Cuenta</button>
+                        <input type="text" id="acc-title" placeholder="Título (Ej: Cuenta AR60, 15 5-Estrellas)" required class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-2 text-xs text-white outline-none focus:border-purple-500">
+                        <input type="number" step="0.01" id="acc-price" placeholder="Precio en Dólares" required class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-2 text-xs text-white outline-none focus:border-purple-500">
+                        <textarea id="acc-desc" placeholder="Detalles de la cuenta..." required class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-2 text-xs text-white h-16 outline-none focus:border-purple-500"></textarea>
+                        <input type="text" id="acc-img" placeholder="Nombre de imagen (Ej: honkai.jpg)" required class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-2 text-xs text-white outline-none focus:border-purple-500">
+                        <button type="submit" class="w-full bg-purple-600 text-white font-bold py-2.5 rounded-lg text-xs hover:bg-purple-500 transition-colors uppercase tracking-wider mt-2">Publicar Cuenta</button>
                     </form>
                 </div>
             </div>
         </section>
 
-        <h2 class="text-2xl font-black text-white mb-6">Servicios de Boosting</h2>
-        <div id="services-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+        <h2 class="text-2xl font-black text-white mb-6 flex items-center gap-2"><i class="fa-solid fa-bolt text-cyan-400"></i> Servicios de Boosting</h2>
+        <div id="services-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-16">
             </div>
 
-        <h2 class="text-2xl font-black text-white mb-6">Marketplace de Cuentas</h2>
-        <div id="accounts-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <h2 class="text-2xl font-black text-white mb-6 flex items-center gap-2"><i class="fa-solid fa-store text-purple-500"></i> Marketplace de Cuentas</h2>
+        <div id="accounts-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
             </div>
     </main>
 
@@ -105,7 +109,6 @@
     </a>
 
     <script>
-        const DB_URL = "https://saithstore-default-rtdb.firebaseio.com";
         const ADMIN_PASS = "jessicajasmin11";
         const FALLBACK_IMG = "https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60";
 
@@ -136,7 +139,7 @@
             }).then((result) => {
                 if (result.value === ADMIN_PASS) {
                     document.getElementById('admin-dashboard').classList.remove('hidden');
-                    Swal.fire({ icon: 'success', title: 'Acceso Concedido', showConfirmButton: false, timer: 1500 });
+                    Swal.fire({ icon: 'success', title: 'Acceso Concedido', showConfirmButton: false, timer: 1500, background: '#0d1117', color: '#fff' });
                 }
             });
         }
@@ -145,96 +148,139 @@
             document.getElementById('admin-dashboard').classList.add('hidden');
         }
 
+        function clearDatabase() {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "Se borrarán todos los servicios y cuentas.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, borrar todo',
+                background: '#0d1117', color: '#fff'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    localStorage.removeItem('saith_boosting');
+                    localStorage.removeItem('saith_cuentas');
+                    loadData();
+                    Swal.fire({title: 'Borrado!', icon: 'success', background: '#0d1117', color: '#fff', timer: 1500, showConfirmButton: false});
+                }
+            });
+        }
+
         function generateOrderTicket(itemType, title, price) {
-            const message = `Hola *Saith Store*, vengo desde la web.\n\n🛍️ *Deseo adquirir:* ${title} (${itemType})\n💵 *Precio:* $${price} USD\n\n📱 *Método de pago:* Yape (Perú)\nPor favor, envíame el QR o número. #saithboost`;
+            const message = `Hola *Saith Store*, vengo desde la web.\n\n🛍️ *Deseo adquirir:* ${title} (${itemType})\n💵 *Precio:* $${price} USD\n\n📱 *Método de pago:* Yape (Perú)\nPor favor, envíame el QR o número para transferir. #saithboost`;
             window.open(`https://wa.me/51967128876?text=${encodeURIComponent(message)}`, '_blank');
         }
 
-        async function loadData() {
-            try {
-                const [resBoost, resAcc] = await Promise.all([ fetch(`${DB_URL}/boosting.json`), fetch(`${DB_URL}/cuentas.json`) ]);
-                const dataBoost = await resBoost.json() || {};
-                const dataAcc = await resAcc.json() || {};
+        function loadData() {
+            // Leemos los datos directamente de la memoria de tu computadora (Local Storage)
+            let dataBoost = JSON.parse(localStorage.getItem('saith_boosting'));
+            let dataAcc = JSON.parse(localStorage.getItem('saith_cuentas'));
 
-                const srvCont = document.getElementById('services-container');
-                srvCont.innerHTML = '';
-                Object.values(dataBoost).forEach(item => {
-                    // Soporte para datos viejos (tituloEs) y nuevos (titulo) para que no salga undefined
-                    const title = item.titulo || item.tituloEs || "Servicio Genérico";
-                    const desc = item.desc || item.descEs || "Sin descripción";
-                    const price = item.precio || 0;
-                    const img = item.imagenUrl || FALLBACK_IMG;
+            // Si está vacío, cargamos tus 4 imágenes por defecto para que no se vea el error "undefined"
+            if (!dataBoost || Object.keys(dataBoost).length === 0) {
+                dataBoost = {
+                    '1': { juego: 'Genshin Impact', titulo: 'Mapas al 100%', desc: 'Exploración completa', precio: '10', imagenUrl: 'genshin.jpg' },
+                    '2': { juego: 'Honkai: Star Rail', titulo: 'Farmeo 20 Deseos', desc: 'Rápido y seguro', precio: '7', imagenUrl: 'honkai.jpg' },
+                    '3': { juego: 'Wuthering Waves', titulo: 'Farmeo Ecos', desc: 'Ecos dorados', precio: '5', imagenUrl: 'wuwa.jpg' },
+                    '4': { juego: 'Arknights: Endfield', titulo: 'Servicio VIP', desc: 'Materiales y farmeo', precio: '15', imagenUrl: 'arknights endfield.jpg' }
+                };
+                localStorage.setItem('saith_boosting', JSON.stringify(dataBoost));
+            }
+            if (!dataAcc) dataAcc = {};
 
-                    srvCont.innerHTML += `
-                        <div class="pro-card rounded-2xl flex flex-col justify-between">
-                            <div class="img-container">
-                                <img src="${img}" alt="${title}" onerror="this.src='${FALLBACK_IMG}'">
-                                <span class="absolute top-2 left-2 text-[9px] bg-black/80 border border-white/10 text-white px-2 py-1 rounded font-bold uppercase backdrop-blur-sm">${item.juego || 'Juego'}</span>
-                            </div>
-                            <div class="p-4">
-                                <h3 class="text-md font-bold text-white">${title}</h3>
-                                <p class="text-xs text-slate-400 mt-1 h-8 overflow-hidden">${desc}</p>
-                                <p class="text-xl font-black text-emerald-400 mt-3">$${parseFloat(price).toFixed(2)} <span class="text-xs text-slate-500 font-normal">USD</span></p>
-                                <button onclick="generateOrderTicket('Boosting', '${title}', '${price}')" class="mt-4 w-full bg-white/10 hover:bg-cyan-600 text-white font-bold py-2 rounded-xl transition-colors text-xs">Solicitar Servicio</button>
-                            </div>
+            // Renderizar Boosting
+            const srvCont = document.getElementById('services-container');
+            srvCont.innerHTML = '';
+            Object.values(dataBoost).forEach(item => {
+                srvCont.innerHTML += `
+                    <div class="pro-card rounded-2xl flex flex-col justify-between">
+                        <div class="img-container">
+                            <img src="${item.imagenUrl}" alt="${item.titulo}" onerror="this.src='${FALLBACK_IMG}'">
+                            <span class="absolute top-2 left-2 text-[9px] bg-black/80 border border-white/10 text-white px-2 py-1 rounded font-bold uppercase backdrop-blur-sm shadow-md">${item.juego}</span>
                         </div>
-                    `;
-                });
+                        <div class="p-4 flex flex-col flex-1 justify-between">
+                            <div>
+                                <h3 class="text-sm font-bold text-white line-clamp-2">${item.titulo}</h3>
+                                <p class="text-xs text-slate-400 mt-1 h-8 overflow-hidden">${item.desc}</p>
+                                <p class="text-xl font-black text-cyan-400 mt-2">$${parseFloat(item.precio).toFixed(2)} <span class="text-[10px] text-slate-500 font-normal">USD</span></p>
+                            </div>
+                            <button onclick="generateOrderTicket('Boosting', '${item.titulo}', '${item.precio}')" class="mt-4 w-full bg-white/5 border border-white/10 hover:border-cyan-500 hover:bg-cyan-900/30 text-cyan-400 font-bold py-2 rounded-xl transition-all text-xs">Solicitar Servicio</button>
+                        </div>
+                    </div>
+                `;
+            });
 
-                const accCont = document.getElementById('accounts-container');
-                accCont.innerHTML = '';
+            // Renderizar Cuentas
+            const accCont = document.getElementById('accounts-container');
+            accCont.innerHTML = '';
+            const accKeys = Object.keys(dataAcc);
+            
+            if(accKeys.length === 0) {
+                accCont.innerHTML = `<p class="col-span-full text-slate-500 text-sm py-4">Aún no has publicado ninguna cuenta en el Marketplace.</p>`;
+            } else {
                 Object.values(dataAcc).forEach(item => {
-                    const title = item.titulo || item.tituloEs || "Cuenta Premium";
-                    const desc = item.desc || item.descEs || item.detalles || "Detalles no especificados";
-                    const price = item.precio || 0;
-                    const img = item.imagenUrl || FALLBACK_IMG;
-
                     accCont.innerHTML += `
                         <div class="pro-card rounded-2xl flex flex-col justify-between">
                             <div class="img-container">
-                                <img src="${img}" alt="${title}" onerror="this.src='${FALLBACK_IMG}'">
-                                <span class="absolute top-2 left-2 text-[9px] bg-purple-900/80 border border-purple-500/30 text-white px-2 py-1 rounded font-bold uppercase backdrop-blur-sm">${item.juego || 'Juego'}</span>
+                                <img src="${item.imagenUrl}" alt="${item.titulo}" onerror="this.src='${FALLBACK_IMG}'">
+                                <span class="absolute top-2 left-2 text-[9px] bg-purple-900/80 border border-purple-500/30 text-white px-2 py-1 rounded font-bold uppercase backdrop-blur-sm shadow-md">${item.juego}</span>
                             </div>
-                            <div class="p-4">
-                                <h3 class="text-md font-bold text-white">${title}</h3>
-                                <p class="text-xs text-slate-400 mt-1 h-12 overflow-hidden">${desc}</p>
-                                <p class="text-xl font-black text-amber-400 mt-3">$${parseFloat(price).toFixed(2)} <span class="text-xs text-slate-500 font-normal">USD</span></p>
-                                <button onclick="generateOrderTicket('Cuenta', '${title}', '${price}')" class="mt-4 w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold py-2 rounded-xl transition-colors text-xs">Comprar Cuenta</button>
+                            <div class="p-4 flex flex-col flex-1 justify-between">
+                                <div>
+                                    <h3 class="text-sm font-bold text-white line-clamp-2">${item.titulo}</h3>
+                                    <p class="text-xs text-slate-400 mt-1 h-12 overflow-hidden">${item.desc}</p>
+                                    <p class="text-xl font-black text-amber-400 mt-2">$${parseFloat(item.precio).toFixed(2)} <span class="text-[10px] text-slate-500 font-normal">USD</span></p>
+                                </div>
+                                <button onclick="generateOrderTicket('Cuenta', '${item.titulo}', '${item.precio}')" class="mt-4 w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold py-2 rounded-xl transition-all text-xs shadow-lg">Comprar Cuenta</button>
                             </div>
                         </div>
                     `;
                 });
-            } catch (error) { console.error("Error cargando DB", error); }
+            }
         }
 
-        async function saveBoosting(e) {
+        // GUARDADO LOCAL (Sin depender de conexiones a la nube)
+        function saveBoosting(e) {
             e.preventDefault();
-            const data = {
+            const dataBoost = JSON.parse(localStorage.getItem('saith_boosting')) || {};
+            const newId = Date.now().toString(); // Generar ID único
+            
+            dataBoost[newId] = {
                 juego: document.getElementById('bst-game').value,
                 titulo: document.getElementById('bst-title').value,
                 desc: document.getElementById('bst-desc').value,
                 precio: document.getElementById('bst-price').value,
                 imagenUrl: document.getElementById('bst-img').value || FALLBACK_IMG
             };
-            await fetch(`${DB_URL}/boosting.json`, { method: 'POST', body: JSON.stringify(data) });
-            Swal.fire({ icon: 'success', title: 'Guardado', toast: true, position: 'top-end', showConfirmButton: false, timer: 2000, background: '#0d1117', color: '#fff' });
-            e.target.reset(); loadData();
+            
+            localStorage.setItem('saith_boosting', JSON.stringify(dataBoost));
+            Swal.fire({ icon: 'success', title: 'Servicio Guardado', toast: true, position: 'top-end', showConfirmButton: false, timer: 2000, background: '#0d1117', color: '#fff' });
+            e.target.reset(); 
+            loadData();
         }
 
-        async function saveAccount(e) {
+        function saveAccount(e) {
             e.preventDefault();
-            const data = {
+            const dataAcc = JSON.parse(localStorage.getItem('saith_cuentas')) || {};
+            const newId = Date.now().toString(); // Generar ID único
+            
+            dataAcc[newId] = {
                 juego: document.getElementById('acc-game').value,
                 titulo: document.getElementById('acc-title').value,
                 precio: document.getElementById('acc-price').value,
                 desc: document.getElementById('acc-desc').value,
                 imagenUrl: document.getElementById('acc-img').value || FALLBACK_IMG
             };
-            await fetch(`${DB_URL}/cuentas.json`, { method: 'POST', body: JSON.stringify(data) });
-            Swal.fire({ icon: 'success', title: 'Publicada', toast: true, position: 'top-end', showConfirmButton: false, timer: 2000, background: '#0d1117', color: '#fff' });
-            e.target.reset(); loadData();
+            
+            localStorage.setItem('saith_cuentas', JSON.stringify(dataAcc));
+            Swal.fire({ icon: 'success', title: 'Cuenta Publicada', toast: true, position: 'top-end', showConfirmButton: false, timer: 2000, background: '#0d1117', color: '#fff' });
+            e.target.reset(); 
+            loadData();
         }
 
+        // Arrancar la página
         loadData();
     </script>
 </body>
