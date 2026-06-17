@@ -45,10 +45,16 @@
         
         .custom-select { appearance: none; background: #0a0a0a url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E") no-repeat right 0.5rem center/1.5em 1.5em; padding-right: 2.5rem; }
         
-        /* Estilos para los inputs de SweetAlert */
+        /* Estilos para los inputs de SweetAlert y Scrollbar */
         .swal2-popup.dark-swal { background: #0a0a0a !important; border: 1px solid #1f1f1f !important; color: white !important; border-radius: 24px !important; }
         .dark-swal .swal2-input, .dark-swal .swal2-textarea { background: #050505 !important; border: 1px solid #1f1f1f !important; color: white !important; border-radius: 12px !important; }
         .dark-swal .swal2-input:focus, .dark-swal .swal2-textarea:focus { border-color: #8b5cf6 !important; box-shadow: none !important; }
+        .dark-swal .swal2-close { color: #fff !important; }
+        
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #050505; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #1f1f1f; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #3b2c63; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col relative antialiased">
@@ -70,21 +76,16 @@
             </div>
 
             <div class="flex items-center gap-3 ml-auto">
-                <!-- Selector de Idioma -->
                 <div class="bg-[#0a0a0a] border border-[#1f1f1f] rounded-xl flex overflow-hidden shadow-lg h-10">
                     <button onclick="changeLanguage('es')" class="px-3 hover:bg-white/5 text-xs font-bold transition-colors border-r border-[#1f1f1f] flex items-center gap-2 text-white">🇪🇸 ES</button>
                     <button onclick="changeLanguage('en')" class="px-3 hover:bg-white/5 text-xs font-bold transition-colors flex items-center gap-2 text-slate-400 hover:text-white">🇺🇸 EN</button>
                 </div>
-
-                <!-- Selector de Moneda -->
                 <select id="currency-selector" onchange="updateCurrency()" class="custom-select bg-[#0a0a0a] text-white border border-[#1f1f1f] rounded-xl text-xs px-4 h-10 font-bold focus:border-purple-500 outline-none shadow-lg cursor-pointer transition-colors hover:border-slate-600">
                     <option value="USD">🇺🇸 USD</option>
                     <option value="PEN">🇵🇪 PEN</option>
                     <option value="EUR">🇪🇺 EUR</option>
                     <option value="MXN">🇲🇽 MXN</option>
                 </select>
-
-                <!-- Candado Admin -->
                 <button onclick="loginAdminPro()" class="h-10 w-10 bg-[#0a0a0a] border border-[#1f1f1f] rounded-xl flex items-center justify-center text-slate-400 hover:text-white hover:border-purple-500 transition-all shadow-lg">
                     <i class="fa-solid fa-lock text-sm"></i>
                 </button>
@@ -100,7 +101,7 @@
             <h1 class="text-5xl md:text-7xl font-black text-white tracking-tight mb-6 leading-tight max-w-4xl">
                 Domina tu juego con <br class="hidden md:block"/><span class="text-gradient">Servicios de Élite</span>
             </h1>
-            <p class="text-slate-400 text-base md:text-lg max-w-2xl font-medium">Exploración 100%, farmeo optimizado y las mejores cuentas starter/endgame para tus gachas favoritos. Todo con entrega rápida y segura.</p>
+            <p class="text-slate-400 text-base md:text-lg max-w-2xl font-medium">Exploración 100%, farmeo optimizado y las mejores cuentas starter/endgame para tus gachas favoritos.</p>
         </section>
 
         <div class="max-w-7xl mx-auto w-full px-4 pb-10">
@@ -118,7 +119,7 @@
                     <div class="bg-[#050505] p-6 rounded-2xl border border-[#1f1f1f]">
                         <h3 class="text-base font-bold text-cyan-400 mb-5 flex items-center"><i class="fa-solid fa-rocket mr-3"></i>Nuevo Servicio</h3>
                         <form id="form-boosting" onsubmit="saveItem(event, 'boost')" class="space-y-4">
-                            <select id="bst-game" class="w-full bg-[#0a0a0a] border border-[#1f1f1f] rounded-xl p-3 text-sm text-white outline-none focus:border-cyan-500 transition-colors">
+                            <select id="bst-game" class="w-full bg-[#0a0a0a] border border-[#1f1f1f] rounded-xl p-3 text-sm text-white outline-none focus:border-cyan-500">
                                 <option value="Genshin Impact">Genshin Impact</option>
                                 <option value="Honkai: Star Rail">Honkai: Star Rail</option>
                                 <option value="Wuthering Waves">Wuthering Waves</option>
@@ -140,11 +141,20 @@
                                 <option value="Genshin Impact">Genshin Impact</option>
                                 <option value="Honkai: Star Rail">Honkai: Star Rail</option>
                                 <option value="Wuthering Waves">Wuthering Waves</option>
+                                <option value="Zenless Zone Zero">Zenless Zone Zero</option>
+                            </select>
+                            <!-- Selector de Servidor -->
+                            <select id="acc-server" class="w-full bg-[#0a0a0a] border border-[#1f1f1f] rounded-xl p-3 text-sm text-white outline-none focus:border-purple-500">
+                                <option value="America">America</option>
+                                <option value="Europe">Europe</option>
+                                <option value="Asia">Asia</option>
+                                <option value="TW/HK/MO">TW/HK/MO</option>
                             </select>
                             <input type="text" id="acc-title" placeholder="Título de la cuenta" required class="w-full bg-[#0a0a0a] border border-[#1f1f1f] rounded-xl p-3 text-sm text-white outline-none focus:border-purple-500">
                             <input type="number" step="0.01" id="acc-price" placeholder="Precio en USD ($)" required class="w-full bg-[#0a0a0a] border border-[#1f1f1f] rounded-xl p-3 text-sm text-white outline-none focus:border-purple-500">
-                            <textarea id="acc-desc" placeholder="Detalles de la cuenta..." required class="w-full bg-[#0a0a0a] border border-[#1f1f1f] rounded-xl p-3 text-sm text-white h-[52px] outline-none focus:border-purple-500"></textarea>
-                            <input type="text" id="acc-img" placeholder="Link de imagen" required class="w-full bg-[#0a0a0a] border border-[#1f1f1f] rounded-xl p-3 text-sm text-white outline-none focus:border-purple-500">
+                            <textarea id="acc-desc" placeholder="Descripción breve..." required class="w-full bg-[#0a0a0a] border border-[#1f1f1f] rounded-xl p-3 text-sm text-white h-[52px] outline-none focus:border-purple-500 custom-scrollbar"></textarea>
+                            <!-- Input para múltiples imágenes -->
+                            <input type="text" id="acc-img" placeholder="Links de imágenes separados por coma (,)" required class="w-full bg-[#0a0a0a] border border-[#1f1f1f] rounded-xl p-3 text-sm text-white outline-none focus:border-purple-500">
                             <button type="submit" class="w-full bg-purple-600/20 border border-purple-500/50 text-purple-400 font-bold py-3 rounded-xl text-sm hover:bg-purple-500 hover:text-white transition-all">Publicar Cuenta</button>
                         </form>
                     </div>
@@ -165,36 +175,21 @@
             </div>
             <div id="accounts-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-24"></div>
 
-            <!-- SECCIÓN DE RESEÑAS PRO -->
+            <!-- Reseñas -->
             <div class="border-t border-[#1f1f1f] pt-16 pb-10">
                 <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-10">
                     <div class="flex items-center gap-4">
                         <div class="h-10 w-2 bg-yellow-500 rounded-full shadow-[0_0_15px_rgba(234,179,8,0.5)]"></div>
                         <div>
                             <h2 class="text-3xl font-black text-white">Lo que dicen los clientes</h2>
-                            <p class="text-slate-400 text-sm mt-1">Calificaciones reales de jugadores satisfechos.</p>
                         </div>
                     </div>
-                    <button onclick="promptReview()" class="bg-[#0a0a0a] border border-[#1f1f1f] hover:border-yellow-500 text-white font-bold py-3 px-6 rounded-xl transition-all shadow-lg flex items-center gap-2 group">
-                        <i class="fa-solid fa-pen-nib text-yellow-500 group-hover:scale-110 transition-transform"></i> Escribir Reseña
-                    </button>
                 </div>
-                
-                <div id="reviews-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <!-- Las reseñas se inyectan aquí -->
-                </div>
+                <div id="reviews-container" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
             </div>
 
         </div>
     </main>
-
-    <!-- Footer -->
-    <footer class="border-t border-[#1f1f1f] bg-[#050505] py-10 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <div class="text-2xl font-black tracking-tight text-white mb-2 opacity-50">SAITH<span class="text-purple-500">STORE</span></div>
-            <p class="text-slate-600 text-sm">© 2026 Todos los derechos reservados. Pagos seguros vía Yape, Plin y PayPal.</p>
-        </div>
-    </footer>
 
     <!-- WhatsApp Flotante -->
     <a href="https://wa.me/51967128876" target="_blank" class="fixed bottom-6 right-6 h-16 w-16 bg-gradient-to-tr from-green-600 to-green-400 rounded-2xl flex items-center justify-center text-white text-3xl shadow-[0_10px_30px_rgba(34,197,94,0.3)] hover:-translate-y-2 transition-all z-50 border border-green-400/30">
@@ -213,247 +208,198 @@
         const ADMIN_PASS = "jessicajasmin11";
         const FALLBACK_IMG = "https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60";
         let isAdminActive = false;
-
-        // Tasas de cambio (se actualizan solas)
         let exchangeRates = { USD: 1, PEN: 3.80, EUR: 0.93, MXN: 18.50 };
         let currentCurrency = 'USD';
         let currencySymbols = { USD: '$', PEN: 'S/', EUR: '€', MXN: '$' };
 
-        fetch('https://open.er-api.com/v6/latest/USD')
-            .then(res => res.json())
-            .then(data => {
-                exchangeRates.PEN = data.rates.PEN;
-                exchangeRates.EUR = data.rates.EUR;
-                exchangeRates.MXN = data.rates.MXN;
-                loadData();
-            }).catch(e => console.log("Usando tasas offline"));
+        fetch('https://open.er-api.com/v6/latest/USD').then(res => res.json()).then(data => {
+            exchangeRates.PEN = data.rates.PEN; exchangeRates.EUR = data.rates.EUR; exchangeRates.MXN = data.rates.MXN; loadData();
+        }).catch(e => console.log("Usando tasas offline"));
 
-        // Datos de reseñas por defecto
-        const defaultReviews = [
-            { id: 'rev_1', name: 'Alonso V.', service: 'Farmeo de Deseos', text: 'Increíble servicio. En menos de 24 horas ya tenía todo el farmeo listo para el banner. Pagué fácil por Yape y me mantuvieron informado por WhatsApp.', date: 'Hace 2 días' },
-            { id: 'rev_2', name: 'Sofia M.', service: 'Cuenta Starter Genshin', text: 'Me pasaron los datos de la cuenta casi al instante. Vino con exactamente lo que prometía la publicación. Súper confiable. #saithboost', date: 'Hace 1 semana' },
-            { id: 'rev_3', name: 'Diego P.', service: 'Exploración 100%', text: 'Tenía mucha pereza de explorar el mapa de Penacony en Honkai, Saith lo dejó al 100% rapidísimo. Excelente trato, los recomiendo totalmente.', date: 'Hace 2 semanas' }
-        ];
-
-        // Traductor
         function changeLanguage(langCode) {
             const select = document.querySelector('.goog-te-combo');
-            if (select) {
-                select.value = langCode;
-                select.dispatchEvent(new Event('change'));
-                
-                const btns = document.querySelectorAll('button[onclick^="changeLanguage"]');
-                btns[0].classList.toggle('text-slate-400', langCode === 'en');
-                btns[0].classList.toggle('text-white', langCode === 'es');
-                btns[1].classList.toggle('text-slate-400', langCode === 'es');
-                btns[1].classList.toggle('text-white', langCode === 'en');
-            }
+            if (select) { select.value = langCode; select.dispatchEvent(new Event('change')); }
         }
 
         function updateCurrency() {
-            currentCurrency = document.getElementById('currency-selector').value;
-            loadData();
+            currentCurrency = document.getElementById('currency-selector').value; loadData();
         }
 
         function loginAdminPro() {
-            if(isAdminActive) {
-                document.getElementById('admin-dashboard').classList.toggle('hidden');
-                return;
-            }
-            Swal.fire({
-                title: 'Acceso Sistema', input: 'password', inputPlaceholder: 'Clave maestra...',
-                showCancelButton: true, confirmButtonText: 'Entrar', confirmButtonColor: '#8b5cf6',
-                customClass: { popup: 'dark-swal' }
-            }).then((result) => {
+            if(isAdminActive) { document.getElementById('admin-dashboard').classList.toggle('hidden'); return; }
+            Swal.fire({ title: 'Acceso Sistema', input: 'password', inputPlaceholder: 'Clave...', showCancelButton: true, confirmButtonText: 'Entrar', confirmButtonColor: '#8b5cf6', customClass: { popup: 'dark-swal' } })
+            .then((result) => {
                 if (result.value === ADMIN_PASS) {
-                    isAdminActive = true;
-                    document.getElementById('admin-dashboard').classList.remove('hidden');
-                    loadData();
+                    isAdminActive = true; document.getElementById('admin-dashboard').classList.remove('hidden'); loadData();
                     Swal.fire({ icon: 'success', title: 'Conectado', showConfirmButton: false, timer: 1000, customClass: { popup: 'dark-swal' } });
                 }
             });
         }
 
-        function logoutAdmin() {
-            isAdminActive = false;
-            document.getElementById('admin-dashboard').classList.add('hidden');
-            loadData();
-        }
+        function logoutAdmin() { isAdminActive = false; document.getElementById('admin-dashboard').classList.add('hidden'); loadData(); }
 
         function deleteItem(id, type) {
-            Swal.fire({
-                title: '¿Eliminar?', text: "No se puede deshacer.", icon: 'warning',
-                showCancelButton: true, confirmButtonColor: '#ef4444', confirmButtonText: 'Sí, borrar', customClass: { popup: 'dark-swal' }
-            }).then((result) => {
+            Swal.fire({ title: '¿Eliminar?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#ef4444', confirmButtonText: 'Borrar', customClass: { popup: 'dark-swal' } })
+            .then((result) => {
                 if (result.isConfirmed) {
                     let storageKey = type === 'boost' ? 'saith_boosting' : (type === 'account' ? 'saith_cuentas' : 'saith_reviews');
                     let data = JSON.parse(localStorage.getItem(storageKey));
-                    
-                    if(type === 'review') {
-                        data = data.filter(r => r.id !== id);
-                        localStorage.setItem(storageKey, JSON.stringify(data));
-                    } else {
-                        delete data[id];
-                        localStorage.setItem(storageKey, JSON.stringify(data));
-                    }
+                    if(type === 'review') { data = data.filter(r => r.id !== id); localStorage.setItem(storageKey, JSON.stringify(data)); } 
+                    else { delete data[id]; localStorage.setItem(storageKey, JSON.stringify(data)); }
                     loadData();
                 }
             });
         }
 
-        // Pop-up para escribir reseña
-        async function promptReview() {
-            const { value: formValues } = await Swal.fire({
-                title: 'Escribe tu Reseña',
-                html:
-                    '<input id="swal-name" class="swal2-input" placeholder="Tu Nombre o Nickname">' +
-                    '<input id="swal-service" class="swal2-input" placeholder="¿Qué servicio compraste?">' +
-                    '<textarea id="swal-text" class="swal2-textarea" placeholder="Cuéntanos tu experiencia..."></textarea>',
-                focusConfirm: false,
-                showCancelButton: true,
-                cancelButtonText: 'Cancelar',
-                confirmButtonText: 'Publicar Reseña',
-                confirmButtonColor: '#eab308', // Yellow
-                customClass: { popup: 'dark-swal' },
-                preConfirm: () => {
-                    const name = document.getElementById('swal-name').value;
-                    const text = document.getElementById('swal-text').value;
-                    if (!name || !text) { Swal.showValidationMessage('Por favor completa nombre y experiencia'); return false;}
-                    return {
-                        id: 'rev_' + Date.now(),
-                        name: name,
-                        service: document.getElementById('swal-service').value || 'Servicios Saith',
-                        text: text,
-                        date: 'Justo ahora'
-                    }
-                }
-            });
-
-            if (formValues) {
-                let currentReviews = JSON.parse(localStorage.getItem('saith_reviews')) || defaultReviews;
-                currentReviews.unshift(formValues); // Añadir al principio
-                localStorage.setItem('saith_reviews', JSON.stringify(currentReviews));
-                loadData();
-                Swal.fire({ icon: 'success', title: '¡Reseña Publicada!', text: 'Gracias por confiar en nosotros.', showConfirmButton: false, timer: 2000, customClass: { popup: 'dark-swal' } });
-            }
-        }
-
         function generateOrderTicket(itemType, title, usdPrice) {
             const convertedPrice = (usdPrice * exchangeRates[currentCurrency]).toFixed(2);
-            const symbol = currencySymbols[currentCurrency];
-            const message = `Hola *Saith Store* 🚀\n\n🛍️ *Deseo adquirir:* ${title} (${itemType})\n💵 *Monto:* ${symbol} ${convertedPrice} ${currentCurrency}\n\nPor favor, indícame los pasos para transferir. #saithboost`;
+            const message = `Hola *Saith Store* 🚀\n\n🛍️ *Deseo adquirir:* ${title} (${itemType})\n💵 *Monto:* ${currencySymbols[currentCurrency]} ${convertedPrice} ${currentCurrency}\n\nPor favor, indícame los pasos. #saithboost`;
             window.open(`https://wa.me/51967128876?text=${encodeURIComponent(message)}`, '_blank');
         }
 
+        // GALERÍA MODAL CON SPINNER DE CARGA INTEGRADO
+        function openAccountDetails(itemJsonStr) {
+            const item = JSON.parse(decodeURIComponent(itemJsonStr));
+            const imgArray = item.imagenes || [item.imagenUrl || FALLBACK_IMG];
+            
+            // Construir el HTML de todas las imágenes con Spinner integrado
+            const imagesHtml = imgArray.map(url => `
+                <div class="relative flex justify-center items-center min-h-[200px] bg-[#050505] rounded-xl border border-[#1f1f1f] mb-4 overflow-hidden shadow-lg">
+                    <!-- Animación de carga (Spinner) -->
+                    <div class="absolute inset-0 flex items-center justify-center text-purple-500">
+                        <i class="fa-solid fa-circle-notch fa-spin text-3xl opacity-50"></i>
+                    </div>
+                    <!-- Imagen con efecto de aparición (Fade-in) -->
+                    <img src="${url}" 
+                         class="w-full relative z-10 opacity-0 transition-opacity duration-700 ease-in-out" 
+                         onload="this.classList.remove('opacity-0'); this.previousElementSibling.style.display='none';" 
+                         onerror="this.src='${FALLBACK_IMG}'; this.classList.remove('opacity-0'); this.previousElementSibling.style.display='none';">
+                </div>
+            `).join('');
+            
+            const serverBadge = item.servidor ? `<span class="inline-block bg-blue-500/20 text-blue-400 border border-blue-500/50 px-3 py-1 rounded-lg text-xs font-bold mb-4 uppercase tracking-wider">${item.servidor}</span>` : '';
+
+            Swal.fire({
+                title: `<div class="text-left mt-2"><h3 class="text-2xl font-black text-white leading-tight mb-2">${item.titulo}</h3>${serverBadge}</div>`,
+                html: `
+                    <div class="text-left">
+                        <p class="text-slate-300 text-sm mb-6 pb-6 border-b border-[#1f1f1f] leading-relaxed">${item.desc}</p>
+                        <h4 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4"><i class="fa-solid fa-image mr-2"></i>Galería de Imágenes</h4>
+                        <div class="max-h-[50vh] overflow-y-auto pr-2 custom-scrollbar">
+                            ${imagesHtml}
+                        </div>
+                        <button onclick="Swal.close(); generateOrderTicket('Cuenta', '${item.titulo}', ${item.precio})" class="mt-6 w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold py-4 rounded-xl transition-all shadow-[0_10px_20px_rgba(139,92,246,0.2)] flex justify-center items-center gap-2 hover:opacity-90">
+                            <i class="fa-solid fa-gem"></i> Adquirir Cuenta por $${item.precio} USD
+                        </button>
+                    </div>
+                `,
+                showCloseButton: true,
+                showConfirmButton: false,
+                width: '600px',
+                background: '#0a0a0a',
+                customClass: { popup: 'dark-swal border border-[#1f1f1f]', title: 'p-0 m-0', htmlContainer: 'p-0 m-0 mt-2' }
+            });
+        }
+
         function loadData() {
-            // Cargar Productos
             let dataBoost = JSON.parse(localStorage.getItem('saith_boosting')) || {};
             let dataAcc = JSON.parse(localStorage.getItem('saith_cuentas')) || {};
-            let dataRev = JSON.parse(localStorage.getItem('saith_reviews'));
-            
-            // Si es la primera vez, cargar las reseñas por defecto
-            if(!dataRev) {
-                dataRev = defaultReviews;
-                localStorage.setItem('saith_reviews', JSON.stringify(dataRev));
-            }
 
             // Renderizar Boosting
             const srvCont = document.getElementById('services-container');
-            srvCont.innerHTML = Object.keys(dataBoost).length === 0 ? '<div class="col-span-full py-10 text-center border border-dashed border-[#1f1f1f] rounded-2xl"><p class="text-slate-500 font-medium">Catálogo en mantenimiento. Vuelve pronto.</p></div>' : '';
+            srvCont.innerHTML = Object.keys(dataBoost).length === 0 ? '' : '';
             Object.entries(dataBoost).forEach(([id, item]) => {
                 const convertedPrice = (parseFloat(item.precio) * exchangeRates[currentCurrency]).toFixed(2);
                 srvCont.innerHTML += `
                     <div class="pro-card rounded-3xl flex flex-col justify-between group">
-                        ${isAdminActive ? `<button onclick="deleteItem('${id}', 'boost')" class="absolute top-3 right-3 bg-red-500/80 backdrop-blur-md text-white w-9 h-9 rounded-full shadow-lg hover:bg-red-500 z-20 flex items-center justify-center border border-white/20 transition-all"><i class="fa-solid fa-trash text-sm"></i></button>` : ''}
+                        ${isAdminActive ? `<button onclick="deleteItem('${id}', 'boost')" class="absolute top-3 right-3 bg-red-500/80 backdrop-blur-md text-white w-9 h-9 rounded-full shadow-lg hover:bg-red-500 z-20 flex items-center justify-center border border-white/20"><i class="fa-solid fa-trash text-sm"></i></button>` : ''}
                         <div class="img-container rounded-t-3xl z-10">
-                            <img src="${item.imagenUrl}" alt="${item.titulo}" onerror="this.src='${FALLBACK_IMG}'">
+                            <img src="${item.imagenUrl}" onerror="this.src='${FALLBACK_IMG}'">
                             <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] to-transparent opacity-80"></div>
-                            <span class="absolute top-3 left-3 text-[10px] bg-black/60 border border-white/10 text-white px-3 py-1.5 rounded-full font-bold uppercase backdrop-blur-md shadow-lg">${item.juego}</span>
+                            <span class="absolute top-3 left-3 text-[10px] bg-black/60 border border-white/10 text-white px-3 py-1.5 rounded-full font-bold uppercase backdrop-blur-md">${item.juego}</span>
                         </div>
                         <div class="p-6 flex flex-col flex-1 justify-between relative z-10 -mt-6">
                             <div>
                                 <h3 class="text-lg font-bold text-white line-clamp-2 leading-tight">${item.titulo}</h3>
                                 <p class="text-sm text-slate-400 mt-2 h-10 overflow-hidden leading-relaxed">${item.desc}</p>
-                                <p class="text-2xl font-black text-cyan-400 mt-4">${currencySymbols[currentCurrency]} ${convertedPrice} <span class="text-xs text-slate-500 font-bold tracking-widest uppercase ml-1">${currentCurrency}</span></p>
+                                <p class="text-2xl font-black text-cyan-400 mt-4">${currencySymbols[currentCurrency]} ${convertedPrice} <span class="text-xs text-slate-500 font-bold ml-1">${currentCurrency}</span></p>
                             </div>
-                            <button onclick="generateOrderTicket('Boosting', '${item.titulo}', ${item.precio})" class="mt-6 w-full bg-[#121212] border border-[#2a2a2a] group-hover:border-cyan-500/50 group-hover:bg-cyan-500/10 text-white font-bold py-3.5 rounded-xl transition-all text-sm shadow-lg flex justify-center items-center gap-2"><i class="fa-solid fa-cart-shopping"></i> Comprar</button>
+                            <button onclick="generateOrderTicket('Boosting', '${item.titulo}', ${item.precio})" class="mt-6 w-full bg-[#121212] border border-[#2a2a2a] group-hover:border-cyan-500/50 group-hover:bg-cyan-500/10 text-white font-bold py-3.5 rounded-xl transition-all text-sm flex justify-center items-center gap-2"><i class="fa-solid fa-cart-shopping"></i> Comprar</button>
                         </div>
                     </div>`;
             });
 
             // Renderizar Cuentas
             const accCont = document.getElementById('accounts-container');
-            accCont.innerHTML = Object.keys(dataAcc).length === 0 ? '<div class="col-span-full py-10 text-center border border-dashed border-[#1f1f1f] rounded-2xl"><p class="text-slate-500 font-medium">No hay cuentas publicadas por el momento.</p></div>' : '';
+            accCont.innerHTML = Object.keys(dataAcc).length === 0 ? '<div class="col-span-full py-10 text-center"><p class="text-slate-500 font-medium">No hay cuentas publicadas.</p></div>' : '';
             Object.entries(dataAcc).forEach(([id, item]) => {
                 const convertedPrice = (parseFloat(item.precio) * exchangeRates[currentCurrency]).toFixed(2);
+                
+                // Procesar la primera imagen y el badge del servidor
+                const imgArray = item.imagenes || [item.imagenUrl || FALLBACK_IMG];
+                const firstImg = imgArray[0];
+                const serverBadge = item.servidor ? `<span class="absolute top-3 right-3 text-[10px] bg-blue-900/80 border border-blue-500/50 text-white px-3 py-1.5 rounded-full font-bold uppercase backdrop-blur-md shadow-lg z-10">${item.servidor}</span>` : '';
+                
+                // Preparar los datos para pasarlos al modal
+                const itemJson = encodeURIComponent(JSON.stringify(item));
+
                 accCont.innerHTML += `
                     <div class="pro-card rounded-3xl flex flex-col justify-between group">
-                        ${isAdminActive ? `<button onclick="deleteItem('${id}', 'account')" class="absolute top-3 right-3 bg-red-500/80 backdrop-blur-md text-white w-9 h-9 rounded-full shadow-lg hover:bg-red-500 z-20 flex items-center justify-center border border-white/20 transition-all"><i class="fa-solid fa-trash text-sm"></i></button>` : ''}
-                        <div class="img-container rounded-t-3xl z-10">
-                            <img src="${item.imagenUrl}" alt="${item.titulo}" onerror="this.src='${FALLBACK_IMG}'">
-                            <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] to-transparent opacity-80"></div>
-                            <span class="absolute top-3 left-3 text-[10px] bg-purple-900/60 border border-purple-500/30 text-white px-3 py-1.5 rounded-full font-bold uppercase backdrop-blur-md shadow-lg">${item.juego}</span>
+                        ${isAdminActive ? `<button onclick="deleteItem('${id}', 'account')" class="absolute top-14 right-3 bg-red-500/80 backdrop-blur-md text-white w-9 h-9 rounded-full shadow-lg hover:bg-red-500 z-20 flex items-center justify-center border border-white/20"><i class="fa-solid fa-trash text-sm"></i></button>` : ''}
+                        
+                        <!-- Contenedor de imagen Clickable -->
+                        <div class="img-container rounded-t-3xl z-10 cursor-pointer relative" onclick="openAccountDetails('${itemJson}')">
+                            <img src="${firstImg}" onerror="this.src='${FALLBACK_IMG}'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-80 group-hover:opacity-50 transition-opacity"></div>
+                            
+                            <!-- Overlay de Ver Galería -->
+                            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10 bg-black/40 backdrop-blur-sm">
+                                <span class="bg-white/10 border border-white/20 text-white px-4 py-2 rounded-xl text-sm font-bold shadow-lg"><i class="fa-solid fa-magnifying-glass-plus mr-2"></i>Ver Detalles</span>
+                            </div>
+
+                            <span class="absolute top-3 left-3 text-[10px] bg-purple-900/60 border border-purple-500/30 text-white px-3 py-1.5 rounded-full font-bold uppercase backdrop-blur-md z-10">${item.juego}</span>
+                            ${serverBadge}
                         </div>
+                        
                         <div class="p-6 flex flex-col flex-1 justify-between relative z-10 -mt-6">
                             <div>
                                 <h3 class="text-lg font-bold text-white line-clamp-2 leading-tight">${item.titulo}</h3>
                                 <p class="text-sm text-slate-400 mt-2 h-14 overflow-hidden leading-relaxed">${item.desc}</p>
-                                <p class="text-2xl font-black text-amber-400 mt-4">${currencySymbols[currentCurrency]} ${convertedPrice} <span class="text-xs text-slate-500 font-bold tracking-widest uppercase ml-1">${currentCurrency}</span></p>
+                                <p class="text-2xl font-black text-amber-400 mt-4">${currencySymbols[currentCurrency]} ${convertedPrice} <span class="text-xs text-slate-500 font-bold ml-1">${currentCurrency}</span></p>
                             </div>
-                            <button onclick="generateOrderTicket('Cuenta', '${item.titulo}', ${item.precio})" class="mt-6 w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold py-3.5 rounded-xl transition-all text-sm shadow-[0_10px_20px_rgba(139,92,246,0.2)] flex justify-center items-center gap-2"><i class="fa-solid fa-gem"></i> Adquirir</button>
+                            <button onclick="generateOrderTicket('Cuenta', '${item.titulo}', ${item.precio})" class="mt-6 w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:opacity-80 text-white font-bold py-3.5 rounded-xl transition-all text-sm flex justify-center items-center gap-2"><i class="fa-solid fa-gem"></i> Adquirir</button>
                         </div>
                     </div>`;
             });
-
-            // Renderizar Reseñas
-            const revCont = document.getElementById('reviews-container');
-            revCont.innerHTML = dataRev.length === 0 ? '<div class="col-span-full py-8 text-center"><p class="text-slate-500">Sé el primero en dejar una reseña.</p></div>' : '';
-            
-            // Mostrar solo las últimas 6 para no saturar la pantalla
-            dataRev.slice(0, 6).forEach((rev) => {
-                // Generar un color de avatar aleatorio basado en el nombre
-                const colors = ['bg-purple-500', 'bg-cyan-500', 'bg-emerald-500', 'bg-rose-500', 'bg-amber-500'];
-                const avatarColor = colors[rev.name.length % colors.length];
-                const initial = rev.name.charAt(0).toUpperCase();
-
-                revCont.innerHTML += `
-                    <div class="bg-[#0a0a0a] border border-[#1f1f1f] rounded-3xl p-6 relative group transition-all hover:border-[#2a2a2a] hover:bg-[#0c0c0c]">
-                        ${isAdminActive ? `<button onclick="deleteItem('${rev.id}', 'review')" class="absolute top-4 right-4 text-slate-600 hover:text-red-500 transition-colors z-20"><i class="fa-solid fa-trash"></i></button>` : ''}
-                        
-                        <div class="flex gap-1 text-yellow-500 text-xs mb-4">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                        </div>
-                        <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"${rev.text}"</p>
-                        
-                        <div class="flex items-center gap-3 mt-auto">
-                            <div class="h-10 w-10 rounded-full ${avatarColor} flex items-center justify-center text-white font-bold shadow-lg">
-                                ${initial}
-                            </div>
-                            <div>
-                                <p class="text-white font-bold text-sm leading-none">${rev.name}</p>
-                                <p class="text-slate-500 text-[11px] mt-1 font-medium">${rev.service} • ${rev.date}</p>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
         }
 
+        // Guardar Elemento (Maneja el array de imágenes y servidor)
         function saveItem(e, type) {
             e.preventDefault();
             const storageKey = type === 'boost' ? 'saith_boosting' : 'saith_cuentas';
             const data = JSON.parse(localStorage.getItem(storageKey)) || {};
             const newId = Date.now().toString();
             
-            data[newId] = type === 'boost' ? {
-                juego: document.getElementById('bst-game').value, titulo: document.getElementById('bst-title').value,
-                desc: document.getElementById('bst-desc').value, precio: document.getElementById('bst-price').value,
-                imagenUrl: document.getElementById('bst-img').value || FALLBACK_IMG
-            } : {
-                juego: document.getElementById('acc-game').value, titulo: document.getElementById('acc-title').value,
-                precio: document.getElementById('acc-price').value, desc: document.getElementById('acc-desc').value,
-                imagenUrl: document.getElementById('acc-img').value || FALLBACK_IMG
-            };
+            if(type === 'boost') {
+                data[newId] = {
+                    juego: document.getElementById('bst-game').value, titulo: document.getElementById('bst-title').value,
+                    desc: document.getElementById('bst-desc').value, precio: document.getElementById('bst-price').value,
+                    imagenUrl: document.getElementById('bst-img').value || FALLBACK_IMG
+                };
+            } else {
+                // Separa los links por comas, limpia espacios y quita vacíos
+                const imgsInput = document.getElementById('acc-img').value;
+                const imagesArray = imgsInput.split(',').map(url => url.trim()).filter(url => url !== '');
+
+                data[newId] = {
+                    juego: document.getElementById('acc-game').value, 
+                    servidor: document.getElementById('acc-server').value, 
+                    titulo: document.getElementById('acc-title').value,
+                    precio: document.getElementById('acc-price').value, 
+                    desc: document.getElementById('acc-desc').value,
+                    imagenes: imagesArray.length > 0 ? imagesArray : [FALLBACK_IMG]
+                };
+            }
             
             localStorage.setItem(storageKey, JSON.stringify(data));
             Swal.fire({ icon: 'success', title: 'Publicado', toast: true, position: 'top-end', showConfirmButton: false, timer: 1500, customClass: { popup: 'dark-swal' } });
