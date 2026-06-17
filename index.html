@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,12 +37,10 @@
     <canvas id="space-canvas"></canvas>
     <div class="radial-glow"></div>
 
-    <!-- Barra Superior -->
     <div class="bg-gradient-to-r from-purple-950/80 via-black to-cyan-950/80 text-center py-2 px-4 text-[11px] font-bold tracking-wider border-b border-white/5 relative z-50">
         <span id="txt-topbar"><i class="fa-solid fa-shield-halved text-cyan-400"></i> Compras 100% manuales y seguras. Trato directo exclusivo por WhatsApp con Saith Store.</span>
     </div>
 
-    <!-- Navegación -->
     <header class="sticky top-0 z-40 glass-nav px-4 lg:px-16 py-4 flex justify-between items-center">
         <div class="flex items-center gap-3">
             <div class="h-9 w-9 rounded-xl bg-gradient-to-tr from-purple-600 to-cyan-400 flex items-center justify-center shadow-lg shadow-purple-500/20">
@@ -70,7 +68,7 @@
                     <option value="en" class="bg-slate-950">EN</option>
                 </select>
             </div>
-            <button onclick="scollToAdmin()" class="h-8 w-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white transition-colors">
+            <button onclick="scrollToAdmin()" class="h-8 w-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white transition-colors">
                 <i class="fa-solid fa-sliders text-xs"></i>
             </button>
         </div>
@@ -95,7 +93,6 @@
 
     <main class="max-w-7xl mx-auto w-full px-4 mb-24 flex-1">
         
-        <!-- Sección Boosting -->
         <h3 id="txt-boosting-title" class="text-lg font-bold text-white mb-6 flex items-center gap-2">
             <i class="fa-solid fa-bolt text-cyan-400"></i> Servicios de Boosting Profesional
         </h3>
@@ -105,7 +102,6 @@
 
         <div class="border-b border-[#21262d] my-10"></div>
 
-        <!-- Sección Cuentas -->
         <h3 id="txt-marketplace-title" class="text-lg font-bold text-white mb-6 flex items-center gap-2">
             <i class="fa-solid fa-store text-purple-500"></i> Catálogo de Cuentas Activas
         </h3>
@@ -113,7 +109,6 @@
             <div class="col-span-full text-center text-slate-500 py-12">Cargando catálogo en tiempo real...</div>
         </div>
 
-        <!-- Sección Reseñas -->
         <section class="max-w-5xl mx-auto w-full mb-20">
             <div class="flex justify-between items-center mb-8 border-b border-[#21262d] pb-4">
                 <div>
@@ -134,7 +129,7 @@
                         <input type="text" id="rev-country" placeholder="País (Ej: Perú 🇵🇪)" required class="w-full bg-black/50 border border-[#30363d] rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none">
                     </div>
                     <select id="rev-stars" class="w-full bg-black/50 border border-[#30363d] rounded-xl px-3 py-2.5 text-xs text-amber-400 font-bold focus:outline-none">
-                        <option value="5">⭐⭐⭐⭐Sample ⭐ (5/5)</option>
+                        <option value="5">⭐⭐⭐⭐⭐ (5/5)</option>
                         <option value="4">⭐⭐⭐⭐ (4/5)</option>
                         <option value="3">⭐⭐⭐ (3/5)</option>
                     </select>
@@ -146,7 +141,6 @@
             <div id="reviews-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
         </section>
 
-        <!-- ================= PANEL DE GESTIÓN AVANZADA (SÓLO ADMIN) ================= -->
         <section id="admin-anchor" class="max-w-6xl mx-auto w-full border-t border-[#30363d] pt-12 mt-12">
             <div class="flex justify-between items-center mb-6">
                 <div class="flex items-center gap-2">
@@ -165,59 +159,55 @@
                     <button id="tab-btn-reseñas" onclick="switchAdminTab('reseñas')" class="px-4 py-2 text-xs font-bold text-slate-400 hover:text-white">Moderación de Reseñas</button>
                 </div>
 
-                <!-- SUB-PANEL 1: GESTIÓN CUENTAS -->
                 <div id="admin-tab-cuentas" class="space-y-6">
                     <div class="glass-panel p-6 rounded-2xl">
                         <h4 class="text-sm font-bold text-white mb-4"><i class="fa-solid fa-circle-plus text-cyan-400 mr-2"></i>Añadir Cuenta</h4>
                         <form id="account-form" onsubmit="createAccount(event)" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <input type="text" id="acc-title" placeholder="Título (Ej: AR 55 Kazuha)" required class="bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white">
-                            <select id="acc-game" required class="bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white">
+                            <input type="text" id="acc-title" placeholder="Título (Ej: AR 55 Kazuha C2)" required class="bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
+                            <select id="acc-game" required class="bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none">
                                 <option value="Genshin Impact">Genshin Impact</option>
                                 <option value="Star Rail">Star Rail</option>
                                 <option value="Wuthering Waves">Wuthering Waves</option>
                             </select>
-                            <input type="text" id="acc-server" placeholder="Servidor" required class="bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white">
-                            <input type="number" step="0.01" id="acc-price" placeholder="Precio Base USD" required class="bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white">
-                            <input type="text" id="acc-img" placeholder="URL Imagen" required class="bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white">
-                            <select id="acc-instant" class="bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white">
+                            <input type="text" id="acc-server" placeholder="Servidor (Ej: América)" required class="bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
+                            <input type="number" step="0.01" id="acc-price" placeholder="Precio Base USD" required class="bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
+                            <input type="text" id="acc-img" placeholder="URL Imagen del Catálogo" required class="bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
+                            <select id="acc-instant" class="bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none">
                                 <option value="si">¿Entrega Inmediata? SÍ</option>
                                 <option value="no">¿Entrega Inmediata? NO</option>
                             </select>
                             <div class="md:col-span-3">
-                                <textarea id="acc-details" rows="2" placeholder="Detalles de la cuenta..." required class="w-full bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white"></textarea>
+                                <textarea id="acc-details" rows="2" placeholder="Detalles, personajes 5 estrellas, armas..." required class="w-full bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white focus:outline-none"></textarea>
                             </div>
-                            <button type="submit" class="bg-cyan-600 text-white text-xs font-black px-6 py-2 rounded-xl uppercase">Registrar Cuenta</button>
+                            <button type="submit" class="bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-black px-6 py-2 rounded-xl uppercase transition-colors">Registrar Cuenta</button>
                         </form>
                     </div>
-                    <div class="bg-[#0d1117] border border-[#21262d] rounded-xl divide-y divide-[#21262d]" id="admin-accounts-list"></div>
+                    <div class="bg-[#0d1117] border border-[#21262d] rounded-xl divide-y divide-[#21262d] p-4 space-y-2" id="admin-accounts-list"></div>
                 </div>
 
-                <!-- SUB-PANEL 2: GESTIÓN DE BOOSTING DINÁMICO -->
                 <div id="admin-tab-boosting" class="hidden space-y-6">
                     <div class="glass-panel p-6 rounded-2xl">
-                        <h4 class="text-sm font-bold text-white mb-4"><i class="fa-solid fa-sliders text-purple-400 mr-2"></i>Añadir / Editar Categoría de Boosting</h4>
+                        <h4 class="text-sm font-bold text-white mb-4"><i class="fa-solid fa-sliders text-purple-400 mr-2"></i>Añadir Servicio de Boosting</h4>
                         <form id="boosting-form" onsubmit="createBoostingService(event)" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <select id="bst-game" required class="bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white">
+                            <select id="bst-game" required class="bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
                                 <option value="Genshin Impact">Genshin Impact</option>
                                 <option value="Star Rail">Star Rail</option>
                                 <option value="Wuthering Waves">Wuthering Waves</option>
                             </select>
-                            <input type="text" id="bst-title-es" placeholder="Título en Español (Ej: Farmeo de 20 Deseos)" required class="bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white">
-                            <input type="text" id="bst-title-en" placeholder="Título en Inglés (Ej: 20 Wishes Farming)" required class="bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white">
-                            <input type="number" step="0.01" id="bst-price" placeholder="Precio en USD (Ej: 10.00)" required class="bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white">
-                            <input type="text" id="bst-desc-es" placeholder="Descripción ES (Ej: Conseguimos 20 deseos rápido)" required class="bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white">
-                            <input type="text" id="bst-desc-en" placeholder="Descripción EN" required class="bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white">
-                            <button type="submit" class="bg-purple-600 text-white text-xs font-black px-6 py-2 rounded-xl uppercase">Guardar Servicio</button>
+                            <input type="text" id="bst-title-es" placeholder="Título ES (Ej: Farmeo Oculi)" required class="bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
+                            <input type="text" id="bst-title-en" placeholder="Título EN (Ej: Oculi Farming)" required class="bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
+                            <input type="number" step="0.01" id="bst-price" placeholder="Precio USD" required class="bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
+                            <input type="text" id="bst-desc-es" placeholder="Descripción corta ES" required class="bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
+                            <input type="text" id="bst-desc-en" placeholder="Descripción corta EN" required class="bg-black/40 border border-[#30363d] rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
+                            <button type="submit" class="bg-purple-600 hover:bg-purple-500 text-white text-xs font-black px-6 py-2 rounded-xl uppercase transition-colors">Guardar Servicio</button>
                         </form>
                     </div>
-                    <div class="bg-[#0d1117] border border-[#21262d] rounded-xl divide-y divide-[#21262d]" id="admin-boosting-list"></div>
+                    <div class="bg-[#0d1117] border border-[#21262d] rounded-xl divide-y divide-[#21262d] p-4 space-y-2" id="admin-boosting-list"></div>
                 </div>
 
-                <!-- SUB-PANEL 3: REVISIÓN DE REVIEWS -->
-                <div id="admin-tab-reseñas" class="hidden bg-[#0d1117] border border-[#21262d] rounded-xl divide-y divide-[#21262d]" id="admin-reviews-list"></div>
+                <div id="admin-tab-reseñas" class="hidden bg-[#0d1117] border border-[#21262d] rounded-xl divide-y divide-[#21262d] p-4 space-y-2"></div>
             </div>
         </section>
-
     </main>
 
     <footer class="bg-[#0d1117] border-t border-[#21262d] py-8 text-center text-xs text-slate-500">
@@ -237,6 +227,7 @@
         let activeFilter = 'all';
         let rawCuentasData = {};
         let rawBoostingData = {};
+        let rawReviewsData = {};
         let isAdminAuthenticated = false;
 
         const ADMIN_PASSWORD = "jessicajasmin11"; 
@@ -255,12 +246,7 @@
                 gateways: "Canales de Transacción Oficiales",
                 filterAll: "🔥 Ver Todo",
                 btnComprar: "Comprar Ahora",
-                btnVendido: "❌ Vendido",
-                badgeAgotado: "Agotado",
-                badgeInstant: "⚡ Entrega Inmediata",
-                btnToggleForm: "✍️ Escribir Reseña",
-                btnToggleFormClose: "❌ Cerrar Ventana",
-                msgSuccessReview: "Tu reseña ha sido enviada para verificación."
+                badgeInstant: "⚡ Entrega Inmediata"
             },
             en: {
                 topbar: "<i class='fa-solid fa-shield-halved text-cyan-400'></i> 100% secure & manual purchases. Direct deal via WhatsApp.",
@@ -272,14 +258,39 @@
                 gateways: "Official Transaction Channels",
                 filterAll: "🔥 View All",
                 btnComprar: "Buy Now",
-                btnVendido: "❌ Sold Out",
-                badgeAgotado: "Sold Out",
-                badgeInstant: "⚡ Instant Delivery",
-                btnToggleForm: "✍️ Write a Review",
-                btnToggleFormClose: "❌ Close Window",
-                msgSuccessReview: "Your review was submitted for clearance."
+                badgeInstant: "⚡ Instant Delivery"
             }
         };
+
+        // CANVAS BACKGROUND ANIMATION
+        const canvas = document.getElementById('space-canvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        for(let i=0; i<60; i++) {
+            stars.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*1.5, d: Math.random() });
+        }
+
+        function drawStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(255, 255, 255, 0.3)";
+            stars.forEach(s => {
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+                ctx.fill();
+                s.y += 0.15;
+                if(s.y > canvas.height) s.y = 0;
+            });
+            requestAnimationFrame(drawStars);
+        }
+        drawStars();
 
         function changeLanguage(lang) { selectedLanguage = lang; updateUI(); }
         function changeCurrency(curr) { selectedCurrency = curr; updateUI(); }
@@ -316,25 +327,23 @@
         function setActiveFilter(filter) { activeFilter = filter; renderFilters(); renderCuentas(); renderBoosting(); }
         function formatPrice(usdPrice) { return `${currencySymbols[selectedCurrency]}${(parseFloat(usdPrice) * exchangeRates[selectedCurrency]).toFixed(2)}`; }
         function triggerSearch() { renderCuentas(); }
+        function scrollToAdmin() { document.getElementById('admin-anchor').scrollIntoView(); }
+        function toggleReviewForm() { document.getElementById('review-form-container').classList.toggle('hidden'); }
 
-        // RENDERIZAR BOOSTING DESDE DATABASE
+        // READ (RENDER DATA)
         function renderBoosting() {
             const container = document.getElementById('boosting-grid');
             container.innerHTML = '';
-
             const juegos = ["Genshin Impact", "Star Rail", "Wuthering Waves"];
-            const imgs = { "Genshin Impact": "genshin.jpg", "Star Rail": "honkai.webp", "Wuthering Waves": "wuwa.webp" };
             const colors = { "Genshin Impact": "border-l-cyan-500", "Star Rail": "border-l-purple-500", "Wuthering Waves": "border-l-amber-500" };
-            const badges = { "Genshin Impact": "bg-cyan-950 text-cyan-400 border-cyan-500/30", "Star Rail": "bg-purple-950 text-purple-400 border-purple-500/30", "Wuthering Waves": "bg-amber-950 text-amber-400 border-amber-500/30" };
 
             juegos.forEach(juego => {
                 if (activeFilter !== 'all' && juego !== activeFilter) return;
-
                 let itemsHtml = '';
+
                 Object.keys(rawBoostingData).forEach(key => {
                     const srv = rawBoostingData[key];
                     if(srv.juego !== juego) return;
-
                     const title = selectedLanguage === 'es' ? srv.tituloEs : srv.tituloEn;
                     const desc = selectedLanguage === 'es' ? srv.descEs : srv.descEn;
                     const price = formatPrice(srv.precio);
@@ -346,24 +355,19 @@
                                 <h5 class="text-xs font-bold text-white">${title}</h5>
                                 <p class="text-[10px] text-slate-400">${desc}</p>
                             </div>
-                            <a href="https://wa.me/51967128876?text=${encodeURIComponent(waText)}" target="_blank" class="bg-white/5 border border-white/10 hover:border-purple-500 px-2.5 py-1 rounded-lg text-xs font-black text-purple-300">${price} →</a>
+                            <a href="https://wa.me/51967128876?text=${encodeURIComponent(waText)}" target="_blank" class="bg-white/5 border border-white/10 hover:border-purple-500 px-2.5 py-1 rounded-lg text-xs font-black text-purple-300 transition-all">${price} →</a>
                         </div>`;
                 });
 
                 if(itemsHtml === '') return;
-
                 container.innerHTML += `
                     <div class="pro-card rounded-2xl p-4 flex flex-col justify-between border-l-2 ${colors[juego]}">
-                        <div class="relative h-28 rounded-xl overflow-hidden bg-slate-950 mb-4">
-                            <img src="${imgs[juego]}" class="w-full h-full object-cover opacity-60">
-                            <span class="absolute top-2 left-2 border text-[9px] font-black uppercase px-2 py-0.5 rounded ${badges[juego]}">${juego}</span>
-                        </div>
+                        <h4 class="text-xs font-black tracking-wider text-slate-400 mb-3 uppercase">${juego} Operations</h4>
                         <div class="space-y-2">${itemsHtml}</div>
                     </div>`;
             });
         }
 
-        // RENDERIZAR CUENTAS
         function renderCuentas() {
             const container = document.getElementById('marketplace-grid');
             const searchVal = document.getElementById('search-input').value.toLowerCase();
@@ -379,19 +383,19 @@
                 let btn = '', badge = '';
 
                 if(isSold) {
-                    badge = `<span class="absolute top-2 right-2 bg-red-900/80 text-red-200 border border-red-700 text-[9px] font-bold px-2 py-0.5 rounded uppercase">Agotado</span>`;
+                    badge = `<span class="absolute top-2 right-2 bg-red-900/80 text-red-200 border border-red-700 text-[9px] font-bold px-2 py-0.5 rounded uppercase">Vendido</span>`;
                     btn = `<button disabled class="w-full bg-slate-800 text-slate-500 font-bold py-2.5 rounded-xl text-xs uppercase cursor-not-allowed">Agotado</button>`;
                 } else {
                     if(acc.entrega === 'si') badge = `<span class="absolute top-2 right-2 bg-amber-500 text-black text-[9px] font-black px-2 py-0.5 rounded uppercase shadow-md">⚡ Entrega Inmediata</span>`;
                     const waLink = `Hola Saith Store, deseo adquirir la cuenta:\n📌 *Item:* ${acc.titulo}\n💵 *Precio:* ${pFormated}`;
-                    btn = `<a href="https://wa.me/51967128876?text=${encodeURIComponent(waLink)}" target="_blank" class="w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-black py-2.5 rounded-xl text-xs uppercase block text-center shadow-md">Comprar Ahora</a>`;
+                    btn = `<a href="https://wa.me/51967128876?text=${encodeURIComponent(waLink)}" target="_blank" class="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black py-2.5 rounded-xl text-xs uppercase block text-center shadow-md transition-all">Comprar Ahora</a>`;
                 }
 
                 container.innerHTML += `
-                    <div class="pro-card rounded-2xl p-3 flex flex-col justify-between ${isSold ? 'opacity-30' : ''}">
+                    <div class="pro-card rounded-2xl p-3 flex flex-col justify-between ${isSold ? 'opacity-40' : ''}">
                         <div>
                             <div class="relative h-44 rounded-xl overflow-hidden bg-slate-900">
-                                <img src="${acc.imagenUrl}" class="w-full h-full object-cover">
+                                <img src="${acc.imagenUrl || 'https://via.placeholder.com/300'}" class="w-full h-full object-cover">
                                 <span class="absolute top-2 left-2 bg-black/70 border border-white/10 text-[9px] font-bold px-2 py-0.5 rounded text-slate-300 uppercase">${acc.juego}</span>
                                 ${badge}
                             </div>
@@ -409,37 +413,56 @@
             });
         }
 
-        // CONTROL DE DATOS (FETCH)
+        function renderReviews() {
+            const grid = document.getElementById('reviews-grid');
+            grid.innerHTML = '';
+            Object.keys(rawReviewsData).forEach(key => {
+                const r = rawReviewsData[key];
+                grid.innerHTML += `
+                    <div class="glass-panel p-4 rounded-xl">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-bold text-white">${r.name} <span class="text-slate-500 font-normal">from ${r.country}</span></span>
+                            <span class="text-amber-400 text-xs">${"⭐".repeat(parseInt(r.stars))}</span>
+                        </div>
+                        <p class="text-xs text-slate-400 font-mono">"${r.comment}"</p>
+                    </div>`;
+            });
+        }
+
+        // DATABASE CONNECTION (FETCH)
         async function syncAllData() {
             try {
-                const [resCuentas, resBoosting] = await Promise.all([fetch(CUENTAS_URL), fetch(BOOSTING_URL)]);
+                const [resCuentas, resBoosting, resReviews] = await Promise.all([
+                    fetch(CUENTAS_URL), fetch(BOOSTING_URL), fetch(REVIEWS_URL)
+                ]);
                 rawCuentasData = await resCuentas.json() || {};
                 rawBoostingData = await resBoosting.json() || {};
-                
-                // Si la base de datos de boosting está vacía, creamos los valores por defecto automáticamente
-                if(Object.keys(rawBoostingData).length === 0) {
-                    await seedInitialBoosting();
-                }
+                rawReviewsData = await resReviews.json() || {};
 
                 updateUI();
+                renderReviews();
                 if(isAdminAuthenticated) renderAdminDashboard();
-            } catch(e) { console.error(e); }
+            } catch(e) { console.error("Error sincronizando Firebase: ", e); }
         }
 
-        async function seedInitialBoosting() {
-            const defaults = [
-                { juego: "Genshin Impact", tituloEs: "Exploración de Región al 100%", tituloEn: "100% Map Completion", precio: 15.00, descEs: "Cofres, misiones de mundo y coleccionables.", descEn: "Chests, world quests and full oculi exploration." },
-                { juego: "Genshin Impact", tituloEs: "Farmeo de Deseos (20 Deseos)", tituloEn: "20 Wishes Farm", precio: 10.00, descEs: "Conseguimos un paquete de 20 deseos rápido.", descEn: "Fast acquisition of 20 wishes pack." },
-                { juego: "Star Rail", tituloEs: "Universo Simulado & Divergente", tituloEn: "Simulated Universe Clear", precio: 10.00, descEs: "Farmeo semanal de puntos.", descEn: "Weekly point caps clear." }
-            ];
-            for(let item of defaults) {
-                await fetch(BOOSTING_URL, { method: 'POST', body: JSON.stringify(item) });
-            }
-            const res = await fetch(BOOSTING_URL);
-            rawBoostingData = await res.json() || {};
+        // CREATE OPERATIONS (ADMIN & USER)
+        async function createAccount(e) {
+            e.preventDefault();
+            const payload = {
+                titulo: document.getElementById('acc-title').value,
+                juego: document.getElementById('acc-game').value,
+                servidor: document.getElementById('acc-server').value,
+                precio: parseFloat(document.getElementById('acc-price').value),
+                imagenUrl: document.getElementById('acc-img').value,
+                entrega: document.getElementById('acc-instant').value,
+                detalles: document.getElementById('acc-details').value,
+                estado: 'disponible'
+            };
+            await fetch(CUENTAS_URL, { method: 'POST', body: JSON.stringify(payload) });
+            document.getElementById('account-form').reset();
+            await syncAllData();
         }
 
-        // OPERACIONES DEL ADMINISTRADOR (CRUD)
         async function createBoostingService(e) {
             e.preventDefault();
             const payload = {
@@ -452,116 +475,116 @@
             };
             await fetch(BOOSTING_URL, { method: 'POST', body: JSON.stringify(payload) });
             document.getElementById('boosting-form').reset();
-            syncAllData();
+            await syncAllData();
         }
 
-        async function deleteBoosting(key) {
-            if(!confirm("¿Eliminar este servicio de boosting?")) return;
-            await fetch(`${FIREBASE_BASE_URL}boosting/${key}.json`, { method: 'DELETE' });
-            syncAllData();
+        async function submitReview(e) {
+            e.preventDefault();
+            const payload = {
+                name: document.getElementById('rev-name').value,
+                country: document.getElementById('rev-country').value,
+                stars: document.getElementById('rev-stars').value,
+                comment: document.getElementById('rev-comment').value
+            };
+            await fetch(REVIEWS_URL, { method: 'POST', body: JSON.stringify(payload) });
+            document.getElementById('review-form').reset();
+            toggleReviewForm();
+            alert("Reseña publicada con éxito en el ecosistema #saithboost");
+            await syncAllData();
         }
 
+        // CONTROL PANEL CONTROL LOGIC
         function loginAdmin() {
             const pass = prompt("Clave Maestra:");
             if(pass === ADMIN_PASSWORD) {
                 isAdminAuthenticated = true;
-                localStorage.setItem('saith_session', 'true');
                 document.getElementById('admin-dashboard').classList.remove('hidden');
-                document.getElementById('btn-login-admin').innerText = "🔓 Consola Desbloqueada";
+                document.getElementById('btn-login-admin').innerText = "🔓 Consola Abierta";
                 renderAdminDashboard();
             } else { alert("Acceso denegado."); }
         }
 
+        function switchAdminTab(tab) {
+            ['cuentas', 'boosting', 'reseñas'].forEach(t => {
+                document.getElementById(`admin-tab-${t}`).classList.add('hidden');
+                document.getElementById(`tab-btn-${t}`).className = "px-4 py-2 text-xs font-bold text-slate-400 hover:text-white";
+            });
+            document.getElementById(`admin-tab-${tab}`).classList.remove('hidden');
+            document.getElementById(`tab-btn-${tab}`).className = "px-4 py-2 text-xs font-bold text-white border-b-2 border-purple-500";
+        }
+
+        // RENDER CENTRAL CONSOLE
         function renderAdminDashboard() {
-            // Lista de Cuentas Admin
+            // Render Cuentas Admin
             const accList = document.getElementById('admin-accounts-list');
             accList.innerHTML = '';
             Object.keys(rawCuentasData).forEach(key => {
-                const acc = rawCuentasData[key];
+                const item = rawCuentasData[key];
                 accList.innerHTML += `
-                    <div class="p-3 flex justify-between items-center text-xs">
-                        <span class="text-white font-bold">${acc.titulo} (${formatPrice(acc.precio)})</span>
+                    <div class="flex justify-between items-center text-xs p-2 bg-black/20 rounded-lg">
+                        <span>[${item.juego}] <b>${item.titulo}</b> - $${item.precio}</span>
                         <div class="flex gap-2">
-                            <button onclick="toggleStockState('${key}', '${acc.estado}')" class="px-2 py-1 rounded bg-amber-600 text-black font-bold">${acc.estado === 'agotado' ? 'Disponible' : 'Agotar'}</button>
-                            <button onclick="deleteAccount('${key}')" class="bg-red-700 text-white px-2 py-1 rounded">Eliminar</button>
+                            <button onclick="toggleSoldAccount('${key}', '${item.estado}')" class="bg-amber-600 px-2 py-1 rounded text-[10px] font-bold">${item.estado === 'agotado' ? '✅ Activar' : '❌ Marcar Vendido'}</button>
+                            <button onclick="deleteAccount('${key}')" class="bg-red-700 px-2 py-1 rounded text-[10px] font-bold">Eliminar</button>
                         </div>
                     </div>`;
             });
 
-            // Lista de Boosting Admin
+            // Render Boosting Admin
             const bstList = document.getElementById('admin-boosting-list');
             bstList.innerHTML = '';
             Object.keys(rawBoostingData).forEach(key => {
-                const bst = rawBoostingData[key];
+                const item = rawBoostingData[key];
                 bstList.innerHTML += `
-                    <div class="p-3 flex justify-between items-center text-xs">
-                        <span class="text-white font-bold">[${bst.juego}] ${bst.tituloEs} (${formatPrice(bst.precio)})</span>
-                        <button onclick="deleteBoosting('${key}')" class="bg-red-700 text-white px-2 py-1 rounded">Eliminar</button>
+                    <div class="flex justify-between items-center text-xs p-2 bg-black/20 rounded-lg">
+                        <span>[${item.juego}] <b>${item.tituloEs}</b> - $${item.precio}</span>
+                        <button onclick="deleteBoosting('${key}')" class="bg-red-700 px-2 py-1 rounded text-[10px] font-bold">Eliminar</button>
+                    </div>`;
+            });
+
+            // Render Reviews Admin
+            const revList = document.getElementById('admin-tab-reseñas');
+            revList.innerHTML = '';
+            Object.keys(rawReviewsData).forEach(key => {
+                const item = rawReviewsData[key];
+                revList.innerHTML += `
+                    <div class="flex justify-between items-center text-xs p-2 bg-black/20 rounded-lg">
+                        <span><b>${item.name}</b>: ${item.comment}</span>
+                        <button onclick="deleteReview('${key}')" class="bg-red-700 px-2 py-1 rounded text-[10px] font-bold">Remover</button>
                     </div>`;
             });
         }
 
-        async function createAccount(e) {
-            e.preventDefault();
-            const payload = {
-                titulo: document.getElementById('acc-title').value,
-                juego: document.getElementById('acc-game').value,
-                servidor: document.getElementById('acc-server').value,
-                precio: parseFloat(document.getElementById('acc-price').value),
-                imagenUrl: document.getElementById('acc-img').value,
-                entrega: document.getElementById('acc-instant').value,
-                estado: "disponible",
-                detalles: document.getElementById('acc-details').value
-            };
-            await fetch(CUENTAS_URL, { method: 'POST', body: JSON.stringify(payload) });
-            document.getElementById('account-form').reset();
-            syncAllData();
-        }
-
-        async function toggleStockState(key, current) {
-            const target = current === 'agotado' ? 'disponible' : 'agotado';
-            await fetch(`${FIREBASE_BASE_URL}cuentas/${key}/estado.json`, { method: 'PUT', body: JSON.stringify(target) });
-            syncAllData();
+        // DELETE & UPDATE OPERATIONS
+        async function toggleSoldAccount(key, currentStatus) {
+            const nextStatus = currentStatus === 'agotado' ? 'disponible' : 'agotado';
+            await fetch(`${FIREBASE_BASE_URL}cuentas/${key}/estado.json`, { method: 'PUT', body: JSON.stringify(nextStatus) });
+            await syncAllData();
         }
 
         async function deleteAccount(key) {
-            if(!confirm("¿Eliminar cuenta?")) return;
-            await fetch(`${FIREBASE_BASE_URL}cuentas/${key}.json`, { method: 'DELETE' });
-            syncAllData();
-        }
-
-        function switchAdminTab(tab) {
-            document.getElementById('admin-tab-cuentas').classList.toggle('hidden', tab !== 'cuentas');
-            document.getElementById('admin-tab-boosting').classList.toggle('hidden', tab !== 'boosting');
-            document.getElementById('admin-tab-reseñas').classList.toggle('hidden', tab !== 'reseñas');
-        }
-
-        function toggleReviewForm() { document.getElementById('review-form-container').classList.toggle('hidden'); }
-        function scollToAdmin() { document.getElementById('admin-anchor').scrollIntoView({ behavior: 'smooth' }); }
-
-        function initSpaceBackground() {
-            const canvas = document.getElementById('space-canvas');
-            const ctx = canvas.getContext('2d');
-            let stars = [];
-            function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-            window.addEventListener('resize', resize); resize();
-            for(let i=0; i<60; i++) stars.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*1+0.2, d: Math.random()*0.3 });
-            function draw() {
-                ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle = "rgba(255,255,255,0.3)";
-                stars.forEach(s => { ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill(); s.y += s.d; if(s.y > canvas.height) s.y = 0; });
-                requestAnimationFrame(draw);
+            if(confirm("¿Eliminar cuenta permanentemente?")) {
+                await fetch(`${FIREBASE_BASE_URL}cuentas/${key}.json`, { method: 'DELETE' });
+                await syncAllData();
             }
-            draw();
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            initSpaceBackground();
-            if(localStorage.getItem('saith_session') === 'true') {
-                isAdminAuthenticated = true;
-                document.getElementById('admin-dashboard').classList.remove('hidden');
+        async function deleteBoosting(key) {
+            if(confirm("¿Eliminar servicio de boosting?")) {
+                await fetch(`${FIREBASE_BASE_URL}boosting/${key}.json`, { method: 'DELETE' });
+                await syncAllData();
             }
-            syncAllData();
-        });
+        }
+
+        async function deleteReview(key) {
+            if(confirm("¿Remover esta reseña del sistema?")) {
+                await fetch(`${FIREBASE_BASE_URL}reseñas_moderadas/${key}.json`, { method: 'DELETE' });
+                await syncAllData();
+            }
+        }
+
+        // INITIALIZATION
+        syncAllData();
     </script>
 </body>
 </html>
