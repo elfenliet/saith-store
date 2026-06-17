@@ -3,64 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saith Store | Gaming Boosting</title>
+    <title>Saith Store | Premium Marketplace</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background-color: #02040a; color: #c9d1d9; font-family: system-ui, sans-serif; }
+        body { background-color: #02040a; color: #c9d1d9; font-family: sans-serif; }
         .glass-panel { background: rgba(13, 17, 23, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.05); }
         .pro-card { background: linear-gradient(180deg, #0d1117 0%, #161b22 100%); border: 1px solid #21262d; transition: 0.3s; }
         .pro-card:hover { border-color: #8b5cf6; transform: translateY(-5px); }
         .text-gradient { background: linear-gradient(135deg, #06b6d4, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     </style>
 </head>
-<body>
+<body class="p-4">
 
-    <!-- Barra Superior -->
-    <div class="bg-black text-center py-2 text-[11px] font-bold border-b border-white/10">
-        Compras 100% manuales. Trato directo por WhatsApp.
-    </div>
+    <header class="max-w-6xl mx-auto py-10 text-center">
+        <h1 class="text-4xl font-black text-white">Marketplace de Cuentas & <br><span class="text-gradient">Servicios de Boosting Global</span></h1>
+    </header>
 
-    <section class="max-w-5xl mx-auto px-4 py-12 text-center">
-        <h1 class="text-4xl font-black mb-2 text-white">Marketplace de Cuentas & <br><span class="text-gradient">Servicios de Boosting Global</span></h1>
-        
-        <!-- Filtros -->
-        <div id="filter-container" class="flex gap-2 justify-center mt-6">
-            <button onclick="setFilter('all')" class="bg-purple-600 px-4 py-1 rounded-lg text-xs font-bold">🔥 Ver Todo</button>
-            <button onclick="setFilter('Genshin')" class="bg-white/5 px-4 py-1 rounded-lg text-xs font-bold">Genshin</button>
-            <button onclick="setFilter('Star Rail')" class="bg-white/5 px-4 py-1 rounded-lg text-xs font-bold">Star Rail</button>
-        </div>
-    </section>
-
-    <!-- Grid de Boosting (Restaurado) -->
-    <main class="max-w-5xl mx-auto px-4 pb-20">
-        <h2 class="text-lg font-bold mb-6 flex items-center gap-2 text-white">
+    <main class="max-w-6xl mx-auto">
+        <h2 class="text-lg font-bold mb-6 text-white flex items-center gap-2">
             <i class="fa-solid fa-bolt text-cyan-400"></i> Servicios de Boosting Profesional
         </h2>
-        
-        <div id="boosting-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Las tarjetas se cargarán aquí -->
-        </div>
+        <div id="boosting-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+            </div>
+
+        <section class="border-t border-[#30363d] pt-12 mt-12">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xs font-black text-slate-400 uppercase">Estación Central de Control</h3>
+                <button onclick="document.getElementById('admin-panel').classList.toggle('hidden')" class="bg-white/5 border border-white/10 px-3 py-1 rounded text-xs font-bold text-slate-300 hover:text-white">
+                    🔒 Panel Admin
+                </button>
+            </div>
+            <div id="admin-panel" class="hidden glass-panel p-6 rounded-2xl">
+                <p class="text-xs text-slate-400">Área de gestión de inventario y precios. (Configuración activa)</p>
+                </div>
+        </section>
     </main>
 
     <script>
-        const data = {
-            "g1": { "titulo": "Farmeo de 20 Deseos", "desc": "10 USD + Fee PayPal.", "precio": "$10.00" },
-            "g2": { "titulo": "Fábricas Completas", "desc": "Cotizar por WhatsApp.", "precio": "Consultar" }
-        };
+        // Simulación de datos (puedes reemplazar esto con tu lógica de Firebase)
+        const boostingData = [
+            { titulo: "Farmeo de 20 Deseos", desc: "Genshin Impact", precio: "$10.00", img: "genshin.jpg" },
+            { titulo: "Exploración 100%", desc: "Genshin Impact", precio: "Cotizar", img: "genshin.jpg" },
+            { titulo: "Build de Personaje", desc: "Star Rail", precio: "$6.00", img: "honkai.webp" }
+        ];
 
-        function render() {
-            const grid = document.getElementById('boosting-grid');
-            grid.innerHTML = Object.values(data).map(item => `
+        function renderBoosting() {
+            const container = document.getElementById('boosting-grid');
+            container.innerHTML = boostingData.map(srv => `
                 <div class="pro-card p-5 rounded-2xl">
-                    <h3 class="font-bold text-white">${item.titulo}</h3>
-                    <p class="text-xs text-slate-400 my-3">${item.desc}</p>
-                    <p class="text-emerald-400 font-bold mb-4">${item.precio}</p>
-                    <a href="https://wa.me/51967128876" class="block w-full bg-purple-600 py-2 rounded-lg text-xs font-bold text-center uppercase hover:bg-purple-500">Contratar</a>
+                    <div class="h-24 rounded-lg bg-slate-950 mb-4 overflow-hidden">
+                        <img src="${srv.img}" class="w-full h-full object-cover opacity-60">
+                    </div>
+                    <h3 class="font-bold text-white text-sm">${srv.titulo}</h3>
+                    <p class="text-[10px] text-slate-400 my-2">${srv.desc}</p>
+                    <p class="text-emerald-400 font-bold text-xs mb-4">${srv.precio}</p>
+                    <a href="https://wa.me/51967128876" class="block w-full bg-purple-600 py-2 rounded-lg text-xs font-bold text-center uppercase hover:bg-purple-500 text-white">Contratar</a>
                 </div>
             `).join('');
         }
-        render();
+
+        renderBoosting();
     </script>
 </body>
 </html>
