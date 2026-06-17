@@ -319,35 +319,28 @@
 
         // RENDERIZAR BOOSTING DESDE DATABASE
         function renderBoosting() {
-            const container = document.getElementById('boosting-grid');
-            container.innerHTML = '';
+    const container = document.getElementById('boosting-grid');
+    container.innerHTML = ''; 
 
-            const juegos = ["Genshin Impact", "Star Rail", "Wuthering Waves"];
-            const imgs = { "Genshin Impact": "genshin.jpg", "Star Rail": "honkai.webp", "Wuthering Waves": "wuwa.webp" };
-            const colors = { "Genshin Impact": "border-l-cyan-500", "Star Rail": "border-l-purple-500", "Wuthering Waves": "border-l-amber-500" };
-            const badges = { "Genshin Impact": "bg-cyan-950 text-cyan-400 border-cyan-500/30", "Star Rail": "bg-purple-950 text-purple-400 border-purple-500/30", "Wuthering Waves": "bg-amber-950 text-amber-400 border-amber-500/30" };
+    Object.keys(rawBoostingData).forEach(key => {
+        const srv = rawBoostingData[key];
+        // Determinar qué mostrar en el precio: número o texto "Cotizar"
+        const precioDisplay = typeof srv.precio === 'number' ? `$${srv.precio}.00` : 'Cotizar';
+        const urlWhatsApp = `https://wa.me/51967128876?text=Hola, quiero contratar: ${srv.tituloEs}`;
 
-            juegos.forEach(juego => {
-                if (activeFilter !== 'all' && juego !== activeFilter) return;
-
-                let itemsHtml = '';
-                Object.keys(rawBoostingData).forEach(key => {
-                    const srv = rawBoostingData[key];
-                    if(srv.juego !== juego) return;
-
-                    const title = selectedLanguage === 'es' ? srv.tituloEs : srv.tituloEn;
-                    const desc = selectedLanguage === 'es' ? srv.descEs : srv.descEn;
-                    const price = formatPrice(srv.precio);
-                    const waText = `Hola Saith Store, me interesa el servicio de boosting: *${title}* (${price})`;
-
-                    itemsHtml += `
-                        <div class="bg-black/30 p-3 rounded-xl border border-white/[0.02] flex justify-between items-center">
-                            <div>
-                                <h5 class="text-xs font-bold text-white">${title}</h5>
-                                <p class="text-[10px] text-slate-400">${desc}</p>
-                            </div>
-                            <a href="https://wa.me/51967128876?text=${encodeURIComponent(waText)}" target="_blank" class="bg-white/5 border border-white/10 hover:border-purple-500 px-2.5 py-1 rounded-lg text-xs font-black text-purple-300">${price} →</a>
-                        </div>`;
+        container.innerHTML += `
+            <div class="pro-card p-4 rounded-xl border border-white/10 hover:border-purple-500 transition-all">
+                <h3 class="text-white font-bold text-sm">${srv.tituloEs}</h3>
+                <p class="text-[10px] text-slate-400 my-2">${srv.descEs}</p>
+                <p class="text-emerald-400 font-bold text-xs mb-3">${precioDisplay}</p>
+                <a href="${urlWhatsApp}" target="_blank" 
+                   class="block w-full bg-purple-600 text-white text-[10px] font-bold py-2 rounded-lg text-center uppercase hover:bg-purple-500">
+                   Contratar
+                </a>
+            </div>
+        `;
+    });
+}
                 });
 
                 if(itemsHtml === '') return;
