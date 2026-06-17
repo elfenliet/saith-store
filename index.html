@@ -3,96 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saith Store | Gaming Boosting & Premium Marketplace</title>
+    <title>Saith Store | Gaming Boosting</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { background-color: #02040a; color: #c9d1d9; font-family: system-ui, sans-serif; }
-        .glass { background: rgba(13, 17, 23, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .pro-card { background: linear-gradient(180deg, #0d1117 0%, #161b22 100%); border: 1px solid #21262d; transition: 0.3s; }
-        .pro-card:hover { transform: translateY(-5px); border-color: #8b5cf6; }
-        .text-gradient { background: linear-gradient(135deg, #06b6d4, #8b5cf6, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        body { background-color: #02040a; color: #c9d1d9; }
+        .glass { background: rgba(13, 17, 23, 0.7); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .pro-card { background: #0d1117; border: 1px solid #21262d; }
     </style>
 </head>
-<body>
-    <header class="p-6 text-center border-b border-white/5">
-        <h1 class="text-4xl font-black text-gradient">SAITH STORE</h1>
-        <p class="text-xs text-slate-500 uppercase tracking-widest mt-2">#saithboost | #saithedit</p>
-    </header>
+<body class="p-6">
+    <div class="max-w-7xl mx-auto text-center mb-12">
+        <h1 class="text-4xl font-black text-white">SAITH STORE</h1>
+        <p class="text-slate-500">#SAITHBOOST | #SAITHEDIT</p>
+    </div>
 
-    <main class="max-w-7xl mx-auto px-4 py-12">
-        <h2 class="text-white text-xl font-bold mb-8 flex items-center gap-2">
-            <i class="fa-solid fa-bolt text-cyan-400"></i> Servicios de Boosting
-        </h2>
-        <div id="boosting-grid" class="grid grid-cols-1 md:grid-cols-4 gap-6"></div>
+    <main class="max-w-7xl mx-auto">
+        <h2 class="text-white font-bold mb-6 flex items-center gap-2"><i class="fa-solid fa-bolt text-cyan-400"></i> Servicios de Boosting</h2>
+        <div id="boosting-grid" class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-12">
+            <p class="text-slate-600">Cargando servicios...</p>
+        </div>
 
-        <h2 class="text-white text-xl font-bold mt-20 mb-8 flex items-center gap-2">
-            <i class="fa-solid fa-store text-purple-500"></i> Cuentas Disponibles
-        </h2>
-        <div id="marketplace-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+        <h2 class="text-white font-bold mb-6 flex items-center gap-2"><i class="fa-solid fa-store text-purple-500"></i> Cuentas Disponibles</h2>
+        <div id="marketplace-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <p class="text-slate-600">Cargando catálogo...</p>
+        </div>
     </main>
 
     <script>
         const WHATSAPP = "51967128876";
-        const ADMIN_PASSWORD = "TU_CONTRASEÑA_AQUI"; // CAMBIA ESTO
         const BASE_URL = "https://saithstore-default-rtdb.firebaseio.com/";
 
-        async function syncData() {
-            const [resBst, resAcc] = await Promise.all([
-                fetch(`${BASE_URL}boosting.json`),
-                fetch(`${BASE_URL}cuentas.json`)
-            ]);
-            const bst = await resBst.json();
-            const acc = await resAcc.json();
+        async function init() {
+            try {
+                const res = await fetch(`${BASE_URL}boosting.json`);
+                const data = await res.json();
+                
+                const bGrid = document.getElementById('boosting-grid');
+                bGrid.innerHTML = ''; // Limpiar mensaje de carga
 
-            if(!bst) { await seedBoosting(); return; }
-            renderBoosting(bst);
-            renderCuentas(acc);
+                if (!data) {
+                    bGrid.innerHTML = '<p class="text-red-500">No hay servicios configurados.</p>';
+                    return;
+                }
+
+                Object.values(data).forEach(item => {
+                    bGrid.innerHTML += `
+                        <div class="pro-card p-4 rounded-xl">
+                            <h3 class="text-white font-bold text-sm">${item.tituloEs}</h3>
+                            <p class="text-[10px] text-slate-400 my-2">${item.descEs || 'Consultar'}</p>
+                            <p class="text-emerald-400 font-bold text-xs mb-3">${item.precio > 0 ? item.precio + ' USD' : 'Consultar'}</p>
+                            <a href="https://wa.me/${WHATSAPP}?text=Hola, quiero contratar: ${item.tituloEs}" target="_blank" 
+                               class="block w-full bg-purple-600 text-white text-[10px] font-bold py-2 rounded-lg text-center uppercase">Contratar</a>
+                        </div>
+                    `;
+                });
+            } catch (e) {
+                console.error("Error al cargar:", e);
+            }
         }
-
-        function renderBoosting(data) {
-            const grid = document.getElementById('boosting-grid');
-            grid.innerHTML = Object.values(data).map(item => `
-                <div class="pro-card p-5 rounded-2xl">
-                    <h3 class="text-white font-bold text-sm">${item.tituloEs}</h3>
-                    <p class="text-[10px] text-slate-400 my-2">${item.descEs}</p>
-                    <p class="text-emerald-400 font-black text-xs mb-4">
-                        ${item.precio === 0 ? 'Consultar Precio' : item.precio + ' USD + Fee'}
-                    </p>
-                    <a href="https://wa.me/${WHATSAPP}?text=Hola, me interesa: ${item.tituloEs}" target="_blank" 
-                       class="block text-center bg-purple-600 py-2 rounded-xl text-[10px] font-bold text-white uppercase hover:bg-purple-500">Contratar</a>
-                </div>
-            `).join('');
-        }
-
-        async function seedBoosting() {
-            const items = [
-                { juego: "Genshin", tituloEs: "Farmeo de 20 Deseos", descEs: "10 USD + Fee PayPal.", precio: 10.00 },
-                { juego: "Genshin", tituloEs: "Abismo 9-12", descEs: "10 USD + Fee PayPal.", precio: 10.00 },
-                { juego: "Genshin", tituloEs: "Build Nivel 90", descEs: "7 USD + Fee PayPal.", precio: 7.00 },
-                { juego: "Star Rail", tituloEs: "Farmeo de 20 Deseos", descEs: "10 USD + Fee PayPal.", precio: 10.00 },
-                { juego: "Star Rail", tituloEs: "Build Personaje", descEs: "6 USD + Fee PayPal.", precio: 6.00 },
-                { juego: "WuWa", tituloEs: "Farmeo Ecos/Builds", descEs: "6 USD + Fee PayPal.", precio: 6.00 },
-                { juego: "Arknights", tituloEs: "Farmeo 20 Deseos", descEs: "10 USD + Fee PayPal.", precio: 10.00 },
-                { juego: "Arknights", tituloEs: "Fábricas/Materiales", descEs: "Cotizar por WhatsApp.", precio: 0.00 }
-            ];
-            for(let i of items) await fetch(`${BASE_URL}boosting.json`, { method: 'POST', body: JSON.stringify(i) });
-            location.reload();
-        }
-
-        function renderCuentas(data) {
-            if(!data) return;
-            const grid = document.getElementById('marketplace-grid');
-            grid.innerHTML = Object.values(data).map(acc => `
-                <div class="pro-card p-4 rounded-2xl">
-                    <img src="${acc.imagenUrl}" class="rounded-xl h-40 w-full object-cover mb-4">
-                    <h3 class="text-white font-bold">${acc.titulo}</h3>
-                    <p class="text-xs text-slate-400 mt-1">${acc.detalles}</p>
-                </div>
-            `).join('');
-        }
-
-        syncData();
+        init();
     </script>
 </body>
 </html>
