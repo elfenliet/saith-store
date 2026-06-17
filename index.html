@@ -2,39 +2,78 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saith Store | Gaming Boosting & Marketplace</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #02040a; color: white; }
-        .glass-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); }
+        body { background-color: #02040a; color: #e2e8f0; font-family: 'Inter', sans-serif; }
+        .glass-card { background: rgba(13, 17, 23, 0.8); border: 1px solid #30363d; transition: 0.3s; }
+        .glass-card:hover { border-color: #f87171; transform: translateY(-5px); }
+        .btn-gradient { background: linear-gradient(90deg, #ef4444, #b91c1c); }
     </style>
 </head>
 <body>
+
     <!-- Navbar -->
-    <nav class="flex justify-between items-center p-6 border-b border-white/10">
-        <div class="font-bold text-xl">SAITH STORE</div>
-        <div class="flex gap-6 text-sm opacity-70">
-            <a href="#">Products</a>
-            <a href="#">Status</a>
-            <a href="#">Discord</a>
+    <nav class="flex justify-between items-center px-8 py-6 border-b border-white/10">
+        <div class="font-black text-xl tracking-tighter">SAITH STORE</div>
+        <div class="flex gap-8 text-sm font-medium opacity-80">
+            <a href="#catalogo" class="hover:text-red-500">Products</a>
+            <a href="#" class="hover:text-red-500">Status</a>
+            <a href="#" class="hover:text-red-500">Discord</a>
         </div>
-        <button class="bg-red-500 px-4 py-2 rounded-lg font-bold">Get Started</button>
+        <a href="https://wa.me/51999999999" class="btn-gradient px-6 py-2 rounded-full font-bold text-sm">Contactar</a>
     </nav>
 
-    <!-- Hero Section similar a image_b5155a.jpg -->
+    <!-- Hero -->
     <header class="text-center py-24">
-        <h1 class="text-6xl font-black mb-6">Your Favorite Store #1</h1>
-        <button class="bg-white text-black px-8 py-3 rounded-full font-bold">Catalog</button>
+        <h1 class="text-5xl font-black mb-4">Servicios #saithboost</h1>
+        <p class="opacity-60 mb-8">Mapas al 100%, Farmeo de Deseos y Cuentas Premium.</p>
+        <a href="#catalogo" class="bg-white text-black px-10 py-4 rounded-full font-bold">Explorar Catálogo</a>
     </header>
 
-    <!-- Grid de Productos similar a image_b5153f.jpg -->
-    <section class="max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-4 gap-6">
-        <!-- Ejemplo de tarjeta -->
-        <div class="glass-card p-4 rounded-2xl hover:border-red-500 transition">
-            <div class="h-40 bg-gray-800 rounded-xl mb-4"></div>
-            <h3 class="font-bold">Arknights: Endfield</h3>
-            <p class="text-sm opacity-50">3 Products</p>
-            <p class="mt-2 font-black">$2.49 +</p>
+    <!-- Grid de Juegos y Servicios -->
+    <section id="catalogo" class="max-w-7xl mx-auto px-6 py-12">
+        <h2 class="text-2xl font-bold mb-8">Catálogo Disponible</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            
+            <!-- Item -->
+            <div class="glass-card p-5 rounded-2xl">
+                <div class="h-32 bg-gray-800 rounded-xl mb-4"></div>
+                <h3 class="font-bold">Genshin Impact</h3>
+                <p class="text-sm opacity-50">Mapas, Farmeo y Cuentas</p>
+                <p class="mt-4 font-black text-red-500">$10.00+</p>
+            </div>
+
+            <div class="glass-card p-5 rounded-2xl">
+                <div class="h-32 bg-gray-800 rounded-xl mb-4"></div>
+                <h3 class="font-bold">Honkai: Star Rail</h3>
+                <p class="text-sm opacity-50">Farmeo de Deseos</p>
+                <p class="mt-4 font-black text-red-500">$5.00+</p>
+            </div>
+
+            <div class="glass-card p-5 rounded-2xl">
+                <div class="h-32 bg-gray-800 rounded-xl mb-4"></div>
+                <h3 class="font-bold">Wuthering Waves</h3>
+                <p class="text-sm opacity-50">Boosting de Cuentas</p>
+                <p class="mt-4 font-black text-red-500">$7.50+</p>
+            </div>
+
+            <div class="glass-card p-5 rounded-2xl">
+                <div class="h-32 bg-gray-800 rounded-xl mb-4"></div>
+                <h3 class="font-bold">Zenless Zone Zero</h3>
+                <p class="text-sm opacity-50">Servicios VIP</p>
+                <p class="mt-4 font-black text-red-500">$8.00+</p>
+            </div>
+
+            <div class="glass-card p-5 rounded-2xl">
+                <div class="h-32 bg-gray-800 rounded-xl mb-4"></div>
+                <h3 class="font-bold">Arknights: Endfield</h3>
+                <p class="text-sm opacity-50">Pre-orden & Boosting</p>
+                <p class="mt-4 font-black text-red-500">$12.00+</p>
+            </div>
         </div>
     </section>
+
 </body>
 </html>
