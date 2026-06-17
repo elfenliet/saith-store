@@ -7,29 +7,76 @@
     <script>
     const FIREBASE_BASE_URL = "https://saithstore-default-rtdb.firebaseio.com/";
     const CUENTAS_URL = `${FIREBASE_BASE_URL}cuentas.json`;
+    const REVIEWS_URL = `${FIREBASE_BASE_URL}reseñas_moderadas.json`;
     const BOOSTING_URL = `${FIREBASE_BASE_URL}boosting.json`;
 
+    let selectedCurrency = 'USD';
+    let selectedLanguage = 'es';
     let activeFilter = 'all';
     let rawCuentasData = {};
     let rawBoostingData = {};
-    let selectedCurrency = 'USD';
+    let isAdminAuthenticated = false;
+
+    const ADMIN_PASSWORD = "TU_CONTRASEÑA_AQUI"; 
     const exchangeRates = { USD: 1.0, PEN: 3.78, EUR: 0.92 };
     const currencySymbols = { USD: '$', PEN: 'S/. ', EUR: '€' };
 
-    // Sincronización con Firebase
-    async function syncAllData() {
-        try {
-            const [resCuentas, resBoosting] = await Promise.all([fetch(CUENTAS_URL), fetch(BOOSTING_URL)]);
-            rawCuentasData = await resCuentas.json() || {};
-            rawBoostingData = await resBoosting.json() || {};
-            renderBoosting();
-            renderCuentas();
-        } catch(e) { console.error("Error al sincronizar:", e); }
+    const i18n = {
+        es: {
+            topbar: "<i class='fa-solid fa-shield-halved text-cyan-400'></i> Compras 100% manuales y seguras. Trato directo por WhatsApp con Saith Store.",
+            heroTitle: "Marketplace de Cuentas & <br><span class='text-gradient'>Servicios de Boosting Global</span>",
+            boostingTitle: "<i class='fa-solid fa-bolt text-cyan-400'></i> Servicios de Boosting Profesional",
+            marketplaceTitle: "<i class='fa-solid fa-store text-purple-500'></i> Catálogo de Cuentas Activas",
+            reviewsTitle: "<i class='fa-solid fa-star text-amber-500'></i> Reseñas Verificadas",
+            reviewsSubtitle: "Opiniones reales bajo el ecosistema #saithboost",
+            gateways: "Canales de Transacción Oficiales",
+            filterAll: "🔥 Ver Todo"
+        },
+        en: {
+            topbar: "<i class='fa-solid fa-shield-halved text-cyan-400'></i> 100% secure & manual purchases. Direct deal via WhatsApp.",
+            heroTitle: "Premium Accounts Marketplace & <br><span class='text-gradient'>Global Boosting Services</span>",
+            boostingTitle: "<i class='fa-solid fa-bolt text-cyan-400'></i> Professional Boosting Services",
+            marketplaceTitle: "<i class='fa-solid fa-store text-purple-500'></i> Active Accounts Catalog",
+            reviewsTitle: "<i class='fa-solid fa-star text-amber-500'></i> Verified Reviews",
+            reviewsSubtitle: "Real feedback under #saithboost ecosystem",
+            gateways: "Official Transaction Channels",
+            filterAll: "🔥 View All"
+        }
+    };
+
+    function changeLanguage(lang) { selectedLanguage = lang; updateUI(); }
+    function changeCurrency(curr) { selectedCurrency = curr; updateUI(); }
+
+    function updateUI() {
+        const ui = i18n[selectedLanguage];
+        document.getElementById('txt-topbar').innerHTML = ui.topbar;
+        document.getElementById('txt-hero-title').innerHTML = ui.heroTitle;
+        document.getElementById('txt-boosting-title').innerHTML = ui.boostingTitle;
+        document.getElementById('txt-marketplace-title').innerHTML = ui.marketplaceTitle;
+        document.getElementById('txt-reviews-title').innerHTML = ui.reviewsTitle;
+        document.getElementById('txt-reviews-subtitle').innerText = ui.reviewsSubtitle;
+        document.getElementById('txt-gateways').innerText = ui.gateways;
+        renderFilters();
+        renderBoosting();
+        renderCuentas();
     }
 
-    function formatPrice(usdPrice) { 
-        return `${currencySymbols[selectedCurrency]}${(parseFloat(usdPrice) * exchangeRates[selectedCurrency]).toFixed(2)}`; 
+    function renderFilters() {
+        const container = document.getElementById('filter-container');
+        const games = [
+            { id: 'all', label: i18n[selectedLanguage].filterAll },
+            { id: 'Genshin Impact', label: 'Genshin' },
+            { id: 'Star Rail', label: 'Star Rail' },
+            { id: 'Wuthering Waves', label: 'WuWa' }
+        ];
+        container.innerHTML = games.map(g => {
+            const active = activeFilter === g.id;
+            return `<button onclick="setActiveFilter('${g.id}')" class="text-[11px] font-bold px-3 py-1 rounded-lg transition-all ${active ? 'bg-purple-600 text-white' : 'text-slate-400 bg-white/5'}">${g.label}</button>`;
+        }).join('');
     }
+
+    function setActiveFilter(filter) { activeFilter = filter; updateUI(); }
+    function formatPrice(usdPrice) { return `${currencySymbols[selectedCurrency]}${(parseFloat(usdPrice) * exchangeRates[selectedCurrency]).toFixed(2)}`; }
 
     function renderBoosting() {
         const container = document.getElementById('boosting-grid');
@@ -51,23 +98,44 @@
 
     function renderCuentas() {
         const container = document.getElementById('marketplace-grid');
+        const searchInput = document.getElementById('search-input');
+        const searchVal = searchInput ? searchInput.value.toLowerCase() : '';
         if (!container) return;
         container.innerHTML = '';
+
         Object.keys(rawCuentasData).forEach(key => {
             const acc = rawCuentasData[key];
             if (activeFilter !== 'all' && acc.juego !== activeFilter) return;
+            if (searchVal && !acc.titulo.toLowerCase().includes(searchVal) && !acc.detalles.toLowerCase().includes(searchVal)) return;
+
             const pFormated = formatPrice(acc.precio);
+            const isSold = acc.estado === 'agotado';
+            
             container.innerHTML += `
-                <div class="pro-card rounded-2xl p-3 flex flex-col justify-between">
-                    <img src="${acc.imagenUrl}" class="w-full h-44 object-cover rounded-xl mb-3">
-                    <h4 class="text-sm font-bold text-white">${acc.titulo}</h4>
-                    <p class="text-emerald-400 font-bold text-xs my-2">${pFormated}</p>
+                <div class="pro-card rounded-2xl p-3 flex flex-col justify-between ${isSold ? 'opacity-30' : ''}">
+                    <div class="relative h-44 rounded-xl overflow-hidden bg-slate-900">
+                        <img src="${acc.imagenUrl}" class="w-full h-full object-cover">
+                        <span class="absolute top-2 left-2 bg-black/70 text-[9px] font-bold px-2 py-0.5 rounded text-slate-300 uppercase">${acc.juego}</span>
+                        ${isSold ? '<span class="absolute top-2 right-2 bg-red-900 text-white text-[9px] font-bold px-2 py-0.5 rounded">AGOTADO</span>' : ''}
+                    </div>
+                    <div class="my-3">
+                        <h4 class="text-sm font-bold text-white line-clamp-1">${acc.titulo}</h4>
+                        <p class="text-emerald-400 font-bold text-xs my-2">${pFormated}</p>
+                    </div>
                     <a href="https://wa.me/51967128876" class="block w-full bg-emerald-600 text-white text-[10px] font-bold py-2 rounded-lg text-center uppercase">Comprar</a>
                 </div>`;
         });
     }
 
-    // Iniciar
+    async function syncAllData() {
+        try {
+            const [resCuentas, resBoosting] = await Promise.all([fetch(CUENTAS_URL), fetch(BOOSTING_URL)]);
+            rawCuentasData = await resCuentas.json() || {};
+            rawBoostingData = await resBoosting.json() || {};
+            updateUI();
+        } catch(e) { console.error("Error cargando datos:", e); }
+    }
+
     syncAllData();
 </script>
     <style>
