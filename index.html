@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saith Store - Premium Gaming Agency</title>
+    
     <!-- Iconos de FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Alertas Profesionales (SweetAlert2) -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <!-- LIBRERÍAS DE FIREBASE -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -21,145 +25,107 @@
             --text-muted: #a0a5b5;
         }
 
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
+        body { background-color: var(--bg-dark); color: var(--text-main); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; padding-bottom: 50px; }
 
-        .header-store {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 40px;
-            border-bottom: 1px solid #1f222e;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .logo-title { font-size: 24px; font-weight: bold; letter-spacing: 1px; }
+        /* HEADER Y NAVEGACIÓN */
+        .header-store { display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; background: rgba(21, 22, 30, 0.95); border-bottom: 1px solid #1f222e; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); flex-wrap: wrap; gap: 15px; }
+        .logo-title { font-size: 26px; font-weight: 800; letter-spacing: 1px; }
         .logo-title span { color: var(--accent-blue); }
+        .header-controls { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
 
-        .header-controls { display: flex; align-items: center; gap: 15px; }
+        .search-bar { background: #11131a; border: 1px solid #2a2d3d; color: white; padding: 10px 15px; border-radius: 20px; outline: none; width: 200px; transition: 0.3s; }
+        .search-bar:focus { border-color: var(--accent-blue); width: 250px; }
 
-        .select-tool {
-            background: var(--card-bg); color: var(--text-main);
-            border: 1px solid #2a2d3d; padding: 8px 12px;
-            border-radius: 8px; font-size: 14px; cursor: pointer; outline: none;
-        }
-
-        .admin-lock {
-            cursor: pointer; color: var(--text-muted); font-size: 18px;
-            padding: 8px 12px; border: 1px solid #1f222e; border-radius: 8px; transition: 0.3s;
-        }
+        .select-tool { background: var(--card-bg); color: var(--text-main); border: 1px solid #2a2d3d; padding: 8px 12px; border-radius: 8px; font-size: 14px; cursor: pointer; outline: none; }
+        .admin-lock { cursor: pointer; color: var(--text-muted); font-size: 18px; padding: 8px 12px; border: 1px solid #1f222e; border-radius: 8px; transition: 0.3s; }
         .admin-lock:hover { color: var(--accent-blue); border-color: var(--accent-blue); }
 
-        .section-title { font-size: 28px; margin: 40px 0 20px 20px; position: relative; padding-left: 15px; }
-        .section-title::before {
-            content: ''; position: absolute; left: 0; top: 15%; height: 70%;
-            width: 5px; background: linear-gradient(to bottom, var(--accent-blue), var(--accent-purple)); border-radius: 2px;
-        }
+        /* TRUST BADGES (Banda de confianza) */
+        .trust-badges { display: flex; justify-content: center; gap: 30px; background: linear-gradient(90deg, #15161e, #1a1c24, #15161e); padding: 15px; font-size: 14px; color: var(--text-muted); border-bottom: 1px solid #1f222e; flex-wrap: wrap; }
+        .trust-item { display: flex; align-items: center; gap: 8px; }
+        .trust-item i { color: var(--accent-blue); font-size: 18px; }
 
-        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; padding: 20px; }
+        /* TÍTULOS Y CONTENEDORES */
+        .section-title { font-size: 28px; margin: 40px 0 20px 40px; position: relative; padding-left: 15px; }
+        .section-title::before { content: ''; position: absolute; left: 0; top: 15%; height: 70%; width: 5px; background: linear-gradient(to bottom, var(--accent-blue), var(--accent-purple)); border-radius: 2px; }
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; padding: 0 40px; }
 
-        .card {
-            background-color: var(--card-bg); border-radius: 16px; overflow: hidden;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.2); transition: transform 0.3s, box-shadow 0.3s; position: relative;
-        }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,210,255,0.15); }
-
-        .card-img-container {
-            width: 100%; height: 180px; position: relative;
-            background-size: cover; background-position: center; cursor: pointer;
-        }
-
-        .badge-game {
-            position: absolute; top: 15px; left: 15px; background-color: rgba(0, 0, 0, 0.7);
-            padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: bold;
-            text-transform: uppercase; letter-spacing: 0.5px; border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .badge-gallery {
-            position: absolute; bottom: 10px; right: 10px; background-color: rgba(0, 0, 0, 0.8);
-            padding: 5px 10px; border-radius: 8px; font-size: 12px; color: white;
-        }
-
-        .btn-delete {
-            position: absolute; top: 15px; right: 15px; background-color: #ff3333;
-            color: white; border: none; width: 32px; height: 32px; border-radius: 50%;
-            cursor: pointer; display: none; align-items: center; justify-content: center; z-index: 10;
-        }
+        /* TARJETAS DE PRODUCTOS */
+        .card { background-color: var(--card-bg); border-radius: 16px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.2); transition: transform 0.3s, box-shadow 0.3s; position: relative; border: 1px solid #1f222e; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,210,255,0.15); border-color: #2a2d3d; }
+        .card-img-container { width: 100%; height: 180px; position: relative; background-size: cover; background-position: center; cursor: pointer; }
+        
+        .badge-game { position: absolute; top: 15px; left: 15px; background-color: rgba(0, 0, 0, 0.7); padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(4px); }
+        .badge-gallery { position: absolute; bottom: 10px; right: 10px; background-color: rgba(0, 0, 0, 0.8); padding: 5px 10px; border-radius: 8px; font-size: 12px; color: white; backdrop-filter: blur(4px); }
+        .btn-delete { position: absolute; top: 15px; right: 15px; background-color: #ff3333; color: white; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: none; align-items: center; justify-content: center; z-index: 10; transition: 0.3s; }
+        .btn-delete:hover { transform: scale(1.1); }
 
         .card-body { padding: 20px; }
-        .card-title { font-size: 20px; margin: 0 0 8px 0; font-weight: 700; }
-        .card-desc { color: var(--text-muted); font-size: 14px; margin: 0 0 20px 0; line-height: 1.4; }
+        .card-title { font-size: 20px; margin: 0 0 8px 0; font-weight: 700; color: #fff; }
+        .card-desc { color: var(--text-muted); font-size: 14px; margin: 0 0 20px 0; line-height: 1.5; }
         .card-footer { display: flex; justify-content: space-between; align-items: center; }
-        .card-price { font-size: 22px; font-weight: bold; color: var(--accent-blue); }
+        .card-price { font-size: 24px; font-weight: bold; color: var(--accent-blue); }
         .card-price span { font-size: 12px; color: var(--text-muted); margin-left: 5px; }
 
-        .btn-buy {
-            background-color: #11131a; color: white; border: 1px solid #222633;
-            padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: bold;
-            display: flex; align-items: center; gap: 8px; transition: 0.3s;
-        }
-        .btn-buy:hover { background-color: white; color: black; }
+        .btn-buy { background: linear-gradient(135deg, #11131a, #1a1c24); color: white; border: 1px solid #2a2d3d; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: bold; display: flex; align-items: center; gap: 8px; transition: 0.3s; }
+        .btn-buy:hover { background: white; color: black; border-color: white; transform: scale(1.05); }
 
-        .admin-panel { background: #1a1c24; border: 1px solid #2a2d3d; border-radius: 16px; padding: 25px; margin: 20px; display: none; }
-        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-bottom: 15px; }
+        /* SECCIÓN DE RESEÑAS */
+        .reviews-header { display: flex; justify-content: space-between; align-items: center; padding: 0 40px; margin-bottom: 20px; }
+        .btn-review { background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.3s; }
+        .btn-review:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 210, 255, 0.3); }
         
-        input, select { background: #11131a; border: 1px solid #2a2d3d; color: white; padding: 12px; border-radius: 8px; font-size: 14px; }
+        .review-card { background: #1a1c24; border-radius: 12px; padding: 20px; border: 1px solid #2a2d3d; position: relative; }
+        .review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .reviewer-name { font-weight: bold; font-size: 16px; color: #fff; display: flex; align-items: center; gap: 8px; }
+        .reviewer-name i { color: #4CAF50; font-size: 14px; } /* Icono verificado */
+        .review-date { font-size: 12px; color: var(--text-muted); }
+        .review-stars { color: #FFD700; margin-bottom: 10px; font-size: 14px; }
+        .review-text { font-size: 14px; color: #d1d5e0; line-height: 1.5; font-style: italic; }
+
+        /* PANEL ADMIN */
+        .admin-panel { background: #1a1c24; border: 1px solid #2a2d3d; border-radius: 16px; padding: 25px; margin: 20px 40px; display: none; }
+        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-bottom: 15px; }
+        input, select, textarea { background: #11131a; border: 1px solid #2a2d3d; color: white; padding: 12px; border-radius: 8px; font-size: 14px; }
+        input:focus, select:focus, textarea:focus { border-color: var(--accent-blue); outline: none; }
         .full-width { grid-column: 1 / -1; }
+        .btn-add { background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); color: white; border: none; padding: 12px 30px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn-add:hover { opacity: 0.9; }
 
-        .btn-add { background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); color: white; border: none; padding: 12px 30px; border-radius: 8px; font-weight: bold; cursor: pointer; }
-
-        .whatsapp-float {
-            position: fixed; bottom: 30px; right: 30px; background-color: #25d366;
-            color: white; width: 60px; height: 60px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; font-size: 32px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4); z-index: 100; text-decoration: none; transition: transform 0.3s;
-        }
+        /* FLOTANTES */
+        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; background-color: #25d366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; box-shadow: 0 4px 15px rgba(0,0,0,0.4); z-index: 100; text-decoration: none; transition: transform 0.3s; }
         .whatsapp-float:hover { transform: scale(1.1); }
 
-        /* GALERÍA MODAL (Para ver varias fotos) */
-        .modal {
-            display: none; position: fixed; z-index: 9999; left: 0; top: 0;
-            width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); backdrop-filter: blur(5px);
-        }
-        .modal-content {
-            margin: auto; display: block; max-width: 90%; max-height: 85vh;
-            margin-top: 5vh; object-fit: contain; border-radius: 8px;
-        }
-        .close-btn {
-            position: absolute; top: 20px; right: 35px; color: #f1f1f1;
-            font-size: 40px; font-weight: bold; cursor: pointer; transition: 0.3s;
-        }
+        /* GALERÍA MODAL */
+        .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); backdrop-filter: blur(5px); }
+        .modal-content { margin: auto; display: block; max-width: 90%; max-height: 85vh; margin-top: 5vh; object-fit: contain; border-radius: 8px; }
+        .close-btn { position: absolute; top: 20px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer; transition: 0.3s; }
         .close-btn:hover { color: #ff3333; }
-        .nav-btn {
-            cursor: pointer; position: absolute; top: 50%; width: auto;
-            padding: 16px; margin-top: -50px; color: white; font-weight: bold;
-            font-size: 30px; transition: 0.6s ease; border-radius: 0 3px 3px 0; user-select: none;
-            background-color: rgba(0,0,0,0.5); border: none;
-        }
+        .nav-btn { cursor: pointer; position: absolute; top: 50%; width: auto; padding: 16px; margin-top: -50px; color: white; font-weight: bold; font-size: 30px; transition: 0.6s ease; border-radius: 0 3px 3px 0; user-select: none; background-color: rgba(0,0,0,0.5); border: none; }
         .prev-btn { left: 10px; border-radius: 8px; }
         .next-btn { right: 10px; border-radius: 8px; }
         .nav-btn:hover { background-color: rgba(0,0,0,0.8); color: var(--accent-blue); }
         .gallery-counter { color: #f1f1f1; text-align: center; font-size: 16px; padding: 15px 0; }
+        
+        /* Personalización SweetAlert Dark Mode */
+        .swal2-popup { background: #1a1c24 !important; color: white !important; border: 1px solid #2a2d3d; border-radius: 16px !important; }
+        .swal2-input, .swal2-textarea, .swal2-select { background: #11131a !important; border: 1px solid #2a2d3d !important; color: white !important; }
+        .swal2-title { color: white !important; }
     </style>
 </head>
 <body>
 
-    <!-- Encabezado con Selectores -->
+    <!-- Encabezado -->
     <div class="header-store">
         <div class="logo-title">SAITH<span>STORE</span></div>
         <div class="header-controls">
-            <!-- Selector de Idioma -->
+            <!-- Barra de búsqueda rápida -->
+            <input type="text" id="searchInput" class="search-bar" placeholder="🔍 Buscar juego o producto..." onkeyup="filterProducts()">
+            
             <select id="langSelect" class="select-tool" onchange="updateUI()">
-                <option value="es">🇪🇸 Español</option>
-                <option value="en">🇺🇸 English</option>
+                <option value="es">🇪🇸 ES</option>
+                <option value="en">🇺🇸 EN</option>
             </select>
-            <!-- Selector de Moneda -->
             <select id="currencySelect" class="select-tool" onchange="renderAllCards()">
                 <option value="USD">USD ($)</option>
                 <option value="PEN">PEN (S/)</option>
@@ -170,42 +136,52 @@
         </div>
     </div>
 
+    <!-- Cinta de Confianza -->
+    <div class="trust-badges" id="trustBadges">
+        <div class="trust-item"><i class="fa-solid fa-shield-halved"></i> Transacciones Seguras</div>
+        <div class="trust-item"><i class="fa-solid fa-bolt"></i> Entrega Rápida</div>
+        <div class="trust-item"><i class="fa-solid fa-headset"></i> Soporte 24/7</div>
+    </div>
+
     <!-- Panel de Administración -->
     <div class="admin-panel" id="adminPanel">
         <h3 id="txtAdminTitle"><i class="fa-solid fa-rocket"></i> Centro de Comandos</h3>
         <div class="admin-grid">
             <select id="itemType">
-                <option value="boosting">Servicio de Boosting / Boosting Service</option>
-                <option value="cuentas">Cuenta de Marketplace / Account</option>
+                <option value="boosting">Servicio de Boosting</option>
+                <option value="cuentas">Cuenta de Marketplace</option>
             </select>
-            <input type="text" id="itemGame" placeholder="Juego / Game (Ej: GENSHIN IMPACT)">
-            <input type="text" id="itemPrice" placeholder="Precio en USD / Price USD (Ej: 10.00)">
-            
-            <!-- Campos Separados por Idioma -->
+            <input type="text" id="itemGame" placeholder="Juego (Ej: GENSHIN IMPACT)">
+            <input type="number" id="itemPrice" placeholder="Precio en USD (Ej: 10)">
             <input type="text" id="itemTitleEs" placeholder="Título en ESPAÑOL">
             <input type="text" id="itemTitleEn" placeholder="Title in ENGLISH">
             <input type="text" id="itemDescEs" placeholder="Descripción corta en ESPAÑOL">
             <input type="text" id="itemDescEn" placeholder="Short description in ENGLISH">
-            
-            <!-- Campo para varias imágenes -->
             <input type="text" id="itemImg" class="full-width" placeholder="URLs de Imgur (Si son varias, sepáralas con una coma ',')">
         </div>
         <button class="btn-add" id="txtAdminBtn" onclick="addNewItem()">Publicar en la Nube</button>
     </div>
 
-    <!-- Títulos Dinámicos -->
+    <!-- Productos -->
     <div class="section-title" id="txtTitle1">Servicios de Boosting</div>
     <div class="grid-container" id="boostingContainer"></div>
 
     <div class="section-title" id="txtTitle2">Marketplace de Cuentas</div>
     <div class="grid-container" id="accountsContainer"></div>
 
-    <!-- Botón Whatsapp -->
-    <a href="https://wa.me/51967128876" class="whatsapp-float" target="_blank">
-        <i class="fa-brands fa-whatsapp"></i>
-    </a>
+    <!-- SECCIÓN DE RESEÑAS -->
+    <hr style="border: 0; border-top: 1px solid #1f222e; margin: 50px 40px;">
+    
+    <div class="reviews-header">
+        <div class="section-title" id="txtTitle3" style="margin: 0;">Reseñas de Clientes</div>
+        <button class="btn-review" onclick="openReviewModal()"><i class="fa-solid fa-pen"></i> <span id="txtBtnReview">Dejar una Reseña</span></button>
+    </div>
+    <div class="grid-container" id="reviewsContainer"></div>
 
-    <!-- MODAL DE GALERÍA DE IMÁGENES -->
+    <!-- Botón Whatsapp -->
+    <a href="https://wa.me/51967128876" class="whatsapp-float" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+
+    <!-- Modal Galería -->
     <div id="imageModal" class="modal">
         <span class="close-btn" onclick="closeGallery()">&times;</span>
         <button class="nav-btn prev-btn" onclick="changeSlide(-1)">&#10094;</button>
@@ -215,7 +191,7 @@
     </div>
 
     <script>
-        // CONFIGURACIÓN DE FIREBASE
+        // FIREBASE CONFIG (Tu base de datos)
         const firebaseConfig = {
             apiKey: "AIzaSyDfqojwsNW2VXOmekvzn50yWEdF7JjYs8",
             authDomain: "saithstore.firebaseapp.com",
@@ -231,109 +207,74 @@
         let isAdmin = false;
         let globalBoostingData = [];
         let globalAccountsData = [];
+        let globalReviewsData = [];
 
-        // TASAS DE CAMBIO DE MONEDA
-        const exchangeRates = {
-            USD: { rate: 1, symbol: '$', code: 'USD' },
-            PEN: { rate: 3.75, symbol: 'S/', code: 'PEN' },
-            MXN: { rate: 18.50, symbol: '$', code: 'MXN' },
-            EUR: { rate: 0.92, symbol: '€', code: 'EUR' }
-        };
+        const exchangeRates = { USD: { rate: 1, symbol: '$', code: 'USD' }, PEN: { rate: 3.75, symbol: 'S/', code: 'PEN' }, MXN: { rate: 18.50, symbol: '$', code: 'MXN' }, EUR: { rate: 0.92, symbol: '€', code: 'EUR' } };
 
-        // DICCIONARIO DE IDIOMAS (Interfaz)
         const langDict = {
-            es: {
-                title1: "Servicios de Boosting",
-                title2: "Marketplace de Cuentas",
-                buyBtn: "Comprar",
-                emptyMsg: "No hay productos disponibles en este momento.",
-                adminTitle: "<i class='fa-solid fa-rocket'></i> Centro de Comandos",
-                adminBtn: "Publicar en la Nube",
-                wpMsg: "¡Hola Saith Store! Me interesa el producto: "
-            },
-            en: {
-                title1: "Boosting Services",
-                title2: "Accounts Marketplace",
-                buyBtn: "Buy",
-                emptyMsg: "No products available at the moment.",
-                adminTitle: "<i class='fa-solid fa-rocket'></i> Command Center",
-                adminBtn: "Publish to Cloud",
-                wpMsg: "Hello Saith Store! I am interested in the product: "
-            }
+            es: { title1: "Servicios de Boosting", title2: "Marketplace de Cuentas", title3: "Reseñas de Clientes", buyBtn: "Comprar", emptyMsg: "No hay productos disponibles.", adminBtn: "Publicar en la Nube", wpMsg: "¡Hola Saith Store! Me interesa el producto: ", btnReview: "Dejar una Reseña", searchPlaceholder: "🔍 Buscar juego o producto..." },
+            en: { title1: "Boosting Services", title2: "Accounts Marketplace", title3: "Customer Reviews", buyBtn: "Buy", emptyMsg: "No products available.", adminBtn: "Publish to Cloud", wpMsg: "Hello Saith Store! I am interested in the product: ", btnReview: "Leave a Review", searchPlaceholder: "🔍 Search game or product..." }
         };
 
-        // ESCUCHAR BASE DE DATOS
+        // Escuchar Firebase
         database.ref('tienda').on('value', (snapshot) => {
             const data = snapshot.val() || {};
             globalBoostingData = data.boosting ? Object.keys(data.boosting).map(key => ({id: key, ...data.boosting[key]})) : [];
             globalAccountsData = data.cuentas ? Object.keys(data.cuentas).map(key => ({id: key, ...data.cuentas[key]})) : [];
+            globalReviewsData = data.resenas ? Object.keys(data.resenas).map(key => ({id: key, ...data.resenas[key]})) : [];
+            
             renderAllCards();
+            renderReviews();
         });
 
-        // ACTUALIZAR TEXTOS DE LA INTERFAZ
         function updateUI() {
             const lang = document.getElementById('langSelect').value;
             document.getElementById('txtTitle1').innerHTML = langDict[lang].title1;
             document.getElementById('txtTitle2').innerHTML = langDict[lang].title2;
-            document.getElementById('txtAdminTitle').innerHTML = langDict[lang].adminTitle;
+            document.getElementById('txtTitle3').innerHTML = langDict[lang].title3;
             document.getElementById('txtAdminBtn').innerHTML = langDict[lang].adminBtn;
+            document.getElementById('txtBtnReview').innerHTML = langDict[lang].btnReview;
+            document.getElementById('searchInput').placeholder = langDict[lang].searchPlaceholder;
             renderAllCards();
         }
 
-        // DIBUJAR TARJETAS
+        // RENDERIZAR PRODUCTOS
         function renderAllCards() {
             renderSection(globalBoostingData, 'boostingContainer');
             renderSection(globalAccountsData, 'accountsContainer');
+            filterProducts(); // Aplicar filtro si hay búsqueda activa
         }
 
         function renderSection(items, containerId) {
             const container = document.getElementById(containerId);
             const lang = document.getElementById('langSelect').value;
-            const currencyKey = document.getElementById('currencySelect').value;
-            const currency = exchangeRates[currencyKey];
+            const currency = exchangeRates[document.getElementById('currencySelect').value];
             
             container.innerHTML = '';
-
-            if (items.length === 0) {
-                container.innerHTML = `<p style="color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 20px;">${langDict[lang].emptyMsg}</p>`;
-                return;
-            }
+            if (items.length === 0) { container.innerHTML = `<p style="color: var(--text-muted); grid-column: 1/-1;">${langDict[lang].emptyMsg}</p>`; return; }
 
             items.forEach(item => {
                 const card = document.createElement('div');
-                card.className = 'card';
+                card.className = 'card product-card'; // Clase extra para el filtro
                 
-                // Traducción de la Base de Datos
-                // Si existe el título en el idioma seleccionado, lo usa. Si no, usa el que haya por defecto.
                 let displayTitle = lang === 'en' && item.tituloEn ? item.tituloEn : (item.tituloEs || item.titulo);
                 let displayDesc = lang === 'en' && item.descEn ? item.descEn : (item.descEs || item.desc);
+                
+                // Atributo de búsqueda oculto
+                card.setAttribute('data-search', `${item.juego} ${displayTitle}`.toLowerCase());
 
-                // Manejo de Imágenes (Soporta múltiples)
-                let images = [];
-                if (Array.isArray(item.img)) {
-                    images = item.img;
-                } else if (item.img && typeof item.img === 'string') {
-                    images = item.img.split(',').map(u => u.trim()); // Por si se guardó como texto separado por comas
-                } else {
-                    images = ["https://images.unsplash.com/photo-1614680376593-902f74cf0d41?q=80&w=600&auto=format&fit=crop"];
-                }
+                let images = Array.isArray(item.img) ? item.img : (typeof item.img === 'string' ? item.img.split(',').map(u=>u.trim()) : ["https://images.unsplash.com/photo-1614680376593-902f74cf0d41?q=80&w=600"]);
                 const mainImage = images[0];
                 const galleryBadge = images.length > 1 ? `<span class="badge-gallery"><i class="fa-solid fa-images"></i> ${images.length}</span>` : '';
-
-                // Conversión de precio
-                const basePrice = parseFloat(item.precio || 0);
-                const localPrice = (basePrice * currency.rate).toFixed(2);
+                const localPrice = (parseFloat(item.precio || 0) * currency.rate).toFixed(2);
                 const showDelete = isAdmin ? 'display: flex' : 'display: none';
                 const itemTypePath = containerId === 'boostingContainer' ? 'boosting' : 'cuentas';
-
-                // Codificamos el arreglo de imágenes para pasarlo a la función
                 const imagesJson = JSON.stringify(images).replace(/'/g, "\\'");
 
                 card.innerHTML = `
                     <button class="btn-delete" style="${showDelete}" onclick="deleteItem('${itemTypePath}', '${item.id}')"><i class="fa-solid fa-trash"></i></button>
                     <div class="card-img-container" style="background-image: url('${mainImage}')" onclick='openGallery(${imagesJson})'>
-                        <span class="badge-game">${item.juego}</span>
-                        ${galleryBadge}
+                        <span class="badge-game">${item.juego}</span>${galleryBadge}
                     </div>
                     <div class="card-body">
                         <h4 class="card-title">${displayTitle}</h4>
@@ -350,69 +291,139 @@
             });
         }
 
+        // SISTEMA DE RESEÑAS
+        function renderReviews() {
+            const container = document.getElementById('reviewsContainer');
+            container.innerHTML = '';
+            
+            if (globalReviewsData.length === 0) { 
+                container.innerHTML = `<p style="color: var(--text-muted); grid-column: 1/-1;">Sé el primero en dejar una reseña.</p>`; 
+                return; 
+            }
+
+            // Mostrar reseñas de la más reciente a la más antigua
+            const reversedReviews = [...globalReviewsData].reverse();
+
+            reversedReviews.forEach(rev => {
+                const card = document.createElement('div');
+                card.className = 'review-card';
+                const showDelete = isAdmin ? 'display: flex' : 'display: none';
+                
+                let starsHTML = '';
+                for(let i=0; i<5; i++) { starsHTML += i < rev.estrellas ? '<i class="fa-solid fa-star"></i>' : '<i class="fa-regular fa-star"></i>'; }
+
+                card.innerHTML = `
+                    <button class="btn-delete" style="${showDelete}; top: 10px; right: 10px; width: 25px; height: 25px; font-size: 10px;" onclick="deleteItem('resenas', '${rev.id}')"><i class="fa-solid fa-xmark"></i></button>
+                    <div class="review-header">
+                        <div class="reviewer-name">${rev.nombre} <i class="fa-solid fa-circle-check" title="Compra Verificada"></i></div>
+                        <div class="review-date">${rev.fecha}</div>
+                    </div>
+                    <div class="review-stars">${starsHTML}</div>
+                    <div class="review-text">"${rev.comentario}"</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function openReviewModal() {
+            Swal.fire({
+                title: 'Dejar una Reseña',
+                html: `
+                    <input id="revName" class="swal2-input" placeholder="Tu Nombre o Nickname">
+                    <select id="revStars" class="swal2-select" style="width: 100%; max-width: 100%; margin-top: 15px;">
+                        <option value="5">⭐⭐⭐⭐⭐ (Excelente)</option>
+                        <option value="4">⭐⭐⭐⭐ (Muy Bueno)</option>
+                        <option value="3">⭐⭐⭐ (Bueno)</option>
+                        <option value="2">⭐⭐ (Regular)</option>
+                        <option value="1">⭐ (Malo)</option>
+                    </select>
+                    <textarea id="revText" class="swal2-textarea" placeholder="¿Cómo fue tu experiencia con Saith Store?" rows="3"></textarea>
+                `,
+                showCancelButton: true,
+                confirmButtonText: 'Publicar Reseña',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#00d2ff',
+                preConfirm: () => {
+                    const nombre = document.getElementById('revName').value;
+                    const estrellas = document.getElementById('revStars').value;
+                    const comentario = document.getElementById('revText').value;
+                    if (!nombre || !comentario) { Swal.showValidationMessage('Por favor completa tu nombre y comentario.'); }
+                    return { nombre, estrellas, comentario };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const hoy = new Date();
+                    const fechaTxt = hoy.toLocaleDateString();
+                    database.ref('tienda/resenas').push({
+                        nombre: result.value.nombre,
+                        estrellas: parseInt(result.value.estrellas),
+                        comentario: result.value.comentario,
+                        fecha: fechaTxt
+                    }).then(() => {
+                        Swal.fire({ title: '¡Gracias!', text: 'Tu reseña ha sido publicada.', icon: 'success', confirmButtonColor: '#00d2ff' });
+                    });
+                }
+            });
+        }
+
+        // BUSCADOR EN TIEMPO REAL
+        function filterProducts() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.getElementsByClassName('product-card');
+            for (let i = 0; i < cards.length; i++) {
+                const searchData = cards[i].getAttribute('data-search');
+                if (searchData.includes(input)) { cards[i].style.display = ""; } 
+                else { cards[i].style.display = "none"; }
+            }
+        }
+
+        // FUNCIONES ADMIN MEJORADAS CON SWEETALERT
         function addNewItem() {
             const type = document.getElementById('itemType').value;
             const juego = document.getElementById('itemGame').value.toUpperCase();
             const precio = document.getElementById('itemPrice').value;
-            
-            // Textos en ambos idiomas
             const tituloEs = document.getElementById('itemTitleEs').value;
-            const tituloEn = document.getElementById('itemTitleEn').value || tituloEs; // Si lo dejan vacío, copia el español
+            const tituloEn = document.getElementById('itemTitleEn').value || tituloEs;
             const descEs = document.getElementById('itemDescEs').value;
-            const descEn = document.getElementById('itemDescEn').value || descEs; // Si lo dejan vacío, copia el español
-
-            // Procesar múltiples imágenes
+            const descEn = document.getElementById('itemDescEn').value || descEs;
+            
             const rawImgs = document.getElementById('itemImg').value;
-            let imgArray = ["https://images.unsplash.com/photo-1614680376593-902f74cf0d41?q=80&w=600&auto=format&fit=crop"];
-            if (rawImgs) {
-                imgArray = rawImgs.split(',').map(url => url.trim()).filter(url => url !== "");
-            }
+            let imgArray = ["https://images.unsplash.com/photo-1614680376593-902f74cf0d41?q=80"];
+            if (rawImgs) { imgArray = rawImgs.split(',').map(url => url.trim()).filter(url => url !== ""); }
 
             if(!juego || !tituloEs || !precio) {
-                alert("Completa Juego, Título en Español y Precio.");
-                return;
+                Swal.fire({ icon: 'error', title: 'Faltan datos', text: 'Completa Juego, Título Español y Precio.', confirmButtonColor: '#00d2ff' }); return;
             }
 
-            // Subimos a Firebase con los nuevos campos de idioma y el array de imágenes
-            database.ref(`tienda/${type}`).push({ 
-                juego: juego, 
-                precio: precio,
-                tituloEs: tituloEs, 
-                tituloEn: tituloEn, 
-                descEs: descEs, 
-                descEn: descEn, 
-                img: imgArray 
-            })
+            database.ref(`tienda/${type}`).push({ juego, precio, tituloEs, tituloEn, descEs, descEn, img: imgArray })
             .then(() => {
-                alert("¡Publicado! / Published!");
-                document.getElementById('itemTitleEs').value = '';
-                document.getElementById('itemTitleEn').value = '';
-                document.getElementById('itemDescEs').value = '';
-                document.getElementById('itemDescEn').value = '';
-                document.getElementById('itemPrice').value = '';
-                document.getElementById('itemImg').value = '';
-            })
-            .catch(err => alert("Error: " + err.message));
+                Swal.fire({ icon: 'success', title: '¡Publicado!', text: 'El producto ya está en la nube.', timer: 1500, showConfirmButton: false });
+                document.querySelectorAll('.admin-grid input').forEach(input => input.value = '');
+            });
         }
 
         function deleteItem(type, id) {
-            if(confirm("¿Eliminar este artículo? / Delete this item?")) {
-                database.ref(`tienda/${type}/${id}`).remove();
-            }
+            Swal.fire({
+                title: '¿Estás seguro?', text: "Esto se borrará de la nube permanentemente.", icon: 'warning', showCancelButton: true, confirmButtonColor: '#ff3333', cancelButtonColor: '#2a2d3d', confirmButtonText: 'Sí, borrar'
+            }).then((result) => {
+                if (result.isConfirmed) { database.ref(`tienda/${type}/${id}`).remove(); }
+            });
         }
 
-        function toggleAdmin() {
+        async function toggleAdmin() {
             if (!isAdmin) {
-                const pass = prompt("Clave / Password:");
+                const { value: pass } = await Swal.fire({ title: 'Acceso Restringido', input: 'password', inputPlaceholder: 'Ingresa tu clave', confirmButtonColor: '#00d2ff' });
                 if (pass === "jessicajasmin11") {
                     isAdmin = true;
                     document.getElementById('adminPanel').style.display = 'block';
-                }
+                    Swal.fire({ icon: 'success', title: 'Bienvenido Administrador', timer: 1500, showConfirmButton: false });
+                } else if(pass) { Swal.fire({ icon: 'error', title: 'Clave incorrecta', confirmButtonColor: '#00d2ff' }); }
             } else {
                 isAdmin = false;
                 document.getElementById('adminPanel').style.display = 'none';
             }
             renderAllCards();
+            renderReviews(); // Refrescar para mostrar/ocultar basureros de reseñas
         }
 
         function sendWhatsApp(producto, precioLocal, code, lang) {
@@ -422,58 +433,14 @@
             window.open(`https://wa.me/${telefono}?text=${mensaje}`, '_blank');
         }
 
-        // LÓGICA DE LA GALERÍA DE IMÁGENES
-        let currentGallery = [];
-        let currentImageIndex = 0;
+        // GALERÍA
+        let currentGallery = []; let currentImageIndex = 0;
+        window.openGallery = function(imgArray) { if (!imgArray || imgArray.length === 0) return; currentGallery = imgArray; currentImageIndex = 0; document.getElementById('imageModal').style.display = 'block'; updateGalleryView(); }
+        window.closeGallery = function() { document.getElementById('imageModal').style.display = 'none'; }
+        window.changeSlide = function(step) { currentImageIndex += step; if (currentImageIndex >= currentGallery.length) currentImageIndex = 0; if (currentImageIndex < 0) currentImageIndex = currentGallery.length - 1; updateGalleryView(); }
+        function updateGalleryView() { document.getElementById('modalImg').src = currentGallery[currentImageIndex]; const navBtns = document.getElementsByClassName('nav-btn'); if (currentGallery.length <= 1) { navBtns[0].style.display = 'none'; navBtns[1].style.display = 'none'; document.getElementById('galleryCount').innerText = ""; } else { navBtns[0].style.display = 'block'; navBtns[1].style.display = 'block'; document.getElementById('galleryCount').innerText = `${currentImageIndex + 1} / ${currentGallery.length}`; } }
+        window.onclick = function(event) { if (event.target == document.getElementById('imageModal')) closeGallery(); }
 
-        window.openGallery = function(imgArray) {
-            if (!imgArray || imgArray.length === 0) return;
-            currentGallery = imgArray;
-            currentImageIndex = 0;
-            document.getElementById('imageModal').style.display = 'block';
-            updateGalleryView();
-        }
-
-        window.closeGallery = function() {
-            document.getElementById('imageModal').style.display = 'none';
-        }
-
-        window.changeSlide = function(step) {
-            currentImageIndex += step;
-            if (currentImageIndex >= currentGallery.length) {
-                currentImageIndex = 0; // Vuelve a la primera
-            }
-            if (currentImageIndex < 0) {
-                currentImageIndex = currentGallery.length - 1; // Va a la última
-            }
-            updateGalleryView();
-        }
-
-        function updateGalleryView() {
-            document.getElementById('modalImg').src = currentGallery[currentImageIndex];
-            
-            // Si solo hay 1 foto, esconde los botones de anterior/siguiente
-            const navBtns = document.getElementsByClassName('nav-btn');
-            if (currentGallery.length <= 1) {
-                navBtns[0].style.display = 'none';
-                navBtns[1].style.display = 'none';
-                document.getElementById('galleryCount').innerText = "";
-            } else {
-                navBtns[0].style.display = 'block';
-                navBtns[1].style.display = 'block';
-                document.getElementById('galleryCount').innerText = `${currentImageIndex + 1} / ${currentGallery.length}`;
-            }
-        }
-
-        // Cerrar galería haciendo clic fuera de la imagen
-        window.onclick = function(event) {
-            const modal = document.getElementById('imageModal');
-            if (event.target == modal) {
-                closeGallery();
-            }
-        }
-
-        // Iniciar textos al cargar la web
         updateUI();
     </script>
 </body>
