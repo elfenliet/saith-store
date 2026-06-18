@@ -1,286 +1,405 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saith Store - Premium Gaming Agency</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Saith Store | Boosting & Cuentas</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
     <style>
         body {
-            background-color: #0b0c0e;
             font-family: 'Inter', sans-serif;
+            background-color: #030303;
+            color: #ffffff;
+            overflow-x: hidden;
         }
-        /* Tarjetas con estilo premium translúcido */
-        .pro-card {
-            background: linear-gradient(145deg, #13151a, #1a1d24);
-            border: 1px solid #222630;
-            transition: all 0.3s ease;
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a855f7; }
+        
+        .glass-nav {
+            background: rgba(3, 3, 3, 0.7);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .pro-card:hover {
-            transform: translateY(-5px);
-            border-color: #3b82f6;
-            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.1);
+        
+        .hero-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(168,85,247,0.15) 0%, rgba(0,0,0,0) 70%);
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 0;
+            pointer-events: none;
         }
-        /* Personalización de las alertas oscuras */
-        .dark-swal {
-            background: #13151a !important;
-            color: #ffffff !important;
-            border: 1px solid #222630;
-        }
+
+        .dark-swal { background: #121212 !important; color: #fff !important; border: 1px solid #2a2a2a; }
+        .hide { display: none !important; }
+        .tab-active { border-bottom: 2px solid #a855f7; color: #a855f7; }
     </style>
 </head>
-<body class="text-slate-300 min-h-screen flex flex-col">
+<body class="antialiased selection:bg-purple-500/30 selection:text-purple-200">
 
-    <header class="border-b border-[#1a1d24] bg-[#0b0c0e]/80 backdrop-blur sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-gradient-to-tr from-blue-600 to-purple-600 rounded-xl flex items-center justify-center text-white font-black shadow-lg shadow-blue-500/20">
-                    <i class="fa-solid fa-bolt text-lg"></i>
+    <!-- Navbar -->
+    <nav class="fixed w-full top-0 z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/20">
+                        <i class="fa-solid fa-gamepad text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-black tracking-tight">SAITH <span class="text-purple-500">STORE</span></h1>
+                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Servicios Premium</p>
+                    </div>
                 </div>
-                <div>
-                    <h1 class="text-white font-black text-xl tracking-wider leading-none">SAITH STORE</h1>
-                    <span class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Premium Gaming Agency</span>
+                <div class="flex items-center gap-4">
+                    <select id="currency-selector" onchange="changeCurrency()" class="bg-[#121212] border border-[#2a2a2a] text-xs font-bold text-slate-300 rounded-lg px-3 py-2 outline-none focus:border-purple-500">
+                        <option value="USD">USD ($)</option>
+                        <option value="PEN">PEN (S/)</option>
+                        <option value="EUR">EUR (€)</option>
+                    </select>
+                    <button onclick="toggleAdmin()" class="text-slate-500 hover:text-purple-400 transition-colors">
+                        <i class="fa-solid fa-lock text-sm"></i>
+                    </button>
                 </div>
-            </div>
-
-            <div class="flex items-center gap-4">
-                <div class="hidden sm:flex items-center gap-2 bg-[#13151a] border border-[#222630] px-3 py-1.5 rounded-lg text-xs font-bold text-white">
-                    <span class="text-amber-500">🇪🇸 ES</span>
-                    <span class="text-slate-600">|</span>
-                    <span class="text-slate-400 hover:text-white cursor-pointer">EN</span>
-                </div>
-                <div class="bg-[#13151a] border border-[#222630] px-3 py-1.5 rounded-lg text-xs font-bold text-white flex items-center gap-1">
-                    <span>💵 USD</span>
-                </div>
-                <button onclick="loginAdminPro()" class="w-9 h-9 bg-[#13151a] border border-[#222630] hover:border-blue-500 hover:text-blue-400 rounded-lg flex items-center justify-center text-slate-400 transition-colors cursor-pointer">
-                    <i class="fa-solid fa-lock text-sm"></i>
-                </button>
             </div>
         </div>
-    </header>
+    </nav>
 
-    <main class="flex-1 max-w-7xl w-full mx-auto px-4 py-10">
+    <!-- Hero Section -->
+    <div class="relative pt-32 pb-16 lg:pt-40 lg:pb-24 overflow-hidden">
+        <div class="hero-glow"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <span class="inline-block py-1 px-3 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-bold tracking-widest uppercase mb-6">
+                #saithboost • #saithedit
+            </span>
+            <h2 class="text-4xl md:text-6xl font-black tracking-tighter mb-6 leading-tight">
+                Potencia tu cuenta al <br class="hidden md:block" />
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500">Máximo Nivel</span>
+            </h2>
+            <p class="text-slate-400 max-w-2xl mx-auto text-sm md:text-base leading-relaxed mb-8">
+                Especialistas en Genshin Impact y Honkai: Star Rail. Servicio de exploración de mapas al 100%, farmeo de protogemas, y venta de cuentas. ¡Aprovecha nuestra promo de 10 dólares for 20 wishes!
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#servicios" class="bg-white text-black font-bold py-3 px-8 rounded-full hover:bg-slate-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.1)] text-sm">
+                    Ver Servicios
+                </a>
+                <div class="flex items-center gap-2 bg-[#121212] border border-[#2a2a2a] py-3 px-6 rounded-full text-sm">
+                    <i class="fa-solid fa-wallet text-purple-400"></i>
+                    <span class="text-slate-300 font-medium">Pago rápido por <b>Yape</b></span>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <section id="admin-dashboard" class="hidden mb-12 p-6 bg-[#13151a] border border-dashed border-blue-500/30 rounded-2xl">
-            <div class="flex items-center justify-between mb-6 border-b border-[#222630] pb-4">
-                <h2 class="text-lg font-bold text-white flex items-center gap-2">
-                    <i class="fa-solid fa-gear text-blue-500"></i> Panel de Control (Modo Administrador)
-                </h2>
-                <span class="bg-blue-500/10 text-blue-400 text-[10px] uppercase font-black px-2 py-1 rounded">Sesión Activa</span>
+    <!-- Admin Panel (Hidden by default) -->
+    <section id="admin-panel" class="hide max-w-7xl mx-auto px-4 mb-16 relative z-10">
+        <div class="bg-gradient-to-br from-[#121212] to-[#0a0a0a] border border-purple-500/30 rounded-3xl p-6 md:p-8 shadow-2xl shadow-purple-500/5">
+            <div class="flex justify-between items-center mb-6 pb-4 border-b border-[#2a2a2a]">
+                <h3 class="text-xl font-black text-white"><i class="fa-solid fa-hammer text-purple-500 mr-2"></i> Panel de Administración</h3>
+                <button onclick="toggleAdmin()" class="text-slate-500 hover:text-white bg-[#1f1f1f] p-2 rounded-lg"><i class="fa-solid fa-xmark"></i></button>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <form onsubmit="saveItem(e, 'boost')" id="form-boosting" class="space-y-4">
-                    <h3 class="text-sm font-bold text-cyan-400 uppercase tracking-wider border-l-2 border-cyan-400 pl-2">Nuevo Servicio (Boosting)</h3>
-                    <input type="text" id="bst-title" placeholder="Título (Ej: Mapas al 100%)" required class="w-full bg-[#0b0c0e] border border-[#222630] rounded-xl p-3 text-sm text-white focus:outline-none focus:border-cyan-500">
-                    <input type="text" id="bst-desc" placeholder="Descripción corta (Ej: Exploración completa)" required class="w-full bg-[#0b0c0e] border border-[#222630] rounded-xl p-3 text-sm text-white focus:outline-none focus:border-cyan-500">
-                    <input type="number" step="0.01" id="bst-price" placeholder="Precio en USD ($)" required class="w-full bg-[#0b0c0e] border border-[#222630] rounded-xl p-3 text-sm text-white focus:outline-none focus:border-cyan-500">
-                    <input type="url" id="bst-img" placeholder="Link de la imagen de portada" required class="w-full bg-[#0b0c0e] border border-[#222630] rounded-xl p-3 text-sm text-white focus:outline-none focus:border-cyan-500">
-                    <button type="submit" class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2.5 rounded-xl text-sm transition-colors cursor-pointer">Publicar Servicio</button>
-                </form>
+                <!-- Form Boosting -->
+                <div class="bg-[#050505] p-5 rounded-2xl border border-[#1f1f1f]">
+                    <h4 class="text-sm font-bold text-slate-300 uppercase tracking-widest mb-4">Añadir Boosting / Farmeo</h4>
+                    <form onsubmit="saveItem(event, 'boost')" class="flex flex-col gap-3">
+                        <select id="bst-game" class="bg-[#121212] border border-[#2a2a2a] rounded-xl p-3 text-sm text-white outline-none focus:border-purple-500" required>
+                            <option value="Genshin Impact">Genshin Impact</option>
+                            <option value="Honkai: Star Rail">Honkai: Star Rail</option>
+                            <option value="Zenless Zone Zero">Zenless Zone Zero</option>
+                            <option value="Wuthering Waves">Wuthering Waves</option>
+                        </select>
+                        <input type="text" id="bst-title" placeholder="Título (Ej. Mapas al 100%)" class="bg-[#121212] border border-[#2a2a2a] rounded-xl p-3 text-sm text-white outline-none focus:border-purple-500" required>
+                        <textarea id="bst-desc" placeholder="Descripción breve..." class="bg-[#121212] border border-[#2a2a2a] rounded-xl p-3 text-sm text-white outline-none focus:border-purple-500 resize-none h-20" required></textarea>
+                        <div class="flex gap-3">
+                            <div class="relative w-full">
+                                <span class="absolute left-4 top-3 text-slate-500 text-sm">$</span>
+                                <input type="number" id="bst-price" placeholder="Precio Base (USD)" class="w-full bg-[#121212] border border-[#2a2a2a] rounded-xl p-3 pl-8 text-sm text-white outline-none focus:border-purple-500" required step="0.01">
+                            </div>
+                        </div>
+                        <textarea id="bst-options" placeholder="Opciones (Ej. 10 dólares for 20 wishes)" class="bg-[#121212] border border-[#2a2a2a] rounded-xl p-3 text-sm text-white outline-none focus:border-purple-500 resize-none h-20"></textarea>
+                        <input type="url" id="bst-img" placeholder="URL de Imagen (Opcional)" class="bg-[#121212] border border-[#2a2a2a] rounded-xl p-3 text-sm text-white outline-none focus:border-purple-500">
+                        <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl transition-colors mt-2 text-sm">Publicar Servicio</button>
+                    </form>
+                </div>
 
-                <form onsubmit="saveItem(e, 'account')" id="form-cuentas" class="space-y-4">
-                    <h3 class="text-sm font-bold text-purple-400 uppercase tracking-wider border-l-2 border-purple-400 pl-2">Nueva Cuenta (Marketplace)</h3>
-                    <input type="text" id="acc-title" placeholder="Título de la cuenta (Ej: Nicole / ASIA TL 70)" required class="w-full bg-[#0b0c0e] border border-[#222630] rounded-xl p-3 text-sm text-white focus:outline-none focus:border-purple-500">
-                    <input type="text" id="acc-desc" placeholder="Detalles o descripción (Ej: Correo hotmail)" class="w-full bg-[#0b0c0e] border border-[#222630] rounded-xl p-3 text-sm text-white focus:outline-none focus:border-purple-500">
-                    <input type="number" step="0.01" id="acc-price" placeholder="Precio en USD ($)" required class="w-full bg-[#0b0c0e] border border-[#222630] rounded-xl p-3 text-sm text-white focus:outline-none focus:border-purple-500">
-                    <input type="url" id="acc-img" placeholder="Link de la imagen de la cuenta" required class="w-full bg-[#0b0c0e] border border-[#222630] rounded-xl p-3 text-sm text-white focus:outline-none focus:border-purple-500">
-                    <button type="submit" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-2.5 rounded-xl text-sm transition-colors cursor-pointer">Publicar Cuenta</button>
-                </form>
+                <!-- Form Cuentas -->
+                <div class="bg-[#050505] p-5 rounded-2xl border border-[#1f1f1f]">
+                    <h4 class="text-sm font-bold text-slate-300 uppercase tracking-widest mb-4">Añadir Cuenta en Venta</h4>
+                    <form onsubmit="saveItem(event, 'account')" class="flex flex-col gap-3">
+                        <div class="flex gap-3">
+                            <select id="acc-game" class="w-1/2 bg-[#121212] border border-[#2a2a2a] rounded-xl p-3 text-sm text-white outline-none focus:border-purple-500" required>
+                                <option value="Genshin Impact">Genshin Impact</option>
+                                <option value="Honkai: Star Rail">Honkai: Star Rail</option>
+                            </select>
+                            <select id="acc-server" class="w-1/2 bg-[#121212] border border-[#2a2a2a] rounded-xl p-3 text-sm text-white outline-none focus:border-purple-500" required>
+                                <option value="America">América</option>
+                                <option value="Europe">Europa</option>
+                                <option value="Asia">Asia</option>
+                            </select>
+                        </div>
+                        <input type="text" id="acc-title" placeholder="Título (Ej. AR55 + Raiden C2)" class="bg-[#121212] border border-[#2a2a2a] rounded-xl p-3 text-sm text-white outline-none focus:border-purple-500" required>
+                        <textarea id="acc-desc" placeholder="Personajes 5★, Armas, Recursos..." class="bg-[#121212] border border-[#2a2a2a] rounded-xl p-3 text-sm text-white outline-none focus:border-purple-500 resize-none h-20" required></textarea>
+                        <div class="relative w-full">
+                            <span class="absolute left-4 top-3 text-slate-500 text-sm">$</span>
+                            <input type="number" id="acc-price" placeholder="Precio (USD)" class="w-full bg-[#121212] border border-[#2a2a2a] rounded-xl p-3 pl-8 text-sm text-white outline-none focus:border-purple-500" required step="0.01">
+                        </div>
+                        <input type="text" id="acc-img" placeholder="URLs de Imágenes separadas por coma" class="bg-[#121212] border border-[#2a2a2a] rounded-xl p-3 text-sm text-white outline-none focus:border-purple-500">
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-colors mt-2 text-sm">Publicar Cuenta</button>
+                    </form>
+                </div>
             </div>
-        </section>
-
-        <div class="flex items-center gap-3 mb-6">
-            <div class="w-1 h-6 bg-cyan-500 rounded-full"></div>
-            <h2 class="text-xl font-black text-white tracking-wide">Servicios de Boosting</h2>
         </div>
-        <div id="services-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            </div>
+    </section>
 
-        <div class="flex items-center gap-3 mb-6">
-            <div class="w-1 h-6 bg-purple-500 rounded-full"></div>
-            <h2 class="text-xl font-black text-white tracking-wide">Marketplace de Cuentas</h2>
+    <!-- Main Content -->
+    <main id="servicios" class="max-w-7xl mx-auto px-4 min-h-[50vh] relative z-10">
+        <!-- Tabs -->
+        <div class="flex justify-center mb-10 border-b border-[#1f1f1f]">
+            <button onclick="switchTab('boosting')" id="tab-boosting" class="px-6 py-4 text-sm font-bold uppercase tracking-wider text-slate-400 hover:text-white transition-colors tab-active">
+                <i class="fa-solid fa-bolt mr-2"></i>Boosting
+            </button>
+            <button onclick="switchTab('cuentas')" id="tab-cuentas" class="px-6 py-4 text-sm font-bold uppercase tracking-wider text-slate-400 hover:text-white transition-colors">
+                <i class="fa-solid fa-user-shield mr-2"></i>Cuentas
+            </button>
+            <button onclick="switchTab('reviews')" id="tab-reviews" class="px-6 py-4 text-sm font-bold uppercase tracking-wider text-slate-400 hover:text-white transition-colors">
+                <i class="fa-solid fa-star mr-2"></i>Reseñas
+            </button>
         </div>
-        <div id="accounts-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            </div>
 
-        <div class="flex items-center gap-3 mb-6">
-            <div class="w-1 h-6 bg-amber-500 rounded-full"></div>
-            <h2 class="text-xl font-black text-white tracking-wide">Lo que dicen los clientes</h2>
+        <!-- Boosting Container -->
+        <div id="boosting-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Renderizado dinámico -->
         </div>
-        <div id="reviews-container" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            </div>
 
+        <!-- Accounts Container -->
+        <div id="cuentas-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hide">
+            <!-- Renderizado dinámico -->
+        </div>
+
+        <!-- Reviews Container -->
+        <div id="reviews-container" class="grid grid-cols-1 md:grid-cols-3 gap-6 hide">
+            <!-- Renderizado dinámico -->
+        </div>
     </main>
 
-    <footer class="border-t border-[#1a1d24] bg-[#07080a] py-6 text-center text-xs text-slate-600 font-medium">
-        <p>&copy; 2026 Saith Store. Todos los derechos reservados. #saithboost #saithedit</p>
+    <!-- Footer -->
+    <footer class="border-t border-[#1f1f1f] bg-[#050505] pt-12 pb-8 mt-20 text-center relative z-10">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col items-center">
+            <div class="flex flex-col md:flex-row items-center justify-center gap-4 mb-6">
+                <div class="flex items-center gap-3 px-5 py-2.5 bg-purple-500/5 border border-purple-500/20 rounded-full">
+                    <i class="fa-solid fa-mobile-screen-button text-purple-400"></i>
+                    <span class="text-xs font-bold text-slate-300 uppercase tracking-widest">Pagos seguros con Yape (+51)</span>
+                </div>
+            </div>
+            <p class="text-slate-500 text-sm font-medium">© 2026 Saith Store. Todos los derechos reservados. <span class="text-purple-400/50">#saithedit</span></p>
+        </div>
     </footer>
 
-    <a href="https://wa.me/51900000000" target="_blank" class="fixed bottom-6 right-6 w-14 h-14 bg-green-500 text-white rounded-full flex items-center justify-center text-2xl shadow-xl shadow-green-500/20 hover:bg-green-400 hover:scale-110 transition-all z-50">
-        <i class="fa-brands fa-whatsapp"></i>
-    </a>
-
     <script>
+        // --- VARIABLES GLOBALES Y CONFIGURACIÓN ---
+        let currentCurrency = 'USD';
         let isAdminActive = false;
-        const ADMIN_PASS = "jessicajasmin11";
+        
+        const exchangeRates = { USD: 1, PEN: 3.75, EUR: 0.92 };
+        const currencySymbols = { USD: '$', PEN: 'S/', EUR: '€' };
+        const FALLBACK_IMG = 'https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
 
-        // ==========================================
-        // BASE DE DATOS FIJA (PROTECCIÓN CELULARES)
-        // ==========================================
-        const datosPredeterminadosBoosting = {
-            "b1": { titulo: "Mapas al 100%", desc: "Exploración completa", precio: "10.00", imagenUrl: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=500&q=60" },
-            "b2": { titulo: "Farmeo 20 Deseos", desc: "Rápido y seguro", precio: "7.00", imagenUrl: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=500&q=60" },
-            "b3": { titulo: "Farmeo Ecos", desc: "Ecos dorados", precio: "5.00", imagenUrl: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=500&q=60" },
-            "b4": { titulo: "Servicio VIP", desc: "Materiales y farmeo", precio: "15.00", imagenUrl: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=500&q=60" }
-        };
+        // --- FUNCIONES DE UI ---
+        function toggleAdmin() {
+            isAdminActive = !isAdminActive;
+            document.getElementById('admin-panel').classList.toggle('hide', !isAdminActive);
+            loadData(); 
+        }
 
-        const datosPredeterminadosCuentas = {
-            "c1": { titulo: "nicole", desc: "correo hotmail", precio: "10.00", imagenUrl: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=500&q=60" },
-            "c2": { titulo: "ASIA TL 70", desc: "cuenta avanzada servidor asia", precio: "200.00", imagenUrl: "https://images.unsplash.com/photo-1560253023-3ec5d502959f?auto=format&fit=crop&w=500&q=60" }
-        };
+        function switchTab(tabName) {
+            ['boosting', 'cuentas', 'reviews'].forEach(t => {
+                document.getElementById(`${t}-container`).classList.add('hide');
+                document.getElementById(`tab-${t}`).classList.remove('tab-active');
+            });
+            document.getElementById(`${tabName}-container`).classList.remove('hide');
+            document.getElementById(`tab-${tabName}`).classList.add('tab-active');
+        }
 
-        const datosPredeterminadosResenas = {
-            "r1": { nombre: "GenshinPlayer", texto: "Súper confiable, me entregaron el mapa al 100% en tiempo récord. Totalmente recomendado." },
-            "r2": { nombre: "Kevin S.", texto: "Compré la cuenta de servidor Asia y todo vino tal cual las fotos. Entrega limpia y segura." },
-            "r3": { nombre: "StarRailFan", texto: "El farmeo de deseos me salvó para el banner actual, muy atentos por WhatsApp." }
-        };
-        // ==========================================
+        function changeCurrency() {
+            currentCurrency = document.getElementById('currency-selector').value;
+            loadData();
+        }
 
-        function loginAdminPro() {
-            if(isAdminActive) { 
-                document.getElementById('admin-dashboard').classList.toggle('hidden'); 
-                return; 
-            }
-            Swal.fire({
-                title: 'Acceso de Administrador',
-                input: 'password',
-                inputPlaceholder: 'Introduce la clave',
-                confirmButtonText: 'Verificar',
-                confirmButtonColor: '#2563eb',
-                customClass: { popup: 'dark-swal' }
-            }).then((res) => {
-                if(res.value === ADMIN_PASS) {
-                    isAdminActive = true;
-                    document.getElementById('admin-dashboard').classList.remove('hidden');
-                    loadData();
-                    Swal.fire({ icon: 'success', title: 'Acceso Concedido', showConfirmButton: false, timer: 1500, customClass: { popup: 'dark-swal' } });
-                } else if(res.value !== undefined) {
-                    Swal.fire({ icon: 'error', title: 'Clave Incorrecta', text: 'No tienes permisos de edición.', customClass: { popup: 'dark-swal' } });
-                }
+        function convertPrice(priceUSD) {
+            return (priceUSD * exchangeRates[currentCurrency]).toFixed(2);
+        }
+
+        // --- FUNCIONES DE DATOS ---
+        function loadData() {
+            // Cargar Boosting
+            let dataBoost = JSON.parse(localStorage.getItem('saith_boosting')) || {};
+            const bstCont = document.getElementById('boosting-container');
+            bstCont.innerHTML = '';
+            
+            Object.entries(dataBoost).forEach(([id, item]) => {
+                let convertedPrice = convertPrice(item.precio);
+                let imgUrl = item.imagenUrl || FALLBACK_IMG;
+                bstCont.innerHTML += `
+                    <div class="bg-[#0a0a0a] border border-[#1f1f1f] rounded-2xl overflow-hidden group hover:border-purple-500/30 transition-all flex flex-col relative">
+                        ${isAdminActive ? `<button onclick="deleteItem('${id}', 'boost')" class="absolute top-3 right-3 z-20 bg-red-500/20 text-red-500 w-8 h-8 rounded-lg backdrop-blur-md flex items-center justify-center hover:bg-red-500 hover:text-white transition-colors"><i class="fa-solid fa-trash text-sm"></i></button>` : ''}
+                        <div class="h-48 overflow-hidden relative">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] to-transparent z-10"></div>
+                            <img src="${imgUrl}" alt="${item.titulo}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-70">
+                            <span class="absolute top-4 left-4 z-20 bg-black/60 backdrop-blur-md border border-white/10 px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-md text-slate-300">${item.juego}</span>
+                        </div>
+                        <div class="p-6 flex-1 flex flex-col justify-between relative z-10 -mt-6">
+                            <div>
+                                <h3 class="text-lg font-bold text-white line-clamp-2 leading-tight">${item.titulo}</h3>
+                                <p class="text-sm text-slate-400 mt-2 h-10 overflow-hidden leading-relaxed">${item.desc}</p>
+                                <p class="text-xs text-slate-500 mt-3 font-bold uppercase tracking-widest">Desde</p>
+                                <p class="text-2xl font-black text-purple-400 mt-1">${currencySymbols[currentCurrency]} ${convertedPrice} <span class="text-xs text-slate-500 font-bold ml-1">${currentCurrency}</span></p>
+                            </div>
+                            <button onclick="generateOrderTicket('Servicio', '${item.titulo}', ${item.precio})" class="mt-6 w-full bg-[#121212] border border-[#2a2a2a] group-hover:border-purple-500/50 group-hover:bg-purple-500/10 text-white font-bold py-3.5 rounded-xl transition-all text-sm flex justify-center items-center gap-2"><i class="fa-brands fa-whatsapp"></i> Contactar / Yape</button>
+                        </div>
+                    </div>`;
+            });
+
+            // Cargar Cuentas
+            let dataAccounts = JSON.parse(localStorage.getItem('saith_cuentas')) || {};
+            const accCont = document.getElementById('cuentas-container');
+            accCont.innerHTML = '';
+            
+            Object.entries(dataAccounts).forEach(([id, item]) => {
+                let convertedPrice = convertPrice(item.precio);
+                let imgUrl = item.imagenUrl || FALLBACK_IMG;
+                accCont.innerHTML += `
+                    <div class="bg-[#0a0a0a] border border-[#1f1f1f] rounded-2xl overflow-hidden group hover:border-blue-500/30 transition-all flex flex-col relative">
+                        ${isAdminActive ? `<button onclick="deleteItem('${id}', 'account')" class="absolute top-3 right-3 z-20 bg-red-500/20 text-red-500 w-8 h-8 rounded-lg backdrop-blur-md flex items-center justify-center hover:bg-red-500 hover:text-white transition-colors"><i class="fa-solid fa-trash text-sm"></i></button>` : ''}
+                        <div class="h-48 overflow-hidden relative">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] to-transparent z-10"></div>
+                            <img src="${imgUrl}" alt="${item.titulo}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-70">
+                            <div class="absolute top-4 left-4 z-20 flex gap-2">
+                                <span class="bg-black/60 backdrop-blur-md border border-white/10 px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-md text-slate-300">${item.juego}</span>
+                                <span class="bg-blue-500/20 border border-blue-500/30 text-blue-300 px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-md">${item.servidor}</span>
+                            </div>
+                        </div>
+                        <div class="p-6 flex-1 flex flex-col justify-between relative z-10 -mt-6">
+                            <div>
+                                <h3 class="text-lg font-bold text-white line-clamp-2 leading-tight">${item.titulo}</h3>
+                                <p class="text-sm text-slate-400 mt-2 h-10 overflow-hidden leading-relaxed">${item.desc}</p>
+                                <p class="text-xs text-slate-500 mt-3 font-bold uppercase tracking-widest">Precio</p>
+                                <p class="text-2xl font-black text-blue-400 mt-1">${currencySymbols[currentCurrency]} ${convertedPrice} <span class="text-xs text-slate-500 font-bold ml-1">${currentCurrency}</span></p>
+                            </div>
+                            <button onclick="generateOrderTicket('Cuenta', '${item.titulo}', ${item.precio})" class="mt-6 w-full bg-[#121212] border border-[#2a2a2a] group-hover:border-blue-500/50 group-hover:bg-blue-500/10 text-white font-bold py-3.5 rounded-xl transition-all text-sm flex justify-center items-center gap-2"><i class="fa-brands fa-whatsapp"></i> Adquirir / Yape</button>
+                        </div>
+                    </div>`;
+            });
+
+            // Cargar Reseñas
+            let dataReviews = JSON.parse(localStorage.getItem('saith_reviews')) || [
+                { id: 1, name: "Carlos M.", text: "Contraté el servicio de mapas al 100% y todo fue súper rápido. Pagué directo con Yape sin problemas. #saithboost", stars: 5 },
+                { id: 2, name: "Ana P.", text: "Aproveché la promo de 10 dólares for 20 wishes para mi cuenta de Honkai y cumplieron al instante. ¡100% confiable!", stars: 5 },
+                { id: 3, name: "Jorge L.", text: "Compré una cuenta starter de Genshin Impact y el trato fue impecable. Muy recomendados.", stars: 5 }
+            ];
+            
+            const revCont = document.getElementById('reviews-container');
+            revCont.innerHTML = '';
+            dataReviews.forEach(r => {
+                revCont.innerHTML += `
+                    <div class="bg-[#0a0a0a] border border-[#1f1f1f] p-6 rounded-2xl relative shadow-lg">
+                        ${isAdminActive ? `<button onclick="deleteItem(${r.id}, 'review')" class="absolute top-4 right-4 text-red-500 hover:text-red-400"><i class="fa-solid fa-trash text-sm"></i></button>` : ''}
+                        <div class="flex gap-1 text-yellow-500 text-xs mb-3">
+                            ${'<i class="fa-solid fa-star"></i>'.repeat(r.stars)}
+                        </div>
+                        <p class="text-sm text-slate-300 italic mb-4">"${r.text}"</p>
+                        <h4 class="text-xs font-bold text-white uppercase tracking-widest">- ${r.name}</h4>
+                    </div>
+                `;
             });
         }
 
-        // Modificado para capturar el evento correctamente sin refrescar
-        document.getElementById('form-boosting').addEventListener('submit', function(e) { saveItem(e, 'boost'); });
-        document.getElementById('form-cuentas').addEventListener('submit', function(e) { saveItem(e, 'account'); });
+        // --- FUNCIONES CRUD ---
+        function saveItem(event, type) {
+            event.preventDefault();
+            const id = Date.now().toString();
+            let storageKey, dataObj;
 
-        function saveItem(e, type) {
-            e.preventDefault();
-            const storageKey = type === 'boost' ? 'saith_boosting' : 'saith_cuentas';
-            
-            // Cargar datos actuales de memoria o inicializar vacío
-            let currentData = JSON.parse(localStorage.getItem(storageKey)) || {};
-            if(Object.keys(currentData).length === 0) {
-                currentData = type === 'boost' ? {...datosPredeterminadosBoosting} : {...datosPredeterminadosCuentas};
-            }
-
-            const id = "custom_" + Date.now().toString();
-            
-            if(type === 'boost') {
-                currentData[id] = {
+            if (type === 'boost') {
+                storageKey = 'saith_boosting';
+                dataObj = {
+                    juego: document.getElementById('bst-game').value,
                     titulo: document.getElementById('bst-title').value,
                     desc: document.getElementById('bst-desc').value,
-                    precio: parseFloat(document.getElementById('bst-price').value).toFixed(2),
+                    precio: parseFloat(document.getElementById('bst-price').value),
+                    opciones: document.getElementById('bst-options').value,
                     imagenUrl: document.getElementById('bst-img').value
                 };
-                document.getElementById('form-boosting').reset();
-            } else {
-                currentData[id] = {
+            } else if (type === 'account') {
+                storageKey = 'saith_cuentas';
+                let imgInput = document.getElementById('acc-img').value;
+                let imagenes = imgInput.split(',').map(img => img.trim()).filter(img => img !== "");
+                dataObj = {
+                    juego: document.getElementById('acc-game').value,
+                    servidor: document.getElementById('acc-server').value,
                     titulo: document.getElementById('acc-title').value,
                     desc: document.getElementById('acc-desc').value,
-                    precio: parseFloat(document.getElementById('acc-price').value).toFixed(2),
-                    imagenUrl: document.getElementById('acc-img').value
+                    precio: parseFloat(document.getElementById('acc-price').value),
+                    imagenUrl: imagenes[0] || FALLBACK_IMG,
+                    imagenes: imagenes.length > 0 ? imagenes : [FALLBACK_IMG]
                 };
-                document.getElementById('form-cuentas').reset();
             }
-            
+
+            let currentData = JSON.parse(localStorage.getItem(storageKey)) || {};
+            currentData[id] = dataObj;
             localStorage.setItem(storageKey, JSON.stringify(currentData));
+            
+            Swal.fire({ icon: 'success', title: 'Publicado con éxito', showConfirmButton: false, timer: 1500, customClass: { popup: 'dark-swal' } });
+            event.target.reset();
             loadData();
-            Swal.fire({ icon: 'success', title: 'Publicado con Éxito', text: 'Item agregado al catálogo.', customClass: { popup: 'dark-swal' } });
         }
 
         function deleteItem(id, type) {
-            const storageKey = type === 'boost' ? 'saith_boosting' : 'saith_cuentas';
-            let currentData = JSON.parse(localStorage.getItem(storageKey)) || (type === 'boost' ? {...datosPredeterminadosBoosting} : {...datosPredeterminadosCuentas});
-            
+            let storageKey;
+            if (type === 'boost') storageKey = 'saith_boosting';
+            else if (type === 'account') storageKey = 'saith_cuentas';
+            else if (type === 'review') return; // Lógica simplificada para reseñas estáticas en este demo
+
+            let currentData = JSON.parse(localStorage.getItem(storageKey)) || {};
             delete currentData[id];
             localStorage.setItem(storageKey, JSON.stringify(currentData));
             loadData();
         }
 
-        function loadData() {
-            // Verificar si hay datos modificados en local, sino usar el catálogo base estable
-            const boostingItems = JSON.parse(localStorage.getItem('saith_boosting')) || datosPredeterminadosBoosting;
-            const accountItems = JSON.parse(localStorage.getItem('saith_cuentas')) || datosPredeterminadosCuentas;
-            const reviewItems = datosPredeterminadosResenas; // Reseñas fijas globales
-
-            // Render Boosting
-            document.getElementById('services-container').innerHTML = Object.entries(boostingItems).map(([id, item]) => `
-                <div class="pro-card p-4 rounded-2xl flex flex-col justify-between">
-                    <div>
-                        <div class="relative overflow-hidden rounded-xl mb-3 h-40">
-                            <img src="${item.imagenUrl}" class="w-full h-full object-cover">
-                            <span class="absolute top-2 left-2 bg-black/70 backdrop-blur text-[9px] text-white font-black px-2 py-0.5 rounded uppercase tracking-wider">Servicio</span>
-                        </div>
-                        <h3 class="text-white font-bold text-base line-clamp-1">${item.titulo}</h3>
-                        <p class="text-slate-400 text-xs mt-1 line-clamp-2">${item.desc}</p>
-                    </div>
-                    <div class="mt-4">
-                        <span class="text-[10px] text-slate-500 block font-bold tracking-wider">DESDE</span>
-                        <p class="text-cyan-400 font-black text-xl">$${item.precio} <span class="text-xs font-normal text-slate-500">USD</span></p>
-                        <a href="https://wa.me/51900000000?text=Hola,%20me%20interesa%20el%20servicio:%20${encodeURIComponent(item.titulo)}" target="_blank" class="mt-3 block text-center w-full bg-[#1c1f26] border border-[#2d323f] hover:border-cyan-500/50 text-white font-bold py-2 rounded-xl text-xs transition-all cursor-pointer">Solicitar Servicio</a>
-                        ${isAdminActive ? `<button onclick="deleteItem('${id}', 'boost')" class="w-full text-center text-red-500 text-[10px] font-bold mt-2 hover:underline cursor-pointer">Eliminar Producto</button>` : ''}
-                    </div>
-                </div>
-            `).join('');
-
-            // Render Cuentas
-            document.getElementById('accounts-container').innerHTML = Object.entries(accountItems).map(([id, item]) => `
-                <div class="pro-card p-4 rounded-2xl flex flex-col justify-between">
-                    <div>
-                        <div class="relative overflow-hidden rounded-xl mb-3 h-40">
-                            <img src="${item.imagenUrl}" class="w-full h-full object-cover">
-                            <span class="absolute top-2 left-2 bg-purple-900/80 backdrop-blur text-[9px] text-purple-200 font-black px-2 py-0.5 rounded uppercase tracking-wider">Cuenta</span>
-                        </div>
-                        <h3 class="text-white font-bold text-base line-clamp-1">${item.titulo}</h3>
-                        <p class="text-slate-400 text-xs mt-1 line-clamp-2">${item.desc || 'Disponible inmediatamente.'}</p>
-                    </div>
-                    <div class="mt-4">
-                        <p class="text-purple-400 font-black text-xl">$${item.precio} <span class="text-xs font-normal text-slate-500">USD</span></p>
-                        <a href="https://wa.me/51900000000?text=Hola,%20me%20interesa%20la%20cuenta:%20${encodeURIComponent(item.titulo)}" target="_blank" class="mt-3 block text-center w-full bg-purple-600/10 border border-purple-500/20 hover:border-purple-500 text-purple-300 font-bold py-2 rounded-xl text-xs transition-all cursor-pointer">Adquirir Cuenta</a>
-                        ${isAdminActive ? `<button onclick="deleteItem('${id}', 'account')" class="w-full text-center text-red-500 text-[10px] font-bold mt-2 hover:underline cursor-pointer">Eliminar Cuenta</button>` : ''}
-                    </div>
-                </div>
-            `).join('');
-
-            // Render Reseñas
-            document.getElementById('reviews-container').innerHTML = Object.entries(reviewItems).map(([id, item]) => `
-                <div class="bg-[#13151a] border border-[#222630] p-5 rounded-2xl relative overflow-hidden">
-                    <div class="absolute top-0 left-0 w-1 h-full bg-amber-500"></div>
-                    <p class="text-slate-300 text-xs italic leading-relaxed">"${item.texto}"</p>
-                    <h4 class="text-white font-bold text-xs mt-3 flex items-center gap-1">
-                        <i class="fa-solid fa-circle-user text-slate-500"></i> - ${item.nombre}
-                    </h4>
-                </div>
-            `).join('');
+        function generateOrderTicket(tipo, titulo, precioBase) {
+            let precioFinal = convertPrice(precioBase);
+            let mensaje = `Hola, me interesa este ${tipo}: *${titulo}*%0A%0A*Moneda:* ${currentCurrency}%0A*Precio Base:* ${currencySymbols[currentCurrency]} ${precioFinal}%0A%0A¿Podemos coordinar el pago vía Yape? #saithboost`;
+            
+            // Reemplazar con el número peruano real (+51)
+            let numeroWhatsapp = "51999999999"; 
+            window.open(`https://wa.me/${numeroWhatsapp}?text=${mensaje}`, '_blank');
         }
 
-        // Iniciar carga del catálogo
-        loadData();
+        // --- INICIALIZADOR ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Precargar servicios por defecto si está vacío
+            if (!localStorage.getItem('saith_boosting')) {
+                const defaultBoost = {
+                    'b1': { juego: 'Genshin Impact', titulo: 'Exploración de Mapas al 100%', desc: 'Limpiamos tu mapa al 100%, recolectamos todos los cofres, anemóculus, etc.', precio: 15, opciones: '', imagenUrl: 'https://images.unsplash.com/photo-1614680376593-902f74cf0d41?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60' },
+                    'b2': { juego: 'Honkai: Star Rail', titulo: 'Promo: 10 dollars for 20 wishes', desc: 'Farmeo rápido de deseos/jades. ¡Sube tu contador de piedad!', precio: 10, opciones: '', imagenUrl: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60' }
+                };
+                localStorage.setItem('saith_boosting', JSON.stringify(defaultBoost));
+            }
+            loadData();
+        });
     </script>
 </body>
 </html>
