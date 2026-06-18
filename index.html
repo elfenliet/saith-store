@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saith Store - Premium Gaming Agency</title>
+    <!-- Iconos de FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- LIBRERÍAS DE FIREBASE -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
     <style>
-        /* Estilos generales idénticos a tu diseño oscuro y moderno */
         :root {
             --bg-dark: #0b0c10;
             --card-bg: #15161e;
@@ -34,11 +35,7 @@
             align-items: center;
             padding: 10px 40px;
             border-bottom: 1px solid #1f222e;
-        }
-
-        .logo-section {
-            display: flex;
-            align-items: center;
+            flex-wrap: wrap;
             gap: 15px;
         }
 
@@ -47,14 +44,30 @@
             font-weight: bold;
             letter-spacing: 1px;
         }
-
         .logo-title span { color: var(--accent-blue); }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .select-tool {
+            background: var(--card-bg);
+            color: var(--text-main);
+            border: 1px solid #2a2d3d;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            outline: none;
+        }
 
         .admin-lock {
             cursor: pointer;
             color: var(--text-muted);
             font-size: 18px;
-            padding: 10px;
+            padding: 8px 12px;
             border: 1px solid #1f222e;
             border-radius: 8px;
             transition: 0.3s;
@@ -141,24 +154,12 @@
             align-items: center;
             justify-content: center;
             z-index: 10;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
         .card-body { padding: 20px; }
-
-        .card-title {
-            font-size: 20px;
-            margin: 0 0 8px 0;
-            font-weight: 700;
-        }
-
-        .card-desc {
-            color: var(--text-muted);
-            font-size: 14px;
-            margin: 0 0 20px 0;
-            line-height: 1.4;
-        }
-
+        .card-title { font-size: 20px; margin: 0 0 8px 0; font-weight: 700; }
+        .card-desc { color: var(--text-muted); font-size: 14px; margin: 0 0 20px 0; line-height: 1.4; }
+        
         .card-footer {
             display: flex;
             justify-content: space-between;
@@ -191,12 +192,8 @@
             transition: 0.3s;
         }
 
-        .btn-buy:hover {
-            background-color: white;
-            color: black;
-        }
+        .btn-buy:hover { background-color: white; color: black; }
 
-        /* Panel de Control Admin */
         .admin-panel {
             background: #1a1c24;
             border: 1px solid #2a2d3d;
@@ -232,7 +229,6 @@
             cursor: pointer;
         }
 
-        /* Botón Flotante Whatsapp */
         .whatsapp-float {
             position: fixed;
             bottom: 30px;
@@ -249,46 +245,65 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
             z-index: 100;
             text-decoration: none;
+            transition: transform 0.3s;
         }
+        
+        .whatsapp-float:hover { transform: scale(1.1); }
     </style>
 </head>
 <body>
 
+    <!-- Encabezado con Selectores -->
     <div class="header-store">
-        <div class="logo-section">
-            <div class="logo-title">SAITH<span>STORE</span></div>
+        <div class="logo-title">SAITH<span>STORE</span></div>
+        <div class="header-controls">
+            <!-- Selector de Idioma -->
+            <select id="langSelect" class="select-tool" onchange="updateUI()">
+                <option value="es">🇪🇸 Español</option>
+                <option value="en">🇺🇸 English</option>
+            </select>
+            <!-- Selector de Moneda -->
+            <select id="currencySelect" class="select-tool" onchange="renderAllCards()">
+                <option value="USD">USD ($)</option>
+                <option value="PEN">PEN (S/)</option>
+                <option value="MXN">MXN ($)</option>
+                <option value="EUR">EUR (€)</option>
+            </select>
+            <div class="admin-lock" onclick="toggleAdmin()"><i class="fa-solid fa-lock"></i></div>
         </div>
-        <div class="admin-lock" onclick="toggleAdmin()"><i class="fa-solid fa-lock"></i></div>
     </div>
 
+    <!-- Panel de Administración -->
     <div class="admin-panel" id="adminPanel">
-        <h3><i class="fa-solid fa-rocket"></i> Centro de Comandos (Subir Contenido)</h3>
+        <h3 id="txtAdminTitle"><i class="fa-solid fa-rocket"></i> Centro de Comandos (Subir Contenido)</h3>
         <div class="admin-grid">
             <select id="itemType">
-                <option value="boosting">Servicio de Boosting</option>
-                <option value="cuentas">Cuenta de Marketplace</option>
+                <option value="boosting">Servicio de Boosting / Boosting Service</option>
+                <option value="cuentas">Cuenta de Marketplace / Account</option>
             </select>
-            <input type="text" id="itemGame" placeholder="Ej: GENSHIN IMPACT">
-            <input type="text" id="itemTitle" placeholder="Título (Ej: Farmeo Ecos)">
-            <input type="text" id="itemDesc" placeholder="Descripción corta">
-            <input type="text" id="itemPrice" placeholder="Precio (Ej: 10.00)">
-            <input type="text" id="itemImg" placeholder="Enlace de la Imagen (URL)">
+            <input type="text" id="itemGame" placeholder="Juego / Game (Ej: GENSHIN IMPACT)">
+            <input type="text" id="itemTitle" placeholder="Título / Title">
+            <input type="text" id="itemDesc" placeholder="Descripción / Description">
+            <input type="text" id="itemPrice" placeholder="Precio en USD / Price USD (Ej: 10.00)">
+            <input type="text" id="itemImg" placeholder="Link de Imgur / Image URL">
         </div>
-        <button class="btn-add" onclick="addNewItem()">Publicar en la Nube</button>
+        <button class="btn-add" id="txtAdminBtn" onclick="addNewItem()">Publicar en la Nube</button>
     </div>
 
-    <div class="section-title">Servicios de Boosting</div>
+    <!-- Títulos Dinámicos -->
+    <div class="section-title" id="txtTitle1">Servicios de Boosting</div>
     <div class="grid-container" id="boostingContainer"></div>
 
-    <div class="section-title">Marketplace de Cuentas</div>
+    <div class="section-title" id="txtTitle2">Marketplace de Cuentas</div>
     <div class="grid-container" id="accountsContainer"></div>
 
-    <a href="https://wa.me/51900000000" class="whatsapp-float" target="_blank">
+    <!-- Botón Whatsapp Actualizado -->
+    <a href="https://wa.me/51967128876" class="whatsapp-float" target="_blank">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
     <script>
-        // CONFIGURACIÓN REAL DE FIREBASE EXTRAÍDA DE TU CAPTURA
+        // CONFIGURACIÓN DE FIREBASE
         const firebaseConfig = {
             apiKey: "AIzaSyDfqojwsNW2VXOmekvzn50yWEdF7JjYs8",
             authDomain: "saithstore.firebaseapp.com",
@@ -298,41 +313,88 @@
             messagingSenderId: "981493503038",
             appId: "1:981493503038:web:a28b58a0c3fee0adcead6f"
         };
-
-        // Inicializar Firebase
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
         let isAdmin = false;
+        let globalBoostingData = [];
+        let globalAccountsData = [];
 
-        // SERVICIOS PREDETERMINADOS FIJOS (Para que nunca aparezcan vacíos)
+        // TASAS DE CAMBIO DE MONEDA (Aproximadas)
+        const exchangeRates = {
+            USD: { rate: 1, symbol: '$', code: 'USD' },
+            PEN: { rate: 3.75, symbol: 'S/', code: 'PEN' },
+            MXN: { rate: 18.50, symbol: '$', code: 'MXN' },
+            EUR: { rate: 0.92, symbol: '€', code: 'EUR' }
+        };
+
+        // DICCIONARIO DE IDIOMAS
+        const langDict = {
+            es: {
+                title1: "Servicios de Boosting",
+                title2: "Marketplace de Cuentas",
+                buyBtn: "Comprar",
+                emptyMsg: "No hay cuentas disponibles en este momento.",
+                adminTitle: "<i class='fa-solid fa-rocket'></i> Centro de Comandos",
+                adminBtn: "Publicar en la Nube",
+                wpMsg: "¡Hola Saith Store! Me interesa el producto: "
+            },
+            en: {
+                title1: "Boosting Services",
+                title2: "Accounts Marketplace",
+                buyBtn: "Buy",
+                emptyMsg: "No accounts available at the moment.",
+                adminTitle: "<i class='fa-solid fa-rocket'></i> Command Center",
+                adminBtn: "Publish to Cloud",
+                wpMsg: "Hello Saith Store! I am interested in the product: "
+            }
+        };
+
+        // SERVICIOS PREDETERMINADOS (Con imágenes seguras para evitar cuadros negros)
         const defaultBoosting = [
-            { id: "def_1", juego: "GENSHIN IMPACT", titulo: "Mapas al 100%", desc: "Exploración completa", precio: "10.00", img: "https://images2.alphacoders.com/110/1109233.jpg" },
-            { id: "def_2", juego: "HONKAI: STAR RAIL", titulo: "Farmeo 20 Deseos", desc: "Rápido y seguro", precio: "7.00", img: "https://images.alphacoders.com/131/1319323.jpeg" },
-            { id: "def_3", juego: "WUTHERING WAVES", titulo: "Farmeo Ecos", desc: "Ecos dorados", precio: "5.00", img: "https://images8.alphacoders.com/136/1360155.jpeg" },
-            { id: "def_4", juego: "ARKNIGHTS: ENDFIELD", titulo: "Servicio VIP", desc: "Materiales y farmeo", precio: "15.00", img: "https://images8.alphacoders.com/133/1336041.png" }
+            { id: "def_1", juego: "GENSHIN IMPACT", titulo: "Mapas al 100%", desc: "Exploración completa", precio: "10.00", img: "https://images.unsplash.com/photo-1614680376593-902f74cf0d41?q=80&w=600&auto=format&fit=crop" },
+            { id: "def_2", juego: "HONKAI: STAR RAIL", titulo: "Farmeo 20 Deseos", desc: "Rápido y seguro", precio: "7.00", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600&auto=format&fit=crop" },
+            { id: "def_3", juego: "WUTHERING WAVES", titulo: "Farmeo Ecos", desc: "Ecos dorados", precio: "5.00", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=600&auto=format&fit=crop" },
+            { id: "def_4", juego: "ARKNIGHTS: ENDFIELD", titulo: "Servicio VIP", desc: "Materiales y farmeo", precio: "15.00", img: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600&auto=format&fit=crop" }
         ];
 
-        // ESCUCHAR LA BASE DE DATOS EN TIEMPO REAL (Sincroniza PC y Celular automáticamente)
+        // ESCUCHAR BASE DE DATOS
         database.ref('tienda').on('value', (snapshot) => {
             const data = snapshot.val() || {};
-            
-            // 1. Cargar Boosting (Predeterminados + los que subas tú)
             const dbBoosting = data.boosting ? Object.keys(data.boosting).map(key => ({id: key, ...data.boosting[key]})) : [];
-            renderCards([...defaultBoosting, ...dbBoosting], 'boostingContainer');
-
-            // 2. Cargar Cuentas del Marketplace
-            const dbCuentas = data.cuentas ? Object.keys(data.cuentas).map(key => ({id: key, ...data.cuentas[key]})) : [];
-            renderCards(dbCuentas, 'accountsContainer');
+            globalBoostingData = [...defaultBoosting, ...dbBoosting];
+            
+            globalAccountsData = data.cuentas ? Object.keys(data.cuentas).map(key => ({id: key, ...data.cuentas[key]})) : [];
+            
+            renderAllCards();
         });
 
-        // Dibujar las tarjetas en la pantalla
-        function renderCards(items, containerId) {
+        // ACTUALIZAR TEXTOS DEL IDIOMA
+        function updateUI() {
+            const lang = document.getElementById('langSelect').value;
+            document.getElementById('txtTitle1').innerHTML = langDict[lang].title1;
+            document.getElementById('txtTitle2').innerHTML = langDict[lang].title2;
+            document.getElementById('txtAdminTitle').innerHTML = langDict[lang].adminTitle;
+            document.getElementById('txtAdminBtn').innerHTML = langDict[lang].adminBtn;
+            renderAllCards(); // Re-renderizar tarjetas para traducir botones de compra
+        }
+
+        // DIBUJAR TARJETAS CON MONEDA E IDIOMA APLICADOS
+        function renderAllCards() {
+            renderSection(globalBoostingData, 'boostingContainer');
+            renderSection(globalAccountsData, 'accountsContainer');
+        }
+
+        function renderSection(items, containerId) {
             const container = document.getElementById(containerId);
+            const lang = document.getElementById('langSelect').value;
+            const currencyKey = document.getElementById('currencySelect').value;
+            const currency = exchangeRates[currencyKey];
+            
             container.innerHTML = '';
 
             if (items.length === 0 && containerId === 'accountsContainer') {
-                container.innerHTML = `<p style="color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 20px;">No hay cuentas disponibles en este momento.</p>`;
+                container.innerHTML = `<p style="color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 20px;">${langDict[lang].emptyMsg}</p>`;
                 return;
             }
 
@@ -340,7 +402,10 @@
                 const card = document.createElement('div');
                 card.className = 'card';
                 
-                // Mostrar botón de borrar solo a administradores y si no es un servicio predeterminado fijo
+                // Conversión de precio
+                const basePrice = parseFloat(item.precio);
+                const localPrice = (basePrice * currency.rate).toFixed(2);
+
                 const showDelete = isAdmin && !item.id.startsWith('def_') ? 'display: flex' : 'display: none';
                 const itemTypePath = containerId === 'boostingContainer' ? 'boosting' : 'cuentas';
 
@@ -353,9 +418,9 @@
                         <h4 class="card-title">${item.titulo}</h4>
                         <p class="card-desc">${item.desc}</p>
                         <div class="card-footer">
-                            <div class="card-price">$ ${item.precio}<span>USD</span></div>
-                            <button class="btn-buy" onclick="sendWhatsApp('${item.titulo}', '${item.precio}')">
-                                <i class="fa-solid fa-cart-shopping"></i> Comprar
+                            <div class="card-price">${currency.symbol} ${localPrice}<span>${currency.code}</span></div>
+                            <button class="btn-buy" onclick="sendWhatsApp('${item.titulo}', '${localPrice}', '${currency.code}', '${lang}')">
+                                <i class="fa-solid fa-cart-shopping"></i> ${langDict[lang].buyBtn}
                             </button>
                         </div>
                     </div>
@@ -364,76 +429,60 @@
             });
         }
 
-        // Subir nuevos items directamente a Firebase
         function addNewItem() {
             const type = document.getElementById('itemType').value;
             const juego = document.getElementById('itemGame').value.toUpperCase();
             const titulo = document.getElementById('itemTitle').value;
             const desc = document.getElementById('itemDesc').value;
             const precio = document.getElementById('itemPrice').value;
-            const img = document.getElementById('itemImg').value || "https://images2.alphacoders.com/110/1109233.jpg";
+            const img = document.getElementById('itemImg').value || "https://images.unsplash.com/photo-1614680376593-902f74cf0d41?q=80&w=600&auto=format&fit=crop"; // Imagen segura por defecto
 
             if(!juego || !titulo || !precio) {
-                alert("Por favor completa los campos principales (Juego, Título y Precio)");
+                alert("Completa Juego, Título y Precio / Fill out Game, Title, and Price");
                 return;
             }
 
-            const newItem = { juego, titulo, desc, precio, img };
-
-            // Empujar a la base de datos en la nube
-            database.ref(`tienda/${type}`).push(newItem)
+            // Guardamos SIEMPRE el precio base en USD en la base de datos
+            database.ref(`tienda/${type}`).push({ juego, titulo, desc, precio, img })
                 .then(() => {
-                    alert("¡Publicado con éxito en la nube! Se verá en PC y Celulares al instante.");
-                    // Limpiar formulario menos el tipo de juego para ahorrar tiempo
+                    alert("¡Publicado! / Published!");
                     document.getElementById('itemTitle').value = '';
                     document.getElementById('itemDesc').value = '';
                     document.getElementById('itemPrice').value = '';
                     document.getElementById('itemImg').value = '';
                 })
-                .catch(error => alert("Error al subir: " + error.message));
+                .catch(err => alert("Error: " + err.message));
         }
 
-        // Eliminar un item de la nube
         function deleteItem(type, id) {
-            if(confirm("¿Seguro que deseas eliminar este artículo de la nube?")) {
-                database.ref(`tienda/${type}/${id}`).remove()
-                    .then(() => alert("Eliminado correctamente."))
-                    .catch(error => alert("Error: " + error.message));
+            if(confirm("¿Eliminar este artículo? / Delete this item?")) {
+                database.ref(`tienda/${type}/${id}`).remove();
             }
         }
 
-        // Sistema de Login Admin
         function toggleAdmin() {
             if (!isAdmin) {
-                const pass = prompt("Introduce la clave de Administrador:");
+                const pass = prompt("Clave / Password:");
                 if (pass === "jessicajasmin11") {
                     isAdmin = true;
                     document.getElementById('adminPanel').style.display = 'block';
-                    alert("¡Modo Administrador activado!");
-                } else if(pass !== null) {
-                    alert("Clave incorrecta.");
                 }
             } else {
                 isAdmin = false;
                 document.getElementById('adminPanel').style.display = 'none';
-                alert("Modo Administrador desactivado.");
             }
-            // Forzar actualización visual para mostrar/ocultar botones de borrar
-            database.ref('tienda').get().then(snapshot => {
-                const data = snapshot.val() || {};
-                const dbBoosting = data.boosting ? Object.keys(data.boosting).map(key => ({id: key, ...data.boosting[key]})) : [];
-                renderCards([...defaultBoosting, ...dbBoosting], 'boostingContainer');
-                const dbCuentas = data.cuentas ? Object.keys(data.cuentas).map(key => ({id: key, ...data.cuentas[key]})) : [];
-                renderCards(dbCuentas, 'accountsContainer');
-            });
+            renderAllCards();
         }
 
-        // Enviar mensaje automático a Whatsapp
-        function sendWhatsApp(producto, precio) {
-            const telefono = "51900000000"; // Reemplaza con tu número real de WhatsApp
-            const mensaje = encodeURIComponent(`¡Hola Saith Store! Estoy interesado en comprar el producto: "${producto}" con un costo de $${precio} USD. Me gustaría recibir más información.`);
+        function sendWhatsApp(producto, precioLocal, code, lang) {
+            const telefono = "51967128876"; // TU NUEVO NÚMERO
+            const baseMsg = langDict[lang].wpMsg;
+            const mensaje = encodeURIComponent(`${baseMsg} "${producto}" (${precioLocal} ${code}).`);
             window.open(`https://wa.me/${telefono}?text=${mensaje}`, '_blank');
         }
+
+        // Iniciar textos al cargar la web
+        updateUI();
     </script>
 </body>
 </html>
