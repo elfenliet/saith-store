@@ -39,216 +39,113 @@
             gap: 15px;
         }
 
-        .logo-title {
-            font-size: 24px;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
+        .logo-title { font-size: 24px; font-weight: bold; letter-spacing: 1px; }
         .logo-title span { color: var(--accent-blue); }
 
-        .header-controls {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+        .header-controls { display: flex; align-items: center; gap: 15px; }
 
         .select-tool {
-            background: var(--card-bg);
-            color: var(--text-main);
-            border: 1px solid #2a2d3d;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 14px;
-            cursor: pointer;
-            outline: none;
+            background: var(--card-bg); color: var(--text-main);
+            border: 1px solid #2a2d3d; padding: 8px 12px;
+            border-radius: 8px; font-size: 14px; cursor: pointer; outline: none;
         }
 
         .admin-lock {
-            cursor: pointer;
-            color: var(--text-muted);
-            font-size: 18px;
-            padding: 8px 12px;
-            border: 1px solid #1f222e;
-            border-radius: 8px;
-            transition: 0.3s;
+            cursor: pointer; color: var(--text-muted); font-size: 18px;
+            padding: 8px 12px; border: 1px solid #1f222e; border-radius: 8px; transition: 0.3s;
         }
+        .admin-lock:hover { color: var(--accent-blue); border-color: var(--accent-blue); }
 
-        .admin-lock:hover {
-            color: var(--accent-blue);
-            border-color: var(--accent-blue);
-        }
-
-        .section-title {
-            font-size: 28px;
-            margin: 40px 0 20px 20px;
-            position: relative;
-            padding-left: 15px;
-        }
-
+        .section-title { font-size: 28px; margin: 40px 0 20px 20px; position: relative; padding-left: 15px; }
         .section-title::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 15%;
-            height: 70%;
-            width: 5px;
-            background: linear-gradient(to bottom, var(--accent-blue), var(--accent-purple));
-            border-radius: 2px;
+            content: ''; position: absolute; left: 0; top: 15%; height: 70%;
+            width: 5px; background: linear-gradient(to bottom, var(--accent-blue), var(--accent-purple)); border-radius: 2px;
         }
 
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-            padding: 20px;
-        }
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; padding: 20px; }
 
         .card {
-            background-color: var(--card-bg);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
+            background-color: var(--card-bg); border-radius: 16px; overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2); transition: transform 0.3s, box-shadow 0.3s; position: relative;
         }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(0,210,255,0.15);
-        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,210,255,0.15); }
 
         .card-img-container {
-            width: 100%;
-            height: 180px;
-            position: relative;
-            background-size: cover;
-            background-position: center;
+            width: 100%; height: 180px; position: relative;
+            background-size: cover; background-position: center; cursor: pointer;
         }
 
         .badge-game {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border: 1px solid rgba(255,255,255,0.1);
+            position: absolute; top: 15px; left: 15px; background-color: rgba(0, 0, 0, 0.7);
+            padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: bold;
+            text-transform: uppercase; letter-spacing: 0.5px; border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .badge-gallery {
+            position: absolute; bottom: 10px; right: 10px; background-color: rgba(0, 0, 0, 0.8);
+            padding: 5px 10px; border-radius: 8px; font-size: 12px; color: white;
         }
 
         .btn-delete {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background-color: #ff3333;
-            color: white;
-            border: none;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
+            position: absolute; top: 15px; right: 15px; background-color: #ff3333;
+            color: white; border: none; width: 32px; height: 32px; border-radius: 50%;
+            cursor: pointer; display: none; align-items: center; justify-content: center; z-index: 10;
         }
 
         .card-body { padding: 20px; }
         .card-title { font-size: 20px; margin: 0 0 8px 0; font-weight: 700; }
         .card-desc { color: var(--text-muted); font-size: 14px; margin: 0 0 20px 0; line-height: 1.4; }
-        
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .card-price {
-            font-size: 22px;
-            font-weight: bold;
-            color: var(--accent-blue);
-        }
-
-        .card-price span {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-left: 5px;
-        }
+        .card-footer { display: flex; justify-content: space-between; align-items: center; }
+        .card-price { font-size: 22px; font-weight: bold; color: var(--accent-blue); }
+        .card-price span { font-size: 12px; color: var(--text-muted); margin-left: 5px; }
 
         .btn-buy {
-            background-color: #11131a;
-            color: white;
-            border: 1px solid #222633;
-            padding: 10px 20px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.3s;
+            background-color: #11131a; color: white; border: 1px solid #222633;
+            padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: bold;
+            display: flex; align-items: center; gap: 8px; transition: 0.3s;
         }
-
         .btn-buy:hover { background-color: white; color: black; }
 
-        .admin-panel {
-            background: #1a1c24;
-            border: 1px solid #2a2d3d;
-            border-radius: 16px;
-            padding: 25px;
-            margin: 20px;
-            display: none;
-        }
+        .admin-panel { background: #1a1c24; border: 1px solid #2a2d3d; border-radius: 16px; padding: 25px; margin: 20px; display: none; }
+        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-bottom: 15px; }
+        
+        input, select { background: #11131a; border: 1px solid #2a2d3d; color: white; padding: 12px; border-radius: 8px; font-size: 14px; }
+        .full-width { grid-column: 1 / -1; }
 
-        .admin-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        input, select {
-            background: #11131a;
-            border: 1px solid #2a2d3d;
-            color: white;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-
-        .btn-add {
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+        .btn-add { background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); color: white; border: none; padding: 12px 30px; border-radius: 8px; font-weight: bold; cursor: pointer; }
 
         .whatsapp-float {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background-color: #25d366;
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            z-index: 100;
-            text-decoration: none;
-            transition: transform 0.3s;
+            position: fixed; bottom: 30px; right: 30px; background-color: #25d366;
+            color: white; width: 60px; height: 60px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 32px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4); z-index: 100; text-decoration: none; transition: transform 0.3s;
         }
-        
         .whatsapp-float:hover { transform: scale(1.1); }
+
+        /* GALERÍA MODAL (Para ver varias fotos) */
+        .modal {
+            display: none; position: fixed; z-index: 9999; left: 0; top: 0;
+            width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            margin: auto; display: block; max-width: 90%; max-height: 85vh;
+            margin-top: 5vh; object-fit: contain; border-radius: 8px;
+        }
+        .close-btn {
+            position: absolute; top: 20px; right: 35px; color: #f1f1f1;
+            font-size: 40px; font-weight: bold; cursor: pointer; transition: 0.3s;
+        }
+        .close-btn:hover { color: #ff3333; }
+        .nav-btn {
+            cursor: pointer; position: absolute; top: 50%; width: auto;
+            padding: 16px; margin-top: -50px; color: white; font-weight: bold;
+            font-size: 30px; transition: 0.6s ease; border-radius: 0 3px 3px 0; user-select: none;
+            background-color: rgba(0,0,0,0.5); border: none;
+        }
+        .prev-btn { left: 10px; border-radius: 8px; }
+        .next-btn { right: 10px; border-radius: 8px; }
+        .nav-btn:hover { background-color: rgba(0,0,0,0.8); color: var(--accent-blue); }
+        .gallery-counter { color: #f1f1f1; text-align: center; font-size: 16px; padding: 15px 0; }
     </style>
 </head>
 <body>
@@ -275,17 +172,23 @@
 
     <!-- Panel de Administración -->
     <div class="admin-panel" id="adminPanel">
-        <h3 id="txtAdminTitle"><i class="fa-solid fa-rocket"></i> Centro de Comandos (Subir Contenido)</h3>
+        <h3 id="txtAdminTitle"><i class="fa-solid fa-rocket"></i> Centro de Comandos</h3>
         <div class="admin-grid">
             <select id="itemType">
                 <option value="boosting">Servicio de Boosting / Boosting Service</option>
                 <option value="cuentas">Cuenta de Marketplace / Account</option>
             </select>
             <input type="text" id="itemGame" placeholder="Juego / Game (Ej: GENSHIN IMPACT)">
-            <input type="text" id="itemTitle" placeholder="Título / Title">
-            <input type="text" id="itemDesc" placeholder="Descripción / Description">
             <input type="text" id="itemPrice" placeholder="Precio en USD / Price USD (Ej: 10.00)">
-            <input type="text" id="itemImg" placeholder="Link de Imagen / Image URL">
+            
+            <!-- Campos Separados por Idioma -->
+            <input type="text" id="itemTitleEs" placeholder="Título en ESPAÑOL">
+            <input type="text" id="itemTitleEn" placeholder="Title in ENGLISH">
+            <input type="text" id="itemDescEs" placeholder="Descripción corta en ESPAÑOL">
+            <input type="text" id="itemDescEn" placeholder="Short description in ENGLISH">
+            
+            <!-- Campo para varias imágenes -->
+            <input type="text" id="itemImg" class="full-width" placeholder="URLs de Imgur (Si son varias, sepáralas con una coma ',')">
         </div>
         <button class="btn-add" id="txtAdminBtn" onclick="addNewItem()">Publicar en la Nube</button>
     </div>
@@ -301,6 +204,15 @@
     <a href="https://wa.me/51967128876" class="whatsapp-float" target="_blank">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
+
+    <!-- MODAL DE GALERÍA DE IMÁGENES -->
+    <div id="imageModal" class="modal">
+        <span class="close-btn" onclick="closeGallery()">&times;</span>
+        <button class="nav-btn prev-btn" onclick="changeSlide(-1)">&#10094;</button>
+        <img class="modal-content" id="modalImg">
+        <button class="nav-btn next-btn" onclick="changeSlide(1)">&#10095;</button>
+        <div class="gallery-counter" id="galleryCount"></div>
+    </div>
 
     <script>
         // CONFIGURACIÓN DE FIREBASE
@@ -328,7 +240,7 @@
             EUR: { rate: 0.92, symbol: '€', code: 'EUR' }
         };
 
-        // DICCIONARIO DE IDIOMAS
+        // DICCIONARIO DE IDIOMAS (Interfaz)
         const langDict = {
             es: {
                 title1: "Servicios de Boosting",
@@ -350,21 +262,15 @@
             }
         };
 
-        // ARREGLO VACÍO: TU TIENDA EMPEZARÁ LIMPIA
-        const defaultBoosting = [];
-
         // ESCUCHAR BASE DE DATOS
         database.ref('tienda').on('value', (snapshot) => {
             const data = snapshot.val() || {};
-            const dbBoosting = data.boosting ? Object.keys(data.boosting).map(key => ({id: key, ...data.boosting[key]})) : [];
-            globalBoostingData = [...defaultBoosting, ...dbBoosting];
-            
+            globalBoostingData = data.boosting ? Object.keys(data.boosting).map(key => ({id: key, ...data.boosting[key]})) : [];
             globalAccountsData = data.cuentas ? Object.keys(data.cuentas).map(key => ({id: key, ...data.cuentas[key]})) : [];
-            
             renderAllCards();
         });
 
-        // ACTUALIZAR TEXTOS DEL IDIOMA
+        // ACTUALIZAR TEXTOS DE LA INTERFAZ
         function updateUI() {
             const lang = document.getElementById('langSelect').value;
             document.getElementById('txtTitle1').innerHTML = langDict[lang].title1;
@@ -397,24 +303,44 @@
                 const card = document.createElement('div');
                 card.className = 'card';
                 
-                // Conversión de precio
-                const basePrice = parseFloat(item.precio);
-                const localPrice = (basePrice * currency.rate).toFixed(2);
+                // Traducción de la Base de Datos
+                // Si existe el título en el idioma seleccionado, lo usa. Si no, usa el que haya por defecto.
+                let displayTitle = lang === 'en' && item.tituloEn ? item.tituloEn : (item.tituloEs || item.titulo);
+                let displayDesc = lang === 'en' && item.descEn ? item.descEn : (item.descEs || item.desc);
 
-                const showDelete = isAdmin && !item.id.startsWith('def_') ? 'display: flex' : 'display: none';
+                // Manejo de Imágenes (Soporta múltiples)
+                let images = [];
+                if (Array.isArray(item.img)) {
+                    images = item.img;
+                } else if (item.img && typeof item.img === 'string') {
+                    images = item.img.split(',').map(u => u.trim()); // Por si se guardó como texto separado por comas
+                } else {
+                    images = ["https://images.unsplash.com/photo-1614680376593-902f74cf0d41?q=80&w=600&auto=format&fit=crop"];
+                }
+                const mainImage = images[0];
+                const galleryBadge = images.length > 1 ? `<span class="badge-gallery"><i class="fa-solid fa-images"></i> ${images.length}</span>` : '';
+
+                // Conversión de precio
+                const basePrice = parseFloat(item.precio || 0);
+                const localPrice = (basePrice * currency.rate).toFixed(2);
+                const showDelete = isAdmin ? 'display: flex' : 'display: none';
                 const itemTypePath = containerId === 'boostingContainer' ? 'boosting' : 'cuentas';
+
+                // Codificamos el arreglo de imágenes para pasarlo a la función
+                const imagesJson = JSON.stringify(images).replace(/'/g, "\\'");
 
                 card.innerHTML = `
                     <button class="btn-delete" style="${showDelete}" onclick="deleteItem('${itemTypePath}', '${item.id}')"><i class="fa-solid fa-trash"></i></button>
-                    <div class="card-img-container" style="background-image: url('${item.img}')">
+                    <div class="card-img-container" style="background-image: url('${mainImage}')" onclick='openGallery(${imagesJson})'>
                         <span class="badge-game">${item.juego}</span>
+                        ${galleryBadge}
                     </div>
                     <div class="card-body">
-                        <h4 class="card-title">${item.titulo}</h4>
-                        <p class="card-desc">${item.desc}</p>
+                        <h4 class="card-title">${displayTitle}</h4>
+                        <p class="card-desc">${displayDesc}</p>
                         <div class="card-footer">
                             <div class="card-price">${currency.symbol} ${localPrice}<span>${currency.code}</span></div>
-                            <button class="btn-buy" onclick="sendWhatsApp('${item.titulo}', '${localPrice}', '${currency.code}', '${lang}')">
+                            <button class="btn-buy" onclick="sendWhatsApp('${displayTitle}', '${localPrice}', '${currency.code}', '${lang}')">
                                 <i class="fa-solid fa-cart-shopping"></i> ${langDict[lang].buyBtn}
                             </button>
                         </div>
@@ -427,25 +353,46 @@
         function addNewItem() {
             const type = document.getElementById('itemType').value;
             const juego = document.getElementById('itemGame').value.toUpperCase();
-            const titulo = document.getElementById('itemTitle').value;
-            const desc = document.getElementById('itemDesc').value;
             const precio = document.getElementById('itemPrice').value;
-            const img = document.getElementById('itemImg').value || "https://images.unsplash.com/photo-1614680376593-902f74cf0d41?q=80&w=600&auto=format&fit=crop";
+            
+            // Textos en ambos idiomas
+            const tituloEs = document.getElementById('itemTitleEs').value;
+            const tituloEn = document.getElementById('itemTitleEn').value || tituloEs; // Si lo dejan vacío, copia el español
+            const descEs = document.getElementById('itemDescEs').value;
+            const descEn = document.getElementById('itemDescEn').value || descEs; // Si lo dejan vacío, copia el español
 
-            if(!juego || !titulo || !precio) {
-                alert("Completa Juego, Título y Precio / Fill out Game, Title, and Price");
+            // Procesar múltiples imágenes
+            const rawImgs = document.getElementById('itemImg').value;
+            let imgArray = ["https://images.unsplash.com/photo-1614680376593-902f74cf0d41?q=80&w=600&auto=format&fit=crop"];
+            if (rawImgs) {
+                imgArray = rawImgs.split(',').map(url => url.trim()).filter(url => url !== "");
+            }
+
+            if(!juego || !tituloEs || !precio) {
+                alert("Completa Juego, Título en Español y Precio.");
                 return;
             }
 
-            database.ref(`tienda/${type}`).push({ juego, titulo, desc, precio, img })
-                .then(() => {
-                    alert("¡Publicado! / Published!");
-                    document.getElementById('itemTitle').value = '';
-                    document.getElementById('itemDesc').value = '';
-                    document.getElementById('itemPrice').value = '';
-                    document.getElementById('itemImg').value = '';
-                })
-                .catch(err => alert("Error: " + err.message));
+            // Subimos a Firebase con los nuevos campos de idioma y el array de imágenes
+            database.ref(`tienda/${type}`).push({ 
+                juego: juego, 
+                precio: precio,
+                tituloEs: tituloEs, 
+                tituloEn: tituloEn, 
+                descEs: descEs, 
+                descEn: descEn, 
+                img: imgArray 
+            })
+            .then(() => {
+                alert("¡Publicado! / Published!");
+                document.getElementById('itemTitleEs').value = '';
+                document.getElementById('itemTitleEn').value = '';
+                document.getElementById('itemDescEs').value = '';
+                document.getElementById('itemDescEn').value = '';
+                document.getElementById('itemPrice').value = '';
+                document.getElementById('itemImg').value = '';
+            })
+            .catch(err => alert("Error: " + err.message));
         }
 
         function deleteItem(type, id) {
@@ -473,6 +420,57 @@
             const baseMsg = langDict[lang].wpMsg;
             const mensaje = encodeURIComponent(`${baseMsg} "${producto}" (${precioLocal} ${code}).`);
             window.open(`https://wa.me/${telefono}?text=${mensaje}`, '_blank');
+        }
+
+        // LÓGICA DE LA GALERÍA DE IMÁGENES
+        let currentGallery = [];
+        let currentImageIndex = 0;
+
+        window.openGallery = function(imgArray) {
+            if (!imgArray || imgArray.length === 0) return;
+            currentGallery = imgArray;
+            currentImageIndex = 0;
+            document.getElementById('imageModal').style.display = 'block';
+            updateGalleryView();
+        }
+
+        window.closeGallery = function() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        window.changeSlide = function(step) {
+            currentImageIndex += step;
+            if (currentImageIndex >= currentGallery.length) {
+                currentImageIndex = 0; // Vuelve a la primera
+            }
+            if (currentImageIndex < 0) {
+                currentImageIndex = currentGallery.length - 1; // Va a la última
+            }
+            updateGalleryView();
+        }
+
+        function updateGalleryView() {
+            document.getElementById('modalImg').src = currentGallery[currentImageIndex];
+            
+            // Si solo hay 1 foto, esconde los botones de anterior/siguiente
+            const navBtns = document.getElementsByClassName('nav-btn');
+            if (currentGallery.length <= 1) {
+                navBtns[0].style.display = 'none';
+                navBtns[1].style.display = 'none';
+                document.getElementById('galleryCount').innerText = "";
+            } else {
+                navBtns[0].style.display = 'block';
+                navBtns[1].style.display = 'block';
+                document.getElementById('galleryCount').innerText = `${currentImageIndex + 1} / ${currentGallery.length}`;
+            }
+        }
+
+        // Cerrar galería haciendo clic fuera de la imagen
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target == modal) {
+                closeGallery();
+            }
         }
 
         // Iniciar textos al cargar la web
