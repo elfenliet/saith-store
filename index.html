@@ -50,9 +50,13 @@
         .section-title::before { content: ''; position: absolute; left: 0; top: 15%; height: 70%; width: 5px; background: linear-gradient(to bottom, var(--accent-blue), var(--accent-purple)); border-radius: 2px; }
         .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; padding: 0 40px; }
 
-        /* TARJETAS DE PRODUCTOS */
-        .card { background-color: var(--card-bg); border-radius: 16px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.2); transition: transform 0.3s, box-shadow 0.3s; position: relative; border: 1px solid #1f222e; }
+        /* TARJETAS DE PRODUCTOS Y CATEGORÍAS */
+        .card { background-color: var(--card-bg); border-radius: 16px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.2); transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; position: relative; border: 1px solid #1f222e; }
         .card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,210,255,0.15); border-color: #2a2d3d; }
+        
+        .category-card { cursor: pointer; }
+        .category-card:hover { border-color: var(--accent-purple); box-shadow: 0 12px 30px rgba(138, 43, 226, 0.2); }
+
         .card-img-container { width: 100%; height: 180px; position: relative; background-size: cover; background-position: center; cursor: pointer; }
         
         .badge-game { position: absolute; top: 15px; left: 15px; background-color: rgba(0, 0, 0, 0.7); padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(4px); }
@@ -70,6 +74,9 @@
         .btn-buy { background: linear-gradient(135deg, #11131a, #1a1c24); color: white; border: 1px solid #2a2d3d; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: bold; display: flex; align-items: center; gap: 8px; transition: 0.3s; }
         .btn-buy:hover { background: white; color: black; border-color: white; transform: scale(1.05); }
 
+        .btn-back { background: #1a1c24; color: white; border: 1px solid #2a2d3d; padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-back:hover { background: #2a2d3d; color: var(--accent-blue); }
+
         /* SECCIÓN DE RESEÑAS */
         .reviews-header { display: flex; justify-content: space-between; align-items: center; padding: 0 40px; margin-bottom: 20px; }
         .btn-review { background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.3s; }
@@ -78,7 +85,7 @@
         .review-card { background: #1a1c24; border-radius: 12px; padding: 20px; border: 1px solid #2a2d3d; position: relative; }
         .review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .reviewer-name { font-weight: bold; font-size: 16px; color: #fff; display: flex; align-items: center; gap: 8px; }
-        .reviewer-name i { color: #4CAF50; font-size: 14px; } /* Icono verificado */
+        .reviewer-name i { color: #4CAF50; font-size: 14px; }
         .review-date { font-size: 12px; color: var(--text-muted); }
         .review-stars { color: #FFD700; margin-bottom: 10px; font-size: 14px; }
         .review-text { font-size: 14px; color: #d1d5e0; line-height: 1.5; font-style: italic; }
@@ -107,7 +114,7 @@
         .nav-btn:hover { background-color: rgba(0,0,0,0.8); color: var(--accent-blue); }
         .gallery-counter { color: #f1f1f1; text-align: center; font-size: 16px; padding: 15px 0; }
         
-        /* Personalización SweetAlert Dark Mode */
+        /* Personalización SweetAlert */
         .swal2-popup { background: #1a1c24 !important; color: white !important; border: 1px solid #2a2d3d; border-radius: 16px !important; }
         .swal2-input, .swal2-textarea, .swal2-select { background: #11131a !important; border: 1px solid #2a2d3d !important; color: white !important; }
         .swal2-title { color: white !important; }
@@ -120,7 +127,7 @@
         <div class="logo-title">SAITH<span>STORE</span></div>
         <div class="header-controls">
             <!-- Barra de búsqueda rápida -->
-            <input type="text" id="searchInput" class="search-bar" placeholder="🔍 Buscar juego o producto..." onkeyup="filterProducts()">
+            <input type="text" id="searchInput" class="search-bar" placeholder="🔍 Buscar juego o producto..." onkeyup="handleSearch()">
             
             <select id="langSelect" class="select-tool" onchange="updateUI()">
                 <option value="es">🇪🇸 ES</option>
@@ -162,10 +169,17 @@
         <button class="btn-add" id="txtAdminBtn" onclick="addNewItem()">Publicar en la Nube</button>
     </div>
 
-    <!-- Productos -->
+    <!-- SECCIÓN: SERVICIOS DE BOOSTING (CON CARPETAS) -->
     <div class="section-title" id="txtTitle1">Servicios de Boosting</div>
+    
+    <!-- Botón Volver (Solo visible al entrar a una categoría) -->
+    <div id="backBtnContainer" style="display: none; padding: 0 40px; margin-bottom: 20px;">
+        <button class="btn-back" onclick="backToCategories()"><i class="fa-solid fa-arrow-left"></i> <span id="txtBackBtn">Volver a Categorías</span></button>
+    </div>
+    
     <div class="grid-container" id="boostingContainer"></div>
 
+    <!-- SECCIÓN: CUENTAS -->
     <div class="section-title" id="txtTitle2">Marketplace de Cuentas</div>
     <div class="grid-container" id="accountsContainer"></div>
 
@@ -208,12 +222,16 @@
         let globalBoostingData = [];
         let globalAccountsData = [];
         let globalReviewsData = [];
+        
+        // Estado de la Categoría de Boosting Activa
+        let activeBoostingCategory = null;
+        let isSearching = false;
 
         const exchangeRates = { USD: { rate: 1, symbol: '$', code: 'USD' }, PEN: { rate: 3.75, symbol: 'S/', code: 'PEN' }, MXN: { rate: 18.50, symbol: '$', code: 'MXN' }, EUR: { rate: 0.92, symbol: '€', code: 'EUR' } };
 
         const langDict = {
-            es: { title1: "Servicios de Boosting", title2: "Marketplace de Cuentas", title3: "Reseñas de Clientes", buyBtn: "Comprar", emptyMsg: "No hay productos disponibles.", adminBtn: "Publicar en la Nube", wpMsg: "¡Hola Saith Store! Me interesa el producto: ", btnReview: "Dejar una Reseña", searchPlaceholder: "🔍 Buscar juego o producto..." },
-            en: { title1: "Boosting Services", title2: "Accounts Marketplace", title3: "Customer Reviews", buyBtn: "Buy", emptyMsg: "No products available.", adminBtn: "Publish to Cloud", wpMsg: "Hello Saith Store! I am interested in the product: ", btnReview: "Leave a Review", searchPlaceholder: "🔍 Search game or product..." }
+            es: { title1: "Servicios de Boosting", title2: "Marketplace de Cuentas", title3: "Reseñas de Clientes", buyBtn: "Comprar", emptyMsg: "No hay productos disponibles.", adminBtn: "Publicar en la Nube", wpMsg: "¡Hola Saith Store! Me interesa el producto: ", btnReview: "Dejar una Reseña", searchPlaceholder: "🔍 Buscar juego o producto...", backBtn: "Volver a Categorías", catBadge: "CATEGORÍA", countText: "servicios" },
+            en: { title1: "Boosting Services", title2: "Accounts Marketplace", title3: "Customer Reviews", buyBtn: "Buy", emptyMsg: "No products available.", adminBtn: "Publish to Cloud", wpMsg: "Hello Saith Store! I am interested in the product: ", btnReview: "Leave a Review", searchPlaceholder: "🔍 Search game or product...", backBtn: "Back to Categories", catBadge: "CATEGORY", countText: "services" }
         };
 
         // Escuchar Firebase
@@ -234,45 +252,122 @@
             document.getElementById('txtTitle3').innerHTML = langDict[lang].title3;
             document.getElementById('txtAdminBtn').innerHTML = langDict[lang].adminBtn;
             document.getElementById('txtBtnReview').innerHTML = langDict[lang].btnReview;
+            document.getElementById('txtBackBtn').innerHTML = langDict[lang].backBtn;
             document.getElementById('searchInput').placeholder = langDict[lang].searchPlaceholder;
             renderAllCards();
         }
 
-        // RENDERIZAR PRODUCTOS
+        // RENDERIZADO PRINCIPAL
         function renderAllCards() {
-            renderSection(globalBoostingData, 'boostingContainer');
-            renderSection(globalAccountsData, 'accountsContainer');
-            filterProducts(); // Aplicar filtro si hay búsqueda activa
+            renderBoostingSection();
+            renderAccountsSection();
+            applySearchFilterCSS(); // Re-aplica el filtro de búsqueda si está activo
         }
 
-        function renderSection(items, containerId) {
-            const container = document.getElementById(containerId);
+        // RENDERIZAR BOOSTING (CON SISTEMA DE CARPETAS)
+        function renderBoostingSection() {
+            const container = document.getElementById('boostingContainer');
+            const backBtn = document.getElementById('backBtnContainer');
             const lang = document.getElementById('langSelect').value;
             const currency = exchangeRates[document.getElementById('currencySelect').value];
             
             container.innerHTML = '';
-            if (items.length === 0) { container.innerHTML = `<p style="color: var(--text-muted); grid-column: 1/-1;">${langDict[lang].emptyMsg}</p>`; return; }
 
+            if (globalBoostingData.length === 0) { 
+                backBtn.style.display = 'none';
+                container.innerHTML = `<p style="color: var(--text-muted); grid-column: 1/-1;">${langDict[lang].emptyMsg}</p>`; 
+                return; 
+            }
+
+            // Si está buscando, ignoramos las carpetas y mostramos TODOS los items para que el CSS los filtre
+            if (isSearching) {
+                backBtn.style.display = 'none';
+                renderItems(globalBoostingData, container, 'boosting', lang, currency);
+                return;
+            }
+
+            // Si NO ha entrado a ninguna categoría, mostramos las carpetas por juego
+            if (!activeBoostingCategory) {
+                backBtn.style.display = 'none';
+                
+                // Extraer juegos únicos
+                const games = [...new Set(globalBoostingData.map(item => item.juego))];
+                
+                games.forEach(game => {
+                    const gameItems = globalBoostingData.filter(i => i.juego === game);
+                    
+                    // Obtener imagen de portada (la del primer servicio)
+                    let images = Array.isArray(gameItems[0].img) ? gameItems[0].img : (typeof gameItems[0].img === 'string' ? gameItems[0].img.split(',').map(u=>u.trim()) : ["https://images.unsplash.com/photo-1614680376593-902f74cf0d41?q=80"]);
+                    const mainImage = images[0];
+
+                    const card = document.createElement('div');
+                    card.className = 'card category-card product-card'; // Clase product-card para buscador
+                    card.setAttribute('data-search', game.toLowerCase());
+                    card.onclick = () => { activeBoostingCategory = game; renderAllCards(); };
+
+                    const countText = `${gameItems.length} ${langDict[lang].countText}`;
+
+                    card.innerHTML = `
+                        <div class="card-img-container" style="background-image: url('${mainImage}')">
+                            <span class="badge-game" style="background-color: var(--accent-purple);">${langDict[lang].catBadge}</span>
+                        </div>
+                        <div class="card-body" style="text-align: center;">
+                            <h4 class="card-title">${game}</h4>
+                            <p class="card-desc" style="color: var(--accent-blue); font-weight: bold; margin-bottom: 0;">${countText}</p>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            } else {
+                // Si HA ENTRADO a una categoría, mostramos el botón volver y los servicios de ese juego
+                backBtn.style.display = 'block';
+                const items = globalBoostingData.filter(i => i.juego === activeBoostingCategory);
+                
+                // Si borra el último producto de la categoría, lo sacamos de ahí
+                if(items.length === 0) {
+                    activeBoostingCategory = null;
+                    renderAllCards();
+                    return;
+                }
+                
+                renderItems(items, container, 'boosting', lang, currency);
+            }
+        }
+
+        // RENDERIZAR CUENTAS (GRILLA NORMAL)
+        function renderAccountsSection() {
+            const container = document.getElementById('accountsContainer');
+            const lang = document.getElementById('langSelect').value;
+            const currency = exchangeRates[document.getElementById('currencySelect').value];
+            
+            container.innerHTML = '';
+            if (globalAccountsData.length === 0) { 
+                container.innerHTML = `<p style="color: var(--text-muted); grid-column: 1/-1;">${langDict[lang].emptyMsg}</p>`; 
+                return; 
+            }
+            renderItems(globalAccountsData, container, 'cuentas', lang, currency);
+        }
+
+        // FUNCIÓN AUXILIAR PARA DIBUJAR LOS PRODUCTOS
+        function renderItems(items, container, typePath, lang, currency) {
             items.forEach(item => {
                 const card = document.createElement('div');
-                card.className = 'card product-card'; // Clase extra para el filtro
+                card.className = 'card product-card';
                 
                 let displayTitle = lang === 'en' && item.tituloEn ? item.tituloEn : (item.tituloEs || item.titulo);
                 let displayDesc = lang === 'en' && item.descEn ? item.descEn : (item.descEs || item.desc);
                 
-                // Atributo de búsqueda oculto
                 card.setAttribute('data-search', `${item.juego} ${displayTitle}`.toLowerCase());
 
-                let images = Array.isArray(item.img) ? item.img : (typeof item.img === 'string' ? item.img.split(',').map(u=>u.trim()) : ["https://images.unsplash.com/photo-1614680376593-902f74cf0d41?q=80&w=600"]);
+                let images = Array.isArray(item.img) ? item.img : (typeof item.img === 'string' ? item.img.split(',').map(u=>u.trim()) : ["https://images.unsplash.com/photo-1614680376593-902f74cf0d41?q=80"]);
                 const mainImage = images[0];
                 const galleryBadge = images.length > 1 ? `<span class="badge-gallery"><i class="fa-solid fa-images"></i> ${images.length}</span>` : '';
                 const localPrice = (parseFloat(item.precio || 0) * currency.rate).toFixed(2);
                 const showDelete = isAdmin ? 'display: flex' : 'display: none';
-                const itemTypePath = containerId === 'boostingContainer' ? 'boosting' : 'cuentas';
                 const imagesJson = JSON.stringify(images).replace(/'/g, "\\'");
 
                 card.innerHTML = `
-                    <button class="btn-delete" style="${showDelete}" onclick="deleteItem('${itemTypePath}', '${item.id}')"><i class="fa-solid fa-trash"></i></button>
+                    <button class="btn-delete" style="${showDelete}" onclick="event.stopPropagation(); deleteItem('${typePath}', '${item.id}')"><i class="fa-solid fa-trash"></i></button>
                     <div class="card-img-container" style="background-image: url('${mainImage}')" onclick='openGallery(${imagesJson})'>
                         <span class="badge-game">${item.juego}</span>${galleryBadge}
                     </div>
@@ -281,7 +376,7 @@
                         <p class="card-desc">${displayDesc}</p>
                         <div class="card-footer">
                             <div class="card-price">${currency.symbol} ${localPrice}<span>${currency.code}</span></div>
-                            <button class="btn-buy" onclick="sendWhatsApp('${displayTitle}', '${localPrice}', '${currency.code}', '${lang}')">
+                            <button class="btn-buy" onclick="event.stopPropagation(); sendWhatsApp('${displayTitle}', '${localPrice}', '${currency.code}', '${lang}')">
                                 <i class="fa-solid fa-cart-shopping"></i> ${langDict[lang].buyBtn}
                             </button>
                         </div>
@@ -289,6 +384,39 @@
                 `;
                 container.appendChild(card);
             });
+        }
+
+        // FUNCIONES DE NAVEGACIÓN DE CARPETAS Y BÚSQUEDA
+        function backToCategories() {
+            activeBoostingCategory = null;
+            renderAllCards();
+        }
+
+        function handleSearch() {
+            const input = document.getElementById('searchInput').value.toLowerCase().trim();
+            const wasSearching = isSearching;
+            isSearching = input.length > 0;
+            
+            // Si el cliente empezó o terminó de escribir, actualizamos la vista
+            if (wasSearching !== isSearching) {
+                renderAllCards();
+            }
+            applySearchFilterCSS();
+        }
+
+        function applySearchFilterCSS() {
+            const input = document.getElementById('searchInput').value.toLowerCase().trim();
+            if (input.length === 0) return; // Si no hay búsqueda, mostramos todo como está
+
+            const cards = document.getElementsByClassName('product-card');
+            for (let i = 0; i < cards.length; i++) {
+                const searchData = cards[i].getAttribute('data-search');
+                if (searchData && searchData.includes(input)) { 
+                    cards[i].style.display = ""; 
+                } else { 
+                    cards[i].style.display = "none"; 
+                }
+            }
         }
 
         // SISTEMA DE RESEÑAS
@@ -301,7 +429,6 @@
                 return; 
             }
 
-            // Mostrar reseñas de la más reciente a la más antigua
             const reversedReviews = [...globalReviewsData].reverse();
 
             reversedReviews.forEach(rev => {
@@ -339,10 +466,7 @@
                     </select>
                     <textarea id="revText" class="swal2-textarea" placeholder="¿Cómo fue tu experiencia con Saith Store?" rows="3"></textarea>
                 `,
-                showCancelButton: true,
-                confirmButtonText: 'Publicar Reseña',
-                cancelButtonText: 'Cancelar',
-                confirmButtonColor: '#00d2ff',
+                showCancelButton: true, confirmButtonText: 'Publicar Reseña', cancelButtonText: 'Cancelar', confirmButtonColor: '#00d2ff',
                 preConfirm: () => {
                     const nombre = document.getElementById('revName').value;
                     const estrellas = document.getElementById('revStars').value;
@@ -355,26 +479,10 @@
                     const hoy = new Date();
                     const fechaTxt = hoy.toLocaleDateString();
                     database.ref('tienda/resenas').push({
-                        nombre: result.value.nombre,
-                        estrellas: parseInt(result.value.estrellas),
-                        comentario: result.value.comentario,
-                        fecha: fechaTxt
-                    }).then(() => {
-                        Swal.fire({ title: '¡Gracias!', text: 'Tu reseña ha sido publicada.', icon: 'success', confirmButtonColor: '#00d2ff' });
-                    });
+                        nombre: result.value.nombre, estrellas: parseInt(result.value.estrellas), comentario: result.value.comentario, fecha: fechaTxt
+                    }).then(() => { Swal.fire({ title: '¡Gracias!', text: 'Tu reseña ha sido publicada.', icon: 'success', confirmButtonColor: '#00d2ff' }); });
                 }
             });
-        }
-
-        // BUSCADOR EN TIEMPO REAL
-        function filterProducts() {
-            const input = document.getElementById('searchInput').value.toLowerCase();
-            const cards = document.getElementsByClassName('product-card');
-            for (let i = 0; i < cards.length; i++) {
-                const searchData = cards[i].getAttribute('data-search');
-                if (searchData.includes(input)) { cards[i].style.display = ""; } 
-                else { cards[i].style.display = "none"; }
-            }
         }
 
         // FUNCIONES ADMIN MEJORADAS CON SWEETALERT
@@ -391,9 +499,7 @@
             let imgArray = ["https://images.unsplash.com/photo-1614680376593-902f74cf0d41?q=80"];
             if (rawImgs) { imgArray = rawImgs.split(',').map(url => url.trim()).filter(url => url !== ""); }
 
-            if(!juego || !tituloEs || !precio) {
-                Swal.fire({ icon: 'error', title: 'Faltan datos', text: 'Completa Juego, Título Español y Precio.', confirmButtonColor: '#00d2ff' }); return;
-            }
+            if(!juego || !tituloEs || !precio) { Swal.fire({ icon: 'error', title: 'Faltan datos', text: 'Completa Juego, Título Español y Precio.', confirmButtonColor: '#00d2ff' }); return; }
 
             database.ref(`tienda/${type}`).push({ juego, precio, tituloEs, tituloEn, descEs, descEn, img: imgArray })
             .then(() => {
@@ -405,9 +511,7 @@
         function deleteItem(type, id) {
             Swal.fire({
                 title: '¿Estás seguro?', text: "Esto se borrará de la nube permanentemente.", icon: 'warning', showCancelButton: true, confirmButtonColor: '#ff3333', cancelButtonColor: '#2a2d3d', confirmButtonText: 'Sí, borrar'
-            }).then((result) => {
-                if (result.isConfirmed) { database.ref(`tienda/${type}/${id}`).remove(); }
-            });
+            }).then((result) => { if (result.isConfirmed) { database.ref(`tienda/${type}/${id}`).remove(); } });
         }
 
         async function toggleAdmin() {
@@ -422,8 +526,7 @@
                 isAdmin = false;
                 document.getElementById('adminPanel').style.display = 'none';
             }
-            renderAllCards();
-            renderReviews(); // Refrescar para mostrar/ocultar basureros de reseñas
+            renderAllCards(); renderReviews();
         }
 
         function sendWhatsApp(producto, precioLocal, code, lang) {
